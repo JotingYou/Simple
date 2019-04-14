@@ -123,7 +123,7 @@ class YJCache: NSObject {
         UserDefaults.standard.setValue(updateTime, forKey: "updateTime");
     }
     ///插入顾客信息
-    func insertPerson(name:String,amount:Int16,fund_number:String,value:Double,cost:Double,buy_date:Date){
+    func insertPerson(name:String,amount:Int64,fund_number:String,value:Double,cost:Double,buy_date:Date){
         let entity = NSEntityDescription.entity(forEntityName: "People", in: managedObjectContext)!
         let person = People.init(entity: entity, insertInto: managedObjectContext)
         person.create_time = Date()
@@ -131,7 +131,7 @@ class YJCache: NSObject {
         updatePerson(person: person, name: name, amount: amount, fund_number: fund_number, value: value, cost: cost, buy_date: buy_date)
     }
     //更新顾客信息
-    func updatePerson(person:People,name:String,amount:Int16,fund_number:String,value:Double,cost:Double,buy_date:Date){
+    func updatePerson(person:People,name:String,amount:Int64,fund_number:String,value:Double,cost:Double,buy_date:Date){
         setValuesFor(person: person, name: name, amount: amount, fund_number: fund_number, value: value, cost: cost, buy_date: buy_date)
         do {
             try managedObjectContext.save();
@@ -153,7 +153,7 @@ class YJCache: NSObject {
     func refresh(person:People) {
         setValuesFor(person: person, name: person.name!, amount: person.amount, fund_number: person.fund_number!, value: person.value, cost: person.cost, buy_date: person.buy_date!)
     }
-    func setValuesFor(person:People,name:String,amount:Int16,fund_number:String,value:Double,cost:Double,buy_date:Date){
+    func setValuesFor(person:People,name:String,amount:Int64,fund_number:String,value:Double,cost:Double,buy_date:Date){
         person.name = name;
         person.amount = amount;
         person.fund_number = fund_number;

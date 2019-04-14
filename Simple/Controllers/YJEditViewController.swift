@@ -32,7 +32,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
             nameField.becomeFirstResponder()
             return
         }
-        guard let amount:Int16 = Int16(amountField.text!)else{
+        guard let amount:Int64 = Int64(amountField.text!)else{
             amountField.becomeFirstResponder()
             return
         }
