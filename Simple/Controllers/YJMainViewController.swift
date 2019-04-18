@@ -35,6 +35,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             navigationItem.searchController = searchController
         }
         searchBar.delegate = self
+        YJHttpTool.shared.getFundValue(id: "006921")
     }
     //MARK: -
     //MARK: searchBar Delegate

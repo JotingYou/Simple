@@ -4,4 +4,6 @@ target "Simple" do
 
 pod 'MBProgressHUD'
 pod 'AFNetworking'
+pod 'SwiftSoup'
+
 end

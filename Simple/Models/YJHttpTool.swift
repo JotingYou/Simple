@@ -30,6 +30,35 @@ class YJHttpTool: NSObject {
         }
         return stocks
     }
+    /**
+     请求基金净值数据
+     返回[status,value]
+     status:0 for failed,1 for success
+     */
+    func getFundValue(id:String)-> [Double] {
+//        获取股票信息
+//        let time = Date().timeIntervalSince1970
+//        let timeInterval = CLongLong(round(time*1000))
+//        print(timeInterval)
+//        let url = URL.init(string: "http://fundgz.1234567.com.cn/js/" + id + ".js?rt=" + String(timeInterval))
+        httpManager.get("http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+id, parameters: nil, progress:nil,success: { (task, response) in
+            guard let data:Data = response as? Data else{
+                fatalError("GetFundValue Error:response can't be converted to Data")
+            }
+            let html = String.init(data: data, encoding: .utf8)
+
+
+
+            
+
+        }, failure: { (task, Error) in
+            
+        })
+        
+        
+        
+        return[0,1]
+    }
     func getFundInfo() -> Bool {
         let url = URL.init(string: "http://fund.eastmoney.com/js/fundcode_search.js")
         let request = URLRequest.init(url: url!)
