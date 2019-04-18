@@ -35,7 +35,21 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             navigationItem.searchController = searchController
         }
         searchBar.delegate = self
-        YJHttpTool.shared.getFundValue(id: "006921")
+        setRefresh()
+    }
+    //MARK: - REFRESH
+    func setRefresh() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshStateChange(refreshControl:)), for: .valueChanged)
+        tableView.addSubview(refreshControl!)
+        refreshControl?.beginRefreshing()
+        refreshStateChange(refreshControl: refreshControl!)
+    }
+    @objc func refreshStateChange(refreshControl:UIRefreshControl) {
+        if YJCache.shared.refreshPeople() {
+            tableView.reloadData()
+        }
+        refreshControl.endRefreshing()
     }
     //MARK: -
     //MARK: searchBar Delegate

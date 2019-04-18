@@ -40,7 +40,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
             nameField.becomeFirstResponder()
             return
         }
-        guard let amount:Int64 = Int64(amountField.text!)else{
+        guard let amount:Double = Double(amountField.text!)else{
             amountField.becomeFirstResponder()
             return
         }

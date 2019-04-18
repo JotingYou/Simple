@@ -47,8 +47,6 @@ class YJCache: NSObject {
     //MARK: *Read*
     ///从本地存储中恢复
     static func recovery(){
-        //读取顾客信息
-        shared.readPeople();
         //恢复股票信息
         let lastTime = UserDefaults.standard.value(forKey: "updateTime" )
         if lastTime == nil {
@@ -56,12 +54,17 @@ class YJCache: NSObject {
         }else{
             shared.updateTime = lastTime as! Date;
         }
-        
         if shared.checkUpdate() {
             shared.update();
         }else{
             shared.readStocks();
         }
+        
+        //读取顾客信息
+        shared.readPeople();
+
+        
+
 
     }
     ///恢复股票信息
@@ -140,9 +143,6 @@ class YJCache: NSObject {
             let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [People]
             if let results = fetchedResults {
                 people = results
-                for person in people{
-                    refresh(person: person)
-                }
             }
             
         } catch  {
@@ -171,7 +171,7 @@ class YJCache: NSObject {
         UserDefaults.standard.setValue(updateTime, forKey: "updateTime");
     }
     ///插入顾客信息
-    func insertPerson(name:String,amount:Int64,fund_number:String,cost:Double,buy_date:Date){
+    func insertPerson(name:String,amount:Double,fund_number:String,cost:Double,buy_date:Date){
         let entity = NSEntityDescription.entity(forEntityName: "People", in: managedObjectContext)!
         let person = People.init(entity: entity, insertInto: managedObjectContext)
         person.create_time = Date()
@@ -179,7 +179,7 @@ class YJCache: NSObject {
         updatePerson(person: person, name: name, amount: amount, fund_number: fund_number,  cost: cost, buy_date: buy_date)
     }
     //更新顾客信息
-    func updatePerson(person:People,name:String,amount:Int64,fund_number:String,cost:Double,buy_date:Date){
+    func updatePerson(person:People,name:String,amount:Double,fund_number:String,cost:Double,buy_date:Date){
         var tmp : Stocks?
         for tmp2 in stocks {
             if tmp2.id == fund_number{
@@ -192,6 +192,10 @@ class YJCache: NSObject {
             return
         }
         let fund_name = stock.name
+        
+        if !updateValueForStock(stock: stock){
+            //TODO: WARNING
+        }
         let value = stock.value
         
         setValuesFor(person: person, name: name, amount: amount, fund_number: fund_number,fund_name: fund_name, value: value, cost: cost, buy_date: buy_date)
@@ -199,6 +203,24 @@ class YJCache: NSObject {
             try managedObjectContext.save();
         } catch  {
             fatalError("无法更新")
+        }
+    }
+    func updateValueForStock(stock:Stocks)->Bool{
+        let dic = YJHttpTool.shared.getFundValue(id: stock.id!)
+        if dic["status"] == "1"{
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let updateTime = dateFormatter.date(from: dic["updateTime"]!)!
+            if stock.update_time! < updateTime{
+                stock.value = Double(dic["value"]!)!
+                stock.update_time = updateTime
+                return true
+            }else{
+                return false
+            }
+
+        }else{
+            return false
         }
     }
     //删除顾客信息
@@ -211,11 +233,33 @@ class YJCache: NSObject {
             fatalError("无法删除")
         }
     }
-    //MARK: ***Set***
-    func refresh(person:People) {
-        setValuesFor(person: person, name: person.name!, amount: person.amount, fund_number: person.fund_number!,fund_name: person.fund, value: person.value, cost: person.cost, buy_date: person.buy_date!)
+    //MARK: REFRESH
+    func refreshPeople() -> Bool {
+        for person in people {
+            refresh(person: person)
+        }
+        return true
     }
-    func setValuesFor(person:People,name:String,amount:Int64,fund_number:String,fund_name:String?,value:Double,cost:Double,buy_date:Date){
+    func refresh(person:People) {
+        let stock = stocks.filter { (stock) -> Bool in
+            if stock.id == person.fund_number{
+                return true
+            }else{
+                return false
+            }
+        }
+        if stock.count == 0 {
+            return
+        }
+        if updateValueForStock(stock: stock.first!){
+            setValuesFor(person: person, name: person.name!, amount: person.amount, fund_number: person.fund_number!,fund_name: person.fund, value: stock.first!.value, cost: person.cost, buy_date: person.buy_date!)
+        }else{
+            //TODO:WARNING
+        }
+
+
+    }
+    func setValuesFor(person:People,name:String,amount:Double,fund_number:String,fund_name:String?,value:Double,cost:Double,buy_date:Date){
         person.name = name;
         person.amount = amount;
         person.fund_number = fund_number;
