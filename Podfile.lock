@@ -14,35 +14,21 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - FMDB (2.7.2):
-    - FMDB/standard (= 2.7.2)
-  - FMDB/standard (2.7.2)
-  - JKDBModel-JDBR (0.0.1):
-    - FMDB (~> 2.0)
   - MBProgressHUD (1.1.0)
-  - SAMKeychain (1.5.3)
 
 DEPENDENCIES:
   - AFNetworking
-  - JKDBModel-JDBR
   - MBProgressHUD
-  - SAMKeychain
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
-    - FMDB
-    - JKDBModel-JDBR
     - MBProgressHUD
-    - SAMKeychain
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
-  JKDBModel-JDBR: 432c379e4bbba54ee4068aed8aac08f9ebde5c1b
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
 
-PODFILE CHECKSUM: 1a03afc28f097a870107f3058d69bf63283f8f5d
+PODFILE CHECKSUM: 1f58b533a17eaac5f13aa2f0ccc5e28cbb716692
 
 COCOAPODS: 1.5.3

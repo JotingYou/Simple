@@ -21,8 +21,8 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
 
     lazy var searchBar: UISearchBar = {
         let searchBar = searchController.searchBar
-        searchController.searchBar.searchBarStyle = .minimal
-        searchController.searchBar.scopeButtonTitles = ["Name","Stock Number","Stock Name"]
+        searchBar.searchBarStyle = .minimal
+        searchBar.scopeButtonTitles = ["Name","Stock Number","Stock Name"]
 
         return searchBar
     }()

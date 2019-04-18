@@ -9,7 +9,8 @@
 import UIKit
 import CoreData
 class YJCache: NSObject {
-    var stocks = Array<Stocks>();
+    var stocks = Array<Stocks>()
+
     var people = Array<People>();
     var updateTime = Date()
     static let shared = YJCache();
@@ -23,16 +24,6 @@ class YJCache: NSObject {
         })
         return container.viewContext
     }()
-//    lazy var stocks_entity: NSEntityDescription = {
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let managedObjectContext = appDelegate.persistentContainer.viewContext
-//        return NSEntityDescription.entity(forEntityName: "Stocks", in: managedObjectContext)!
-//        }()
-//    lazy var people_entity: NSEntityDescription = {
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let managedObjectContext = appDelegate.persistentContainer.viewContext
-//        return NSEntityDescription.entity(forEntityName: "People", in: managedObjectContext)!
-//    }()
     
 
     ///更新数据
@@ -75,19 +66,66 @@ class YJCache: NSObject {
     }
     ///恢复股票信息
     private func readStocks(){
-        //        步骤二：建立一个获取的请求
+        if readStocksFromCoreData() {
+            print("Read From CoreData")
+        }else if readStocksFromFile(){
+            print("Read From File")
+        }else{
+            stocks = YJHttpTool.shared.getData()
+        }
+    }
+    private func readStocksFromCoreData()->Bool{
+        //        建立一个获取的请求
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Stocks")
         
-        //        步骤三：执行请求
+        //        执行请求
         do {
             let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [Stocks]
+            if fetchedResults?.count == 0 {
+                return false
+            }
             if let results = fetchedResults {
                 stocks = results
             }
             
         } catch  {
-            fatalError("读取股票失败")
+            print("CoreData Error:读取股票失败")
+            return false
         }
+
+        return true
+    }
+    private func readStocksFromFile()->Bool{
+        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("fundcode_search.js")
+        
+        var data = NSData.init(contentsOf: url)
+        
+        if data == nil {
+            let  path = Bundle.main.path(forResource: "fundcode_search", ofType: "js")!
+            
+            data = NSData.init(contentsOfFile: path)
+        }        
+
+        guard let content = String.init(data: data! as Data, encoding: String.Encoding.utf8)else{
+            return false
+        }
+        guard let startRange = content.range(of: "var r = [")else{
+            return false
+        }
+        guard let endRange = content.range(of: "];") else{
+            return false
+        }
+        let original = content[startRange.upperBound...endRange.lowerBound]
+        let stockStrs = original.components(separatedBy: "]")
+        for str in stockStrs {
+            if str.count > 0{
+                let obj = YJStockStringObject.init(str: str)
+                insertStock(stockString: obj)
+            }
+
+        }
+        saveStocks()
+        return true
     }
     ///读取顾客信息
     private func readPeople(){
@@ -114,6 +152,16 @@ class YJCache: NSObject {
     }
     //MARK: *Save*
     ///将股票信息存储到本地
+    private func insertStock(stockString:YJStockStringObject){
+        let entity = NSEntityDescription.entity(forEntityName: "Stocks", in: managedObjectContext)!
+        let stock = Stocks.init(entity: entity, insertInto: managedObjectContext)
+        stock.name = stockString.name
+        stock.id = stockString.id
+        stock.code = stockString.code
+        stock.name_spell = stockString.name_spell
+        stock.type = stockString.type
+        stocks.insert(stock, at: 0)
+    }
     private func saveStocks(){
         do {
             try managedObjectContext.save();
@@ -123,16 +171,30 @@ class YJCache: NSObject {
         UserDefaults.standard.setValue(updateTime, forKey: "updateTime");
     }
     ///插入顾客信息
-    func insertPerson(name:String,amount:Int64,fund_number:String,value:Double,cost:Double,buy_date:Date){
+    func insertPerson(name:String,amount:Int64,fund_number:String,cost:Double,buy_date:Date){
         let entity = NSEntityDescription.entity(forEntityName: "People", in: managedObjectContext)!
         let person = People.init(entity: entity, insertInto: managedObjectContext)
         person.create_time = Date()
         people.insert(person, at: 0)
-        updatePerson(person: person, name: name, amount: amount, fund_number: fund_number, value: value, cost: cost, buy_date: buy_date)
+        updatePerson(person: person, name: name, amount: amount, fund_number: fund_number,  cost: cost, buy_date: buy_date)
     }
     //更新顾客信息
-    func updatePerson(person:People,name:String,amount:Int64,fund_number:String,value:Double,cost:Double,buy_date:Date){
-        setValuesFor(person: person, name: name, amount: amount, fund_number: fund_number, value: value, cost: cost, buy_date: buy_date)
+    func updatePerson(person:People,name:String,amount:Int64,fund_number:String,cost:Double,buy_date:Date){
+        var tmp : Stocks?
+        for tmp2 in stocks {
+            if tmp2.id == fund_number{
+                tmp = tmp2
+                break
+            }
+        }
+        guard let stock = tmp else {
+            print("更新失败：找不到该股票")
+            return
+        }
+        let fund_name = stock.name
+        let value = stock.value
+        
+        setValuesFor(person: person, name: name, amount: amount, fund_number: fund_number,fund_name: fund_name, value: value, cost: cost, buy_date: buy_date)
         do {
             try managedObjectContext.save();
         } catch  {
@@ -151,12 +213,13 @@ class YJCache: NSObject {
     }
     //MARK: ***Set***
     func refresh(person:People) {
-        setValuesFor(person: person, name: person.name!, amount: person.amount, fund_number: person.fund_number!, value: person.value, cost: person.cost, buy_date: person.buy_date!)
+        setValuesFor(person: person, name: person.name!, amount: person.amount, fund_number: person.fund_number!,fund_name: person.fund, value: person.value, cost: person.cost, buy_date: person.buy_date!)
     }
-    func setValuesFor(person:People,name:String,amount:Int64,fund_number:String,value:Double,cost:Double,buy_date:Date){
+    func setValuesFor(person:People,name:String,amount:Int64,fund_number:String,fund_name:String?,value:Double,cost:Double,buy_date:Date){
         person.name = name;
         person.amount = amount;
         person.fund_number = fund_number;
+        person.fund = fund_name ?? ""
         person.value = value;
         person.cost = cost;
         person.buy_date = buy_date;
