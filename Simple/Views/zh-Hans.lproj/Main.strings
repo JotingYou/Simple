@@ -1,0 +1,69 @@
+
+/* Class = "UITextField"; placeholder = "input amount"; ObjectID = "1R0-gY-39p"; */
+"1R0-gY-39p.placeholder" = "input amount";
+
+/* Class = "UITextField"; placeholder = "input cost"; ObjectID = "3Ah-8Q-G1h"; */
+"3Ah-8Q-G1h.placeholder" = "input cost";
+
+/* Class = "UILabel"; text = "Date:"; ObjectID = "5gM-44-nNa"; */
+"5gM-44-nNa.text" = "Date:";
+
+/* Class = "UINavigationItem"; title = "Detail"; ObjectID = "Bry-qk-e3W"; */
+"Bry-qk-e3W.title" = "Detail";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "Fgd-tV-G3F"; */
+"Fgd-tV-G3F.text" = "Detail";
+
+/* Class = "UILabel"; text = "Loaded by SecondViewController"; ObjectID = "NDk-cv-Gan"; */
+"NDk-cv-Gan.text" = "Loaded by SecondViewController";
+
+/* Class = "UITextField"; placeholder = "input name"; ObjectID = "OgV-0Q-coy"; */
+"OgV-0Q-coy.placeholder" = "input name";
+
+/* Class = "UINavigationItem"; title = "List"; ObjectID = "VJB-LD-PdW"; */
+"VJB-LD-PdW.title" = "List";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "VVE-5s-sDB"; */
+"VVE-5s-sDB.text" = "name";
+
+/* Class = "UITabBarItem"; title = "Main"; ObjectID = "WfP-9H-EJX"; */
+"WfP-9H-EJX.title" = "Main";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "ZW5-rB-V9z"; */
+"ZW5-rB-V9z.title" = "Title";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "Zjo-I4-UOM"; */
+"Zjo-I4-UOM.text" = "Amount:";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "bqE-7X-m8I"; */
+"bqE-7X-m8I.placeholder" = "Search";
+
+/* Class = "UISearchBar"; bqE-7X-m8I.scopeButtonTitles[0] = "Title"; ObjectID = "bqE-7X-m8I"; */
+"bqE-7X-m8I.scopeButtonTitles[0]" = "Title";
+
+/* Class = "UISearchBar"; bqE-7X-m8I.scopeButtonTitles[1] = "Title"; ObjectID = "bqE-7X-m8I"; */
+"bqE-7X-m8I.scopeButtonTitles[1]" = "Title";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "cPa-gy-q4n"; */
+"cPa-gy-q4n.title" = "Settings";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "eqk-70-aUP"; */
+"eqk-70-aUP.text" = "Title";
+
+/* Class = "UILabel"; text = "Stock:"; ObjectID = "fEg-pY-FjU"; */
+"fEg-pY-FjU.text" = "Stock:";
+
+/* Class = "UILabel"; text = "Cost:"; ObjectID = "ilI-fu-rf4"; */
+"ilI-fu-rf4.text" = "Cost:";
+
+/* Class = "UILabel"; text = "Name:"; ObjectID = "nez-7B-rcQ"; */
+"nez-7B-rcQ.text" = "Name:";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "oYn-pg-MgT"; */
+"oYn-pg-MgT.text" = "Detail";
+
+/* Class = "UILabel"; text = "Second View"; ObjectID = "zEq-FU-wV5"; */
+"zEq-FU-wV5.text" = "Second View";
+
+/* Class = "UITextField"; placeholder = "input date"; ObjectID = "zZn-1F-Lp7"; */
+"zZn-1F-Lp7.placeholder" = "input date";

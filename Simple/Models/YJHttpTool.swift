@@ -64,7 +64,7 @@ class YJHttpTool: NSObject {
                 
                 let valueTD:Element = try doc.select("td").get(1)
                 let value = try valueTD.text()
-                
+
                 return["status":"1","value":value,"updateTime":updateTime]
             }catch{
                 print("HTML parse error")

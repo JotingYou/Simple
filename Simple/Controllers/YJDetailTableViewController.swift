@@ -45,7 +45,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detail", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
         switch indexPath.row {
         case 0:
             cell.textLabel?.text = "Name"
@@ -85,9 +85,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
             break;
         case 9:
             cell.textLabel?.text = "Buy Date"
-            let dateFormatter = DateFormatter();
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            cell.detailTextLabel?.text = dateFormatter.string(from: person!.buy_date!)
+            cell.detailTextLabel?.text = YJCache.shared.dateFormatter.string(from: person!.buy_date!)
             break;
         case 10:
             cell.textLabel?.text = "Days"

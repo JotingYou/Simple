@@ -10,7 +10,12 @@ import UIKit
 import CoreData
 class YJCache: NSObject {
     var stocks = Array<Stocks>()
-
+    let dateFormatter:DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
+    
     var people = Array<People>();
     var updateTime = Date()
     static let shared = YJCache();
@@ -98,6 +103,16 @@ class YJCache: NSObject {
 
         return true
     }
+    func getStockWith(id:String) -> Stocks?{
+        let tmp = stocks.filter { (stock) -> Bool in
+            return stock.id == id
+        }
+        guard let stock = tmp.first else {
+            print("更新失败：找不到该股票")
+            return nil
+        }
+        return stock
+    }
     private func readStocksFromFile()->Bool{
         let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("fundcode_search.js")
         
@@ -171,45 +186,48 @@ class YJCache: NSObject {
         UserDefaults.standard.setValue(updateTime, forKey: "updateTime");
     }
     ///插入顾客信息
-    func insertPerson(name:String,amount:Double,fund_number:String,cost:Double,buy_date:Date){
+    func insertPerson(name:String,amount:Double,fund_number:String,cost:Double,buy_date:Date) -> Bool{
+        guard let stock = getStockWith(id: fund_number) else{
+            print("创建用户失败")
+            return false
+        }
         let entity = NSEntityDescription.entity(forEntityName: "People", in: managedObjectContext)!
         let person = People.init(entity: entity, insertInto: managedObjectContext)
         person.create_time = Date()
         people.insert(person, at: 0)
-        updatePerson(person: person, name: name, amount: amount, fund_number: fund_number,  cost: cost, buy_date: buy_date)
+        return updatePerson(person: person, name: name, amount: amount, fund_number: fund_number, stock: stock, cost: cost, buy_date: buy_date)
     }
     //更新顾客信息
-    func updatePerson(person:People,name:String,amount:Double,fund_number:String,cost:Double,buy_date:Date){
-        var tmp : Stocks?
-        for tmp2 in stocks {
-            if tmp2.id == fund_number{
-                tmp = tmp2
-                break
+    func updatePerson(person:People,name:String,amount:Double,fund_number:String,stock:Stocks?,cost:Double,buy_date:Date) -> Bool{
+        var stock_act : Stocks?
+        if stock != nil{
+            stock_act = stock
+        }else{
+            guard let tmp = getStockWith(id: fund_number) else{
+                print("更新用户信息失败")
+                return false
             }
+            stock_act = tmp
         }
-        guard let stock = tmp else {
-            print("更新失败：找不到该股票")
-            return
-        }
-        let fund_name = stock.name
+        let fund_name = stock_act!.name
         
-        if !updateValueForStock(stock: stock){
+        if !updateValueForStock(stock: stock_act!){
             //TODO: WARNING
         }
-        let value = stock.value
+        let value = stock_act!.value
         
         setValuesFor(person: person, name: name, amount: amount, fund_number: fund_number,fund_name: fund_name, value: value, cost: cost, buy_date: buy_date)
         do {
             try managedObjectContext.save();
         } catch  {
-            fatalError("无法更新")
+            print("无法更新CoreData")
+            return false
         }
+        return true
     }
     func updateValueForStock(stock:Stocks)->Bool{
         let dic = YJHttpTool.shared.getFundValue(id: stock.id!)
         if dic["status"] == "1"{
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
             let updateTime = dateFormatter.date(from: dic["updateTime"]!)!
             if stock.update_time! < updateTime{
                 stock.value = Double(dic["value"]!)!
