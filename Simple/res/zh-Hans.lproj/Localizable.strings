@@ -1,0 +1,18 @@
+/* 
+  local.strings
+  Simple
+
+  Created by JotingYou on 2019/4/19.
+  Copyright © 2019 YouJoting. All rights reserved.
+*/
+"Name" = "姓名";
+"Stock Number" = "基金代码";
+"Stock Name" = "基金名称";
+"Amount" = "份数";
+"Value" = "单位净值";
+"Cost" = "成本";
+"Interest" = "收益";
+"Simple" = "收益率";
+"Years" = "年化收益率";
+"Buy Date" = "购买日期";
+"Days" = "持有天数";

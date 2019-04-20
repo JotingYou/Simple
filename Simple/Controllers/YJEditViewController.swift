@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 protocol YJEditViewControllerDelegate:NSObjectProtocol {
     func didFinished();
 }
@@ -141,7 +140,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
     func setSearchBar() {
         searchBar.delegate = self
         searchBar.searchBarStyle = .minimal
-        searchBar.scopeButtonTitles = ["Number","Name"]
+        searchBar.scopeButtonTitles = [NSLocalizedString("Stock Number", comment: ""),NSLocalizedString("Stock Name", comment: "")]
         view.addConstraints(searchBarNormalContraints)
     }
     func setDidplayView(){

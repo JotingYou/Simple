@@ -1,42 +1,42 @@
 
 /* Class = "UITextField"; placeholder = "input amount"; ObjectID = "1R0-gY-39p"; */
-"1R0-gY-39p.placeholder" = "input amount";
+"1R0-gY-39p.placeholder" = "购买数量";
 
 /* Class = "UITextField"; placeholder = "input cost"; ObjectID = "3Ah-8Q-G1h"; */
-"3Ah-8Q-G1h.placeholder" = "input cost";
+"3Ah-8Q-G1h.placeholder" = "成本";
 
 /* Class = "UILabel"; text = "Date:"; ObjectID = "5gM-44-nNa"; */
-"5gM-44-nNa.text" = "Date:";
+"5gM-44-nNa.text" = "购买日期:";
 
 /* Class = "UINavigationItem"; title = "Detail"; ObjectID = "Bry-qk-e3W"; */
-"Bry-qk-e3W.title" = "Detail";
+"Bry-qk-e3W.title" = "详情";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "Fgd-tV-G3F"; */
-"Fgd-tV-G3F.text" = "Detail";
+"Fgd-tV-G3F.text" = "详情";
 
 /* Class = "UILabel"; text = "Loaded by SecondViewController"; ObjectID = "NDk-cv-Gan"; */
 "NDk-cv-Gan.text" = "Loaded by SecondViewController";
 
 /* Class = "UITextField"; placeholder = "input name"; ObjectID = "OgV-0Q-coy"; */
-"OgV-0Q-coy.placeholder" = "input name";
+"OgV-0Q-coy.placeholder" = "输入姓名";
 
 /* Class = "UINavigationItem"; title = "List"; ObjectID = "VJB-LD-PdW"; */
-"VJB-LD-PdW.title" = "List";
+"VJB-LD-PdW.title" = "财管";
 
 /* Class = "UILabel"; text = "name"; ObjectID = "VVE-5s-sDB"; */
-"VVE-5s-sDB.text" = "name";
+"VVE-5s-sDB.text" = "姓名";
 
 /* Class = "UITabBarItem"; title = "Main"; ObjectID = "WfP-9H-EJX"; */
-"WfP-9H-EJX.title" = "Main";
+"WfP-9H-EJX.title" = "清单";
 
 /* Class = "UINavigationItem"; title = "Title"; ObjectID = "ZW5-rB-V9z"; */
-"ZW5-rB-V9z.title" = "Title";
+"ZW5-rB-V9z.title" = "添加";
 
 /* Class = "UILabel"; text = "Amount:"; ObjectID = "Zjo-I4-UOM"; */
-"Zjo-I4-UOM.text" = "Amount:";
+"Zjo-I4-UOM.text" = "份数:";
 
 /* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "bqE-7X-m8I"; */
-"bqE-7X-m8I.placeholder" = "Search";
+"bqE-7X-m8I.placeholder" = "搜索";
 
 /* Class = "UISearchBar"; bqE-7X-m8I.scopeButtonTitles[0] = "Title"; ObjectID = "bqE-7X-m8I"; */
 "bqE-7X-m8I.scopeButtonTitles[0]" = "Title";
@@ -45,19 +45,19 @@
 "bqE-7X-m8I.scopeButtonTitles[1]" = "Title";
 
 /* Class = "UITabBarItem"; title = "Settings"; ObjectID = "cPa-gy-q4n"; */
-"cPa-gy-q4n.title" = "Settings";
+"cPa-gy-q4n.title" = "设置";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "eqk-70-aUP"; */
 "eqk-70-aUP.text" = "Title";
 
 /* Class = "UILabel"; text = "Stock:"; ObjectID = "fEg-pY-FjU"; */
-"fEg-pY-FjU.text" = "Stock:";
+"fEg-pY-FjU.text" = "基金:";
 
 /* Class = "UILabel"; text = "Cost:"; ObjectID = "ilI-fu-rf4"; */
-"ilI-fu-rf4.text" = "Cost:";
+"ilI-fu-rf4.text" = "成本:";
 
 /* Class = "UILabel"; text = "Name:"; ObjectID = "nez-7B-rcQ"; */
-"nez-7B-rcQ.text" = "Name:";
+"nez-7B-rcQ.text" = "姓名:";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "oYn-pg-MgT"; */
 "oYn-pg-MgT.text" = "Detail";
@@ -66,4 +66,4 @@
 "zEq-FU-wV5.text" = "Second View";
 
 /* Class = "UITextField"; placeholder = "input date"; ObjectID = "zZn-1F-Lp7"; */
-"zZn-1F-Lp7.placeholder" = "input date";
+"zZn-1F-Lp7.placeholder" = "选择购买日期";

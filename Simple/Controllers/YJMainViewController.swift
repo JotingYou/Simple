@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,YJDetailTVCDelegate,UISearchResultsUpdating {
     
     lazy var searchController:UISearchController = {
@@ -16,14 +17,21 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         searchController.hidesNavigationBarDuringPresentation = true
         definesPresentationContext = true
         searchController.obscuresBackgroundDuringPresentation = false
+
         return searchController
     }()
 
     lazy var searchBar: UISearchBar = {
         let searchBar = searchController.searchBar
         searchBar.searchBarStyle = .minimal
-        searchBar.scopeButtonTitles = ["Name","Stock Number","Stock Name"]
+        searchBar.scopeButtonTitles = [NSLocalizedString("Name", comment: ""),NSLocalizedString("Stock Number", comment: ""),NSLocalizedString("Stock Name", comment: "")]
+        
 
+//            searchBar.backgroundImage = UIImage.init(named: "navigationbar_background")
+  //      searchBar.backgroundColor = UIColor.init(red: 240, green: 100, blue: 114, alpha: 100)
+//        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 240, green: 100, blue: 114, alpha: 1)
+        //searchBar.isTranslucent = false
+        searchBar.tintColor = .white
         return searchBar
     }()
 
@@ -33,7 +41,10 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         super.viewDidLoad()
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
+        } else {
+            navigationItem.titleView?.addSubview(searchBar)
         }
+        navigationController?.view.backgroundColor = .white
         searchBar.delegate = self
         setRefresh()
     }
@@ -127,7 +138,12 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         
         cell.textLabel?.text = person.name
         if person.isValued {
-            cell.detailTextLabel?.text = String(person.profit)
+            cell.detailTextLabel?.text = String(format:"%.2lf",person.profit)
+            if person.profit >= 0{
+                cell.detailTextLabel?.textColor = .red
+            }else{
+                cell.detailTextLabel?.textColor = .green
+            }
         }else{
             cell.detailTextLabel?.text = "Waiting..."
         }

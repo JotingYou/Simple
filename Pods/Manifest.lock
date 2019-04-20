@@ -14,25 +14,29 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - FoldingCell (3.1.1)
   - MBProgressHUD (1.1.0)
   - SwiftSoup (1.7.1)
 
 DEPENDENCIES:
   - AFNetworking
+  - FoldingCell
   - MBProgressHUD
   - SwiftSoup
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - FoldingCell
     - MBProgressHUD
     - SwiftSoup
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  FoldingCell: 238c33ae8d9cd655090c9c4c5ff32596cfd18c6e
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   SwiftSoup: 277f7ef548826e0ca7603a06b30d4a5df3ee0587
 
-PODFILE CHECKSUM: f477c35abf93bf258b1bcfb8110b8aa44aa8c36d
+PODFILE CHECKSUM: a4213903b2f69c6aa2c3b050a48b6965d6ff1de5
 
 COCOAPODS: 1.5.3

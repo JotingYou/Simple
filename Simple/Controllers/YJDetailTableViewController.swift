@@ -48,47 +48,52 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
         let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = "Name"
+            cell.textLabel?.text = NSLocalizedString("Name", comment: "")
             cell.detailTextLabel?.text = person!.name
             break;
         case 1:
-            cell.textLabel?.text = "Stock"
+            cell.textLabel?.text = NSLocalizedString("Stock Name", comment: "")
             cell.detailTextLabel?.text = person!.fund
             break;
         case 2:
-            cell.textLabel?.text = "Stock Number"
+            cell.textLabel?.text = NSLocalizedString("Stock Number", comment: "")
             cell.detailTextLabel?.text = person!.fund_number
             break;
         case 3:
-            cell.textLabel?.text = "Amount"
+            cell.textLabel?.text = NSLocalizedString("Amount", comment: "")
             cell.detailTextLabel?.text = String(person!.amount)
             break;
         case 4:
-            cell.textLabel?.text = "Value"
+            cell.textLabel?.text = NSLocalizedString("Value", comment: "")
             cell.detailTextLabel?.text = String(person!.value)
             break;
         case 5:
-            cell.textLabel?.text = "Cost"
+            cell.textLabel?.text = NSLocalizedString("Cost", comment: "")
             cell.detailTextLabel?.text = String(person!.cost)
             break;
         case 6:
-            cell.textLabel?.text = "Interst"
-            cell.detailTextLabel?.text = String(person!.profit)
+            cell.textLabel?.text = NSLocalizedString("Interest", comment: "")
+            cell.detailTextLabel?.text = String(format:"%.2lf",person!.profit)
+            if person!.profit >= 0{
+                cell.detailTextLabel?.textColor = .red
+            }else{
+                cell.detailTextLabel?.textColor = .green
+            }
             break;
         case 7:
-            cell.textLabel?.text = "Simple"
-            cell.detailTextLabel?.text = String(person!.simple*100) + "%"
+            cell.textLabel?.text = NSLocalizedString("Simple", comment: "")
+            cell.detailTextLabel?.text = String(format:"%.2lf",person!.simple*100) + "%"
             break;
         case 8:
-            cell.textLabel?.text = "Year"
-            cell.detailTextLabel?.text = String(person!.annualized*100) + "%"
+            cell.textLabel?.text = NSLocalizedString("Years", comment: "")
+            cell.detailTextLabel?.text = String(format:"%.2lf",person!.annualized*100) + "%"
             break;
         case 9:
-            cell.textLabel?.text = "Buy Date"
+            cell.textLabel?.text = NSLocalizedString("Buy Date", comment: "")
             cell.detailTextLabel?.text = YJCache.shared.dateFormatter.string(from: person!.buy_date!)
             break;
         case 10:
-            cell.textLabel?.text = "Days"
+            cell.textLabel?.text = NSLocalizedString("Days", comment: "")
             cell.detailTextLabel?.text = String(person!.days)
             break;
         default:
