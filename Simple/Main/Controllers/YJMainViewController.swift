@@ -10,7 +10,18 @@ import UIKit
 import FoldingCell
 
 class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate {
-    var cellHeights:[CGFloat] = [0]
+    
+    var searchResults = Array<People>()
+    
+    lazy var cellHeights:[CGFloat] = {
+        if isFiltering() {
+            return searchCellHeights
+        }else{
+            return normalCellHeights
+        }
+    }()
+    lazy var normalCellHeights:[CGFloat] = (0..<YJCache.shared.people.count).map { _ in YJConst.closeCellHeight }
+    lazy var searchCellHeights:[CGFloat] = (0..<searchResults.count).map { _ in YJConst.closeCellHeight }
     lazy var searchController:UISearchController = {
         let searchController = UISearchController.init(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -29,11 +40,10 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         return searchBar
     }()
 
-    var searchResults = Array<People>()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cellHeights = (0..<YJCache.shared.people.count).map { _ in YJConst.closeCellHeight }
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
@@ -69,6 +79,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.endEditing(true)
+        cellHeights = normalCellHeights
     }
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
@@ -95,16 +106,19 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     //MARK: searchController Delegate
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!,scope: searchBar.selectedScopeButtonIndex)
+        searchCellHeights = (0..<searchResults.count).map { _ in YJConst.closeCellHeight }
         tableView.reloadData()
     }
     //MARK: -
     //MARK: tableview
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if case let cell as FoldingCell = cell {
+        if case let cell as YJFoldingCell = cell {
             if cellHeights[indexPath.row] == YJConst.closeCellHeight {
-                cell.setSelected(false, animated: false)
+                cell.isUnfolded = false
+                cell.unfold(false, animated: false, completion: nil)
             } else {
-                cell.setSelected(true, animated: false)
+                cell.isUnfolded = true
+                cell.unfold(true, animated: false, completion: nil)
             }
         }
     }
@@ -112,6 +126,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         return cellHeights[indexPath.row]
+
     }
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -143,6 +158,8 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         let reusableID = "personCell"
         guard let cell:YJFoldingCell = tableView.dequeueReusableCell(withIdentifier: reusableID) as? YJFoldingCell else {
             let cell = YJFoldingCell.init(style: .value1, reuseIdentifier: "personCell")
+            cell.setPerson(person: person)
+            cell.delegate = self
             return cell
         }
         cell.setPerson(person: person)
@@ -207,15 +224,15 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         if !cell.isUnfolded {
             cellHeights[indexPath.row] = YJConst.openCellHeight
             cell.unfold(true, animated: true, completion: nil)
-            duration = 0.5
+            duration = 0.3
         } else {
             cellHeights[indexPath.row] = YJConst.closeCellHeight
-            cell.unfold(false, animated: true, completion: nil)
-            duration = 0.8
+            cell.unfold(false, animated:true, completion: nil)
+            duration = 0.5
         }
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
         }, completion: nil)
     }
     func didFinished(tag:Int,indexPath:IndexPath?) {
@@ -226,7 +243,6 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         }else{
             cellHeights[indexPath!.row] = YJConst.closeCellHeight
             self.tableView.reloadRows(at: [indexPath!], with: .automatic)
-
         }
 
     }

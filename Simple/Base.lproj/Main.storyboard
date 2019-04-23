@@ -104,11 +104,11 @@
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JXk-a1-RVM">
                                                                     <rect key="frame" x="319" y="25" width="30" height="30"/>
-                                                                    <state key="normal" title="Edit">
+                                                                    <state key="normal" title="Fold">
                                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="editPerson:" destination="V5F-Pe-H1l" eventType="touchUpInside" id="XH1-JP-htG"/>
+                                                                        <action selector="showDetail:" destination="V5F-Pe-H1l" eventType="touchUpInside" id="Gxa-WN-sUL"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -147,15 +147,16 @@
                                                                     <color key="tintColor" red="0.27058823529411763" green="0.21568627450980393" blue="0.082352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <state key="normal">
                                                                         <attributedString key="attributedTitle">
-                                                                            <fragment content="Fold">
+                                                                            <fragment content="EDIT">
                                                                                 <attributes>
                                                                                     <font key="NSFont" size="18" name="PingFangSC-Semibold"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                                 </attributes>
                                                                             </fragment>
                                                                         </attributedString>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="showDetail:" destination="V5F-Pe-H1l" eventType="touchUpInside" id="IZg-1w-CLG"/>
+                                                                        <action selector="editPerson:" destination="V5F-Pe-H1l" eventType="touchUpInside" id="r1e-YA-Dwe"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
