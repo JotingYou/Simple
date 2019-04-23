@@ -25,6 +25,8 @@
 		3E80E5D0225F1F11005E9FBA /* YJEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5CF225F1F11005E9FBA /* YJEditViewController.swift */; };
 		3E80E5D222605CF6005E9FBA /* YJDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5D122605CF6005E9FBA /* YJDetailTableViewController.swift */; };
 		3E80E5D422607DFF005E9FBA /* YJHttpTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */; };
+		3E9051ED226C64FB006DD597 /* YJFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */; };
+		3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EE226C6B60006DD597 /* YJConst.swift */; };
 		3EF47E57226AC4B600890E0D /* fundcode_search.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EF47E56226AC4B600890E0D /* fundcode_search.js */; };
 		3EF47E5C226AF83F00890E0D /* YJMainNavgationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF47E5B226AF83F00890E0D /* YJMainNavgationController.swift */; };
 /* End PBXBuildFile section */
@@ -72,6 +74,8 @@
 		3E80E5CF225F1F11005E9FBA /* YJEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJEditViewController.swift; sourceTree = "<group>"; };
 		3E80E5D122605CF6005E9FBA /* YJDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJDetailTableViewController.swift; sourceTree = "<group>"; };
 		3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJHttpTool.swift; sourceTree = "<group>"; };
+		3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJFoldingCell.swift; sourceTree = "<group>"; };
+		3E9051EE226C6B60006DD597 /* YJConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJConst.swift; sourceTree = "<group>"; };
 		3EF47E56226AC4B600890E0D /* fundcode_search.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = fundcode_search.js; sourceTree = "<group>"; };
 		3EF47E5B226AF83F00890E0D /* YJMainNavgationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJMainNavgationController.swift; sourceTree = "<group>"; };
 		A4D649D7DDBE97C43A175A3B /* Pods-Simple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Simple/Pods-Simple.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +118,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		3E0E986A226F0FC400FD7ACE /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				3E80E5B8225E302D005E9FBA /* Models */,
+				3E80E5BA225E303E005E9FBA /* Views */,
+				3E80E5B9225E3035005E9FBA /* Controllers */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		3E80E578225D98D7005E9FBA = {
 			isa = PBXGroup;
 			children = (
@@ -139,12 +153,12 @@
 		3E80E583225D98D7005E9FBA /* Simple */ = {
 			isa = PBXGroup;
 			children = (
+				3E80E58A225D98D7005E9FBA /* Main.storyboard */,
+				3E80E58F225D98D9005E9FBA /* LaunchScreen.storyboard */,
+				3E0E986A226F0FC400FD7ACE /* Main */,
 				3E80E592225D98D9005E9FBA /* Info.plist */,
 				3E80E5BC225E307D005E9FBA /* frameworks */,
 				3E80E5BB225E3061005E9FBA /* res */,
-				3E80E5BA225E303E005E9FBA /* Views */,
-				3E80E5B9225E3035005E9FBA /* Controllers */,
-				3E80E5B8225E302D005E9FBA /* Models */,
 			);
 			path = Simple;
 			sourceTree = "<group>";
@@ -174,6 +188,7 @@
 				3E80E5BF225E3103005E9FBA /* YJCache.swift */,
 				3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */,
 				3E57524022672105002BD654 /* YJStockStringObject.swift */,
+				3E9051EE226C6B60006DD597 /* YJConst.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -194,8 +209,7 @@
 		3E80E5BA225E303E005E9FBA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3E80E58A225D98D7005E9FBA /* Main.storyboard */,
-				3E80E58F225D98D9005E9FBA /* LaunchScreen.storyboard */,
+				3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -422,9 +436,11 @@
 				3E80E5BE225E30D3005E9FBA /* YJMainViewController.swift in Sources */,
 				3EF47E5C226AF83F00890E0D /* YJMainNavgationController.swift in Sources */,
 				3E80E5D0225F1F11005E9FBA /* YJEditViewController.swift in Sources */,
+				3E9051ED226C64FB006DD597 /* YJFoldingCell.swift in Sources */,
 				3E57524122672105002BD654 /* YJStockStringObject.swift in Sources */,
 				3E80E589225D98D7005E9FBA /* SecondViewController.swift in Sources */,
 				3E80E5C0225E3103005E9FBA /* YJCache.swift in Sources */,
+				3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */,
 				3E80E5CE225E499E005E9FBA /* Save.xcdatamodeld in Sources */,
 				3E80E585225D98D7005E9FBA /* AppDelegate.swift in Sources */,
 				3E80E5D222605CF6005E9FBA /* YJDetailTableViewController.swift in Sources */,

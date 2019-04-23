@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import FoldingCell
 
-
-class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,YJDetailTVCDelegate,UISearchResultsUpdating {
-    
+class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate {
+    var cellHeights:[CGFloat] = [0]
     lazy var searchController:UISearchController = {
         let searchController = UISearchController.init(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -25,12 +25,6 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         let searchBar = searchController.searchBar
         searchBar.searchBarStyle = .minimal
         searchBar.scopeButtonTitles = [NSLocalizedString("Name", comment: ""),NSLocalizedString("Stock Number", comment: ""),NSLocalizedString("Stock Name", comment: "")]
-        
-
-//            searchBar.backgroundImage = UIImage.init(named: "navigationbar_background")
-  //      searchBar.backgroundColor = UIColor.init(red: 240, green: 100, blue: 114, alpha: 100)
-//        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 240, green: 100, blue: 114, alpha: 1)
-        //searchBar.isTranslucent = false
         searchBar.tintColor = .white
         return searchBar
     }()
@@ -39,6 +33,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cellHeights = (0..<YJCache.shared.people.count).map { _ in YJConst.closeCellHeight }
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
@@ -104,6 +99,20 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     }
     //MARK: -
     //MARK: tableview
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if case let cell as FoldingCell = cell {
+            if cellHeights[indexPath.row] == YJConst.closeCellHeight {
+                cell.setSelected(false, animated: false)
+            } else {
+                cell.setSelected(true, animated: false)
+            }
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        return cellHeights[indexPath.row]
+    }
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         if isFiltering() {
@@ -115,6 +124,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         if editingStyle == .delete {
             YJCache.shared.deletePersonAt(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            cellHeights.remove(at: indexPath.row)
         }
     }
 
@@ -131,60 +141,101 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             person = searchResults[indexPath.row]
         }
         let reusableID = "personCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: reusableID) ?? {
-            let cell = UITableViewCell.init(style: .value1, reuseIdentifier: "personCell")
+        guard let cell:YJFoldingCell = tableView.dequeueReusableCell(withIdentifier: reusableID) as? YJFoldingCell else {
+            let cell = YJFoldingCell.init(style: .value1, reuseIdentifier: "personCell")
             return cell
-        }()
-        
-        cell.textLabel?.text = person.name
-        if person.isValued {
-            cell.detailTextLabel?.text = String(format:"%.2lf",person.profit)
-            if person.profit >= 0{
-                cell.detailTextLabel?.textColor = .red
-            }else{
-                cell.detailTextLabel?.textColor = .green
-            }
-        }else{
-            cell.detailTextLabel?.text = "Waiting..."
         }
+        cell.setPerson(person: person)
+        cell.delegate = self
         return cell
     }
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "toDetail", sender: indexPath)
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "toDetail", sender: indexPath)
+//    }
     
     // MARK: - Navigation
 
+    @IBAction func toAdd(_ sender: Any) {
+        performSegue(withIdentifier: "toEdit", sender: ["type":0])
+    }
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination.isKind(of: YJEditViewController.self) {
             let dest:YJEditViewController = segue.destination as! YJEditViewController
-            dest.type = 0
-            dest.delegate = self
-        }else if segue.destination.isKind(of: YJDetailTableViewController.self){
-            let dest = segue.destination as! YJDetailTableViewController
-            if let index:IndexPath = sender as? IndexPath {
-                if isFiltering(){
-                    dest.person = searchResults[index.row]
-                }else{
-                    dest.person = YJCache.shared.people[index.row]
-
-                }
-                dest.delegate = self
-                dest.indexPath = index
+            guard let dic = sender as? [String:Any] else{
+                return
             }
-
+            guard let type = dic["type"] as? Int else{
+                return
+            }
+            dest.type = type
+            dest.delegate = self
+            if type == 1{
+                guard let indexPath = dic["indexPath"] as? IndexPath else{
+                    return
+                }
+                guard let person = dic["person"] as? People else{
+                    return
+                }
+                dest.indexPath = indexPath
+                dest.person = person
+            }
         }
+//        else if segue.destination.isKind(of: YJDetailTableViewController.self){
+//            let dest = segue.destination as! YJDetailTableViewController
+//            if let index:IndexPath = sender as? IndexPath {
+//                if isFiltering(){
+//                    dest.person = searchResults[index.row]
+//                }else{
+//                    dest.person = YJCache.shared.people[index.row]
+//
+//                }
+//                dest.delegate = self
+//                dest.indexPath = index
+//            }
+//
+//        }
     }
  
     //MARK: -
     //MARK: Custom Delegate
-    func didFinished() {
-        let index = IndexPath.init(row: 0, section: 0)
-        self.tableView.insertRows(at: [index], with: .automatic)
+    func foldCell(cell:YJFoldingCell){
+        guard let indexPath = self.tableView.indexPath(for: cell)else{
+            return
+        }        
+        var duration = 0.0
+        if !cell.isUnfolded {
+            cellHeights[indexPath.row] = YJConst.openCellHeight
+            cell.unfold(true, animated: true, completion: nil)
+            duration = 0.5
+        } else {
+            cellHeights[indexPath.row] = YJConst.closeCellHeight
+            cell.unfold(false, animated: true, completion: nil)
+            duration = 0.8
+        }
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }, completion: nil)
     }
-    
-    func didEdited(index:IndexPath) {
-        self.tableView.reloadRows(at: [index], with: .automatic)
+    func didFinished(tag:Int,indexPath:IndexPath?) {
+        if tag == 0 {
+            let index = IndexPath.init(row: 0, section: 0)
+            cellHeights.insert(YJConst.closeCellHeight, at: 0)
+            self.tableView.insertRows(at: [index], with: .automatic)
+        }else{
+            cellHeights[indexPath!.row] = YJConst.closeCellHeight
+            self.tableView.reloadRows(at: [indexPath!], with: .automatic)
+
+        }
+
+    }
+    func editPerson(cell: YJFoldingCell) {
+        guard let index = self.tableView.indexPath(for: cell) else {
+            return
+        }
+        let sender = ["type":1,"indexPath":index,"person":cell.person!] as [String : Any]
+        
+        performSegue(withIdentifier: "toEdit", sender: sender)
     }
 }

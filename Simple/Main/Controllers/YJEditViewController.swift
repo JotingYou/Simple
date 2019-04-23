@@ -8,7 +8,8 @@
 
 import UIKit
 protocol YJEditViewControllerDelegate:NSObjectProtocol {
-    func didFinished();
+    ///tag:0 for add;1 for edit
+    func didFinished(tag:Int,indexPath:IndexPath?);
 }
 
 class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource {
@@ -95,13 +96,15 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
             }
         }else{
             //编辑顾客信息
-            if !YJCache.shared.updatePerson(person:person!,name: name, amount: amount, fund_number: fund_number, stock: nil, cost: cost, buy_date: buy_date){
+            if !YJCache.shared.updatePerson(person:person!,name: name, amount: amount, fund_number: fund_number, stock: nil, cost: cost, buy_date: buy_date)
+            {
                 YJProgressHUD.showError(message: "更新用户信息失败")
                 return
             }
         }
         
-        self.delegate?.didFinished(); self.navigationController?.popViewController(animated: true)
+        self.delegate?.didFinished(tag:type,indexPath: indexPath)
+        self.navigationController?.popViewController(animated: true)
         
     }
     // MARK: - Set Views
