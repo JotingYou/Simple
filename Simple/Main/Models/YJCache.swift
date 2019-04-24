@@ -186,37 +186,36 @@ class YJCache: NSObject {
         UserDefaults.standard.setValue(updateTime, forKey: "updateTime");
     }
     ///插入顾客信息
-    func insertPerson(name:String,amount:Double,fund_number:String,cost:Double,buy_date:Date) -> Bool{
-        guard let stock = getStockWith(id: fund_number) else{
-            print("创建用户失败")
-            return false
-        }
+    func insertPerson(name:String,amount:Double,stock:Stocks,cost:Double,buy_date:Date) -> Bool{
+//        guard let stock = getStockWith(id: fund_number) else{
+//            print("创建用户失败")
+//            return false
+//        }
         let entity = NSEntityDescription.entity(forEntityName: "People", in: managedObjectContext)!
         let person = People.init(entity: entity, insertInto: managedObjectContext)
         person.create_time = Date()
         people.insert(person, at: 0)
-        return updatePerson(person: person, name: name, amount: amount, fund_number: fund_number, stock: stock, cost: cost, buy_date: buy_date)
+        return updatePerson(person: person, name: name, amount: amount, stock: stock, cost: cost, buy_date: buy_date)
     }
     //更新顾客信息
-    func updatePerson(person:People,name:String,amount:Double,fund_number:String,stock:Stocks?,cost:Double,buy_date:Date) -> Bool{
-        var stock_act : Stocks?
-        if stock != nil{
-            stock_act = stock
-        }else{
-            guard let tmp = getStockWith(id: fund_number) else{
-                print("更新用户信息失败")
-                return false
-            }
-            stock_act = tmp
-        }
-        let fund_name = stock_act!.name
+    func updatePerson(person:People,name:String,amount:Double,stock:Stocks,cost:Double,buy_date:Date) -> Bool{
+//        var stock_act : Stocks?
+//        if stock != nil{
+//            stock_act = stock
+//        }else{
+//            guard let tmp = getStockWith(id: fund_number) else{
+//                print("更新用户信息失败")
+//                return false
+//            }
+//            stock_act = tmp
+//        }
+        person.stock = stock
         
-        if !updateValueForStock(stock: stock_act!){
+        if !updateValueForStock(stock: stock){
             //TODO: WARNING
         }
-        let value = stock_act!.value
         
-        setValuesFor(person: person, name: name, amount: amount, fund_number: fund_number,fund_name: fund_name, value: value, cost: cost, buy_date: buy_date)
+        setValuesFor(person: person, name: name, amount: amount,stock: stock, cost: cost, buy_date: buy_date)
         do {
             try managedObjectContext.save();
         } catch  {
@@ -259,30 +258,28 @@ class YJCache: NSObject {
         return true
     }
     func refresh(person:People) {
-        let stock = stocks.filter { (stock) -> Bool in
-            if stock.id == person.fund_number{
-                return true
-            }else{
-                return false
-            }
-        }
-        if stock.count == 0 {
-            return
-        }
-        if updateValueForStock(stock: stock.first!){
-            setValuesFor(person: person, name: person.name!, amount: person.amount, fund_number: person.fund_number!,fund_name: person.fund, value: stock.first!.value, cost: person.cost, buy_date: person.buy_date!)
+//        let stock = stocks.filter { (stock) -> Bool in
+//            if stock.id == person.fund_number{
+//                return true
+//            }else{
+//                return false
+//            }
+//        }
+//        if stock.count == 0 {
+//            return
+//        }
+        if updateValueForStock(stock: person.stock!){
+            setValuesFor(person: person, name: person.name!, amount: person.amount, stock: person.stock!, cost: person.cost, buy_date: person.buy_date!)
         }else{
             //TODO:WARNING
         }
 
 
     }
-    func setValuesFor(person:People,name:String,amount:Double,fund_number:String,fund_name:String?,value:Double,cost:Double,buy_date:Date){
+    func setValuesFor(person:People,name:String,amount:Double,stock:Stocks,cost:Double,buy_date:Date){
+        person.stock = stock
         person.name = name;
         person.amount = amount;
-        person.fund_number = fund_number;
-        person.fund = fund_name ?? ""
-        person.value = value;
         person.cost = cost;
         person.buy_date = buy_date;
         let calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
@@ -290,8 +287,8 @@ class YJCache: NSObject {
         person.days = Int16(components.day!)
         if person.days>0 {
             person.isValued = true
-            person.profit = (value-cost) * Double(amount);
-            person.simple = Float((value-cost) / cost);
+            person.profit = (stock.value-cost) * Double(amount);
+            person.simple = Float((stock.value-cost) / cost);
             person.annualized = person.simple * 365 / Float(person.days);
         }
         

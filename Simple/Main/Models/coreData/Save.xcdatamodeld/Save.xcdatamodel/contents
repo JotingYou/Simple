@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="People" representedClassName="People" syncable="YES" codeGenerationType="class">
         <attribute name="amount" attributeType="Double" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="annualized" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -7,13 +7,12 @@
         <attribute name="cost" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="create_time" attributeType="Date" defaultDateTimeInterval="576735780" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="days" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="fund" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fund_number" attributeType="String" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="isValued" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" minValueString="0" defaultValueString="name" syncable="YES"/>
         <attribute name="profit" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="simple" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="value" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="updateTime" optional="YES" attributeType="Date" defaultDateTimeInterval="-211143660" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="stock" maxCount="1" deletionRule="Nullify" destinationEntity="Stocks" inverseName="owners" inverseEntity="Stocks" syncable="YES"/>
     </entity>
     <entity name="Stocks" representedClassName="Stocks" syncable="YES" codeGenerationType="class">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,9 +22,10 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="update_time" optional="YES" attributeType="Date" defaultDateTimeInterval="-978336000" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="owners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="People" inverseName="stock" inverseEntity="People" syncable="YES"/>
     </entity>
     <elements>
-        <element name="People" positionX="-36" positionY="45" width="128" height="240"/>
-        <element name="Stocks" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="People" positionX="-36" positionY="45" width="128" height="225"/>
+        <element name="Stocks" positionX="-63" positionY="-18" width="128" height="165"/>
     </elements>
 </model>

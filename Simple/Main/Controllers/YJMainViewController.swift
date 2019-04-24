@@ -13,13 +13,6 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     
     var searchResults = Array<People>()
     
-    lazy var cellHeights:[CGFloat] = {
-        if isFiltering() {
-            return searchCellHeights
-        }else{
-            return normalCellHeights
-        }
-    }()
     lazy var normalCellHeights:[CGFloat] = (0..<YJCache.shared.people.count).map { _ in YJConst.closeCellHeight }
     lazy var searchCellHeights:[CGFloat] = (0..<searchResults.count).map { _ in YJConst.closeCellHeight }
     lazy var searchController:UISearchController = {
@@ -50,6 +43,8 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             navigationItem.titleView?.addSubview(searchBar)
         }
         navigationController?.view.backgroundColor = .white
+    
+        tableView.backgroundColor = UIColor.init(patternImage: UIImage.init(named: "background")!)
         searchBar.delegate = self
         setRefresh()
     }
@@ -79,7 +74,6 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.endEditing(true)
-        cellHeights = normalCellHeights
     }
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
@@ -96,9 +90,9 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             }else if(scope == 0){
                 return person.name?.lowercased().contains(searchText.lowercased()) ?? false
             }else if(scope == 1){
-                return person.fund_number?.lowercased().contains(searchText.lowercased()) ?? false
+                return person.stock!.id?.lowercased().contains(searchText.lowercased()) ?? false
             }else{
-                return person.fund?.lowercased().contains(searchText.lowercased()) ?? false
+                return person.stock!.name?.lowercased().contains(searchText.lowercased()) ?? false
             }
         })
     }
@@ -112,8 +106,17 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     //MARK: -
     //MARK: tableview
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
         if case let cell as YJFoldingCell = cell {
-            if cellHeights[indexPath.row] == YJConst.closeCellHeight {
+            let cellHeight:CGFloat = {
+                if isFiltering() {
+                    return searchCellHeights[indexPath.row]
+                }else{
+                    return normalCellHeights[indexPath.row]
+                }
+            }()
+            
+            if cellHeight == YJConst.closeCellHeight {
                 cell.isUnfolded = false
                 cell.unfold(false, animated: false, completion: nil)
             } else {
@@ -124,8 +127,11 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        return cellHeights[indexPath.row]
+        if isFiltering() {
+            return searchCellHeights[indexPath.row]
+        }else{
+            return normalCellHeights[indexPath.row]
+        }
 
     }
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -139,7 +145,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         if editingStyle == .delete {
             YJCache.shared.deletePersonAt(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            cellHeights.remove(at: indexPath.row)
+            normalCellHeights.remove(at: indexPath.row)
         }
     }
 
@@ -163,6 +169,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             return cell
         }
         cell.setPerson(person: person)
+        cell.setCorner()
         cell.delegate = self
         return cell
     }
@@ -221,12 +228,22 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             return
         }        
         var duration = 0.0
+        
         if !cell.isUnfolded {
-            cellHeights[indexPath.row] = YJConst.openCellHeight
+            if isFiltering() {
+                searchCellHeights[indexPath.row] = YJConst.openCellHeight
+            }else{
+                normalCellHeights[indexPath.row] = YJConst.openCellHeight
+            }
+
             cell.unfold(true, animated: true, completion: nil)
             duration = 0.3
         } else {
-            cellHeights[indexPath.row] = YJConst.closeCellHeight
+            if isFiltering() {
+                searchCellHeights[indexPath.row] = YJConst.closeCellHeight
+            }else{
+                normalCellHeights[indexPath.row] = YJConst.closeCellHeight
+            }
             cell.unfold(false, animated:true, completion: nil)
             duration = 0.5
         }
@@ -238,10 +255,10 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     func didFinished(tag:Int,indexPath:IndexPath?) {
         if tag == 0 {
             let index = IndexPath.init(row: 0, section: 0)
-            cellHeights.insert(YJConst.closeCellHeight, at: 0)
+            normalCellHeights.insert(YJConst.closeCellHeight, at: 0)
             self.tableView.insertRows(at: [index], with: .automatic)
         }else{
-            cellHeights[indexPath!.row] = YJConst.closeCellHeight
+            normalCellHeights[indexPath!.row] = YJConst.closeCellHeight
             self.tableView.reloadRows(at: [indexPath!], with: .automatic)
         }
 

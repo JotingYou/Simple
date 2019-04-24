@@ -75,10 +75,12 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
         }
         let fund_number = searchBar.text!
         filterContentForSearchText(fund_number)
-        if searchResults.count == 0 {
+        if searchResults.count != 1 {
+            print("请选择基金")
             searchBar.becomeFirstResponder()
             return
         }
+        let stock = searchResults.first
         guard let cost = Double(costField.text!)else{
             costField.becomeFirstResponder()
             return
@@ -90,13 +92,13 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
         }
         if type == 0 {
             //新增顾客
-            if !YJCache.shared.insertPerson(name: name, amount: amount, fund_number: fund_number,  cost: cost, buy_date: buy_date){
+            if !YJCache.shared.insertPerson(name: name, amount: amount,stock:stock!,cost: cost, buy_date: buy_date){
                 YJProgressHUD.showError(message: "创建用户失败")
                 return
             }
         }else{
             //编辑顾客信息
-            if !YJCache.shared.updatePerson(person:person!,name: name, amount: amount, fund_number: fund_number, stock: nil, cost: cost, buy_date: buy_date)
+            if !YJCache.shared.updatePerson(person:person!,name: name, amount: amount, stock: stock!, cost: cost, buy_date: buy_date)
             {
                 YJProgressHUD.showError(message: "更新用户信息失败")
                 return
@@ -134,7 +136,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
             self.costField.text = String(person!.cost)
             self.nameField.text = String(person!.name!)
             self.title = "Edit"
-            searchBar.text = person?.fund_number
+            searchBar.text = person?.stock?.id
         }else{
 
             dateField.text = YJCache.shared.dateFormatter.string(from: Date())

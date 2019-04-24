@@ -10,5 +10,5 @@ import UIKit
 
 class YJConst: NSObject {
     static let openCellHeight:CGFloat = 330
-    static let closeCellHeight:CGFloat = 90
+    static let closeCellHeight:CGFloat = 80
 }

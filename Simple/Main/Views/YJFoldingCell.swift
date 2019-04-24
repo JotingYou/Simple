@@ -20,13 +20,31 @@ class YJFoldingCell: FoldingCell {
     
     var person:People?
     
+    @IBOutlet weak var stackView: UIStackView!
+
+    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var  nameLabel:UILabel!
     @IBOutlet weak var profitLabel:UILabel!
     @IBOutlet weak var fundNameLabel:UILabel!
     @IBOutlet weak var rateLabel:UILabel?
     @IBOutlet weak var yearsLabel:UILabel?
+    //detail view label
+    @IBOutlet weak var updateTimeLabel: UILabel!
+    @IBOutlet weak var detailValueLabel: UILabel!
+    @IBOutlet weak var detailFundNameLabel: UILabel!
+    @IBOutlet weak var detailTitleLabel: UILabel!
     
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var detailFundCodeLabel: UILabel!
+    
+    @IBOutlet weak var detailCostLabel: UILabel!
+    @IBOutlet weak var detailAmountLabel: UILabel!
+    @IBOutlet weak var detailBuyDateLabel: UILabel!
+    @IBOutlet weak var detailDaysLabel: UILabel!
+    @IBOutlet weak var detailProfitLabel: UILabel!
+    
+    
+    
+    
     
     @IBAction func showDetail(_ sender: Any) {
         self.delegate?.foldCell(cell: self)
@@ -35,28 +53,57 @@ class YJFoldingCell: FoldingCell {
     @IBAction func editPerson(_ sender: Any) {
         self.delegate?.editPerson(cell: self)
     }
+    func setCorner(){
+        foregroundView.layer.cornerRadius = 10
+        foregroundView.layer.masksToBounds = true
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
+        stackView.layer.masksToBounds = true
+        stackView.layer.cornerRadius = 10
+        editButton.layer.masksToBounds = true
+        editButton.layer.cornerRadius = 10
+    }
     func setPerson(person:People){
         self.person = person
         nameLabel.text = person.name
-        fundNameLabel.text = person.fund
+        fundNameLabel.text = person.stock?.name
         backViewColor = .lightGray
+        
+        updateTimeLabel.text = YJCache.shared.dateFormatter.string(from: person.stock!.update_time!)
+        detailValueLabel.text =  String(format:"%.3lf", person.stock!.value)
+        detailFundNameLabel.text = person.stock?.name
+        detailTitleLabel.text = person.name
+        
+        detailFundCodeLabel.text = person.stock?.id
+        
+        detailCostLabel.text = String(format:"%.3lf", person.cost)
+        detailAmountLabel.text = String(person.amount)
+        detailBuyDateLabel.text = YJCache.shared.dateFormatter.string(from: person.buy_date!)
+        detailDaysLabel.text = String(person.days)
+        
+        
         if person.isValued {
             profitLabel.text = String(format: "%.2lf", person.profit)
+            detailProfitLabel.text = String(format: "%.2lf", person.profit)
+
             if person.profit >= 0 {
                 profitLabel.textColor = .red
                 rateLabel?.textColor = .red
                 yearsLabel?.textColor = .red
+                detailProfitLabel.textColor = .red
             }else{
                 profitLabel.textColor = .green
-                rateLabel?.textColor = .red
-                yearsLabel?.textColor = .red
+                rateLabel?.textColor = .green
+                yearsLabel?.textColor = .green
+                detailProfitLabel.textColor = .green
             }
-            rateLabel?.text = String(format: "%.2f", person.simple)
-            yearsLabel?.text = String(format: "%.2f", person.annualized)
+            rateLabel?.text = String(format: "%.2f", person.simple*100) + "%"
+            yearsLabel?.text = String(format: "%.2f", person.annualized*100) + "%"
         }else{
             profitLabel.text = NSLocalizedString("Waiting", comment: "")
             rateLabel?.text = NSLocalizedString("Waiting", comment: "")
             yearsLabel?.text = NSLocalizedString("Waiting", comment: "")
+            detailProfitLabel.text = NSLocalizedString("Waiting", comment: "")
         }
 
     }
