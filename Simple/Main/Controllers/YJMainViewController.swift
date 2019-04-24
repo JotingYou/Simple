@@ -43,24 +43,35 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             navigationItem.titleView?.addSubview(searchBar)
         }
         navigationController?.view.backgroundColor = .white
-    
-        tableView.backgroundColor = UIColor.init(patternImage: UIImage.init(named: "background")!)
+
         searchBar.delegate = self
+        setTableView()
         setRefresh()
     }
     //MARK: - REFRESH
-    func setRefresh() {
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(refreshStateChange(refreshControl:)), for: .valueChanged)
-        tableView.addSubview(refreshControl!)
-        refreshControl?.beginRefreshing()
-        refreshStateChange(refreshControl: refreshControl!)
+    func setTableView() {
+        tableView.estimatedRowHeight = YJConst.closeCellHeight
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "background"))
     }
-    @objc func refreshStateChange(refreshControl:UIRefreshControl) {
-        if YJCache.shared.refreshPeople() {
-            tableView.reloadData()
-        }
-        refreshControl.endRefreshing()
+    func setRefresh() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(refreshStateChange), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    @objc func refreshStateChange(_ refreshControl:UIRefreshControl) {
+        let deadlineTime = DispatchTime.now() + .seconds(1)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: { [weak self] in
+            if #available(iOS 10.0, *) {
+               refreshControl.endRefreshing()
+                
+            }
+            if YJCache.shared.refreshPeople() {
+                self?.tableView.reloadData()
+            }
+        })
+
     }
     //MARK: -
     //MARK: searchBar Delegate
@@ -169,7 +180,9 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             return cell
         }
         cell.setPerson(person: person)
-        cell.setCorner()
+        let durations: [TimeInterval] = [0.26, 0.25, 0.23,0.2]
+        cell.durationsForExpandedState = durations
+        cell.durationsForCollapsedState = durations
         cell.delegate = self
         return cell
     }

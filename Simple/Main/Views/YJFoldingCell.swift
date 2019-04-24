@@ -14,13 +14,13 @@ protocol YJFoldingCellDelegate:NSObjectProtocol {
     func editPerson(cell:YJFoldingCell)
 }
 
+
 class YJFoldingCell: FoldingCell {
 
     weak var delegate:YJFoldingCellDelegate?
     
     var person:People?
     
-    @IBOutlet weak var stackView: UIStackView!
 
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var  nameLabel:UILabel!
@@ -53,21 +53,10 @@ class YJFoldingCell: FoldingCell {
     @IBAction func editPerson(_ sender: Any) {
         self.delegate?.editPerson(cell: self)
     }
-    func setCorner(){
-        foregroundView.layer.cornerRadius = 10
-        foregroundView.layer.masksToBounds = true
-        contentView.layer.cornerRadius = 10
-        contentView.layer.masksToBounds = true
-        stackView.layer.masksToBounds = true
-        stackView.layer.cornerRadius = 10
-        editButton.layer.masksToBounds = true
-        editButton.layer.cornerRadius = 10
-    }
     func setPerson(person:People){
         self.person = person
         nameLabel.text = person.name
         fundNameLabel.text = person.stock?.name
-        backViewColor = .lightGray
         
         updateTimeLabel.text = YJCache.shared.dateFormatter.string(from: person.stock!.update_time!)
         detailValueLabel.text =  String(format:"%.3lf", person.stock!.value)
@@ -76,7 +65,7 @@ class YJFoldingCell: FoldingCell {
         
         detailFundCodeLabel.text = person.stock?.id
         
-        detailCostLabel.text = String(format:"%.3lf", person.cost)
+        detailCostLabel.text = String(person.cost)
         detailAmountLabel.text = String(person.amount)
         detailBuyDateLabel.text = YJCache.shared.dateFormatter.string(from: person.buy_date!)
         detailDaysLabel.text = String(person.days)
@@ -108,13 +97,20 @@ class YJFoldingCell: FoldingCell {
 
     }
     override func awakeFromNib() {
+        
+        foregroundView.layer.cornerRadius = 10
+        foregroundView.layer.masksToBounds = true
+        editButton.layer.cornerRadius = 10
+        editButton.layer.masksToBounds = true
         super.awakeFromNib()
+
+        
         // Initialization code
     }
     override func animationDuration(_ itemIndex:NSInteger, type:AnimationType)-> TimeInterval {
         
         // durations count equal it itemCount
-        let durations = [0.33, 0.26, 0.26] // timing animation for each view
+        let durations = [0.26, 0.25, 0.23,0.2]// timing animation for each view
         return durations[itemIndex]
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
