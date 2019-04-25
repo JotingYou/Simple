@@ -33,7 +33,7 @@
 "ZW5-rB-V9z.title" = "添加";
 
 /* Class = "UILabel"; text = "Amount:"; ObjectID = "Zjo-I4-UOM"; */
-"Zjo-I4-UOM.text" = "份数:";
+"Zjo-I4-UOM.text" = "持有份数:";
 
 /* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "bqE-7X-m8I"; */
 "bqE-7X-m8I.placeholder" = "搜索";
@@ -67,3 +67,94 @@
 
 /* Class = "UITextField"; placeholder = "input date"; ObjectID = "zZn-1F-Lp7"; */
 "zZn-1F-Lp7.placeholder" = "选择购买日期";
+
+/* Class = "UILabel"; text = "Buy Date"; ObjectID = "0E7-0h-CEu"; */
+"0E7-0h-CEu.text" = "购买日期";
+
+
+/* Class = "UILabel"; text = "Cost"; ObjectID = "3Ha-92-EN5"; */
+"3Ha-92-EN5.text" = "成本 (元)";
+
+
+/* Class = "UILabel"; text = "Simple"; ObjectID = "AaZ-yT-Jtr"; */
+"AaZ-yT-Jtr.text" = "收益率";
+
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "FRz-U7-vRW"; */
+"FRz-U7-vRW.text" = "Label";
+
+
+/* Class = "UILabel"; text = "Years"; ObjectID = "GHV-gP-c8e"; */
+"GHV-gP-c8e.text" = "年化收益率";
+
+/* Class = "UILabel"; text = "Interest"; ObjectID = "Ghg-oB-KuM"; */
+"Ghg-oB-KuM.text" = "收益 (元)";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "J7Z-6w-9kb"; */
+"J7Z-6w-9kb.text" = "姓名";
+
+/* Class = "UIButton"; normalTitle = "FOLD"; ObjectID = "JXk-a1-RVM"; */
+"JXk-a1-RVM.normalTitle" = "收起";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "Jtb-xK-FJo"; */
+"Jtb-xK-FJo.text" = "单位净值 (元)";
+
+/* Class = "UILabel"; text = "Code"; ObjectID = "Lxp-wF-efl"; */
+"Lxp-wF-efl.text" = "基金代码";
+
+
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "V1a-B9-MHb"; */
+"V1a-B9-MHb.text" = "0.0";
+
+
+/* Class = "UILabel"; text = "Days"; ObjectID = "VTL-F7-KIg"; */
+"VTL-F7-KIg.text" = "持有天数 (天)";
+
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Wq4-9f-o8B"; */
+"Wq4-9f-o8B.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Wr9-vH-N3X"; */
+"Wr9-vH-N3X.text" = "Label";
+
+
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "lOD-Gh-k4b"; */
+"lOD-Gh-k4b.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "EDIT"; ObjectID = "mjU-mj-ihX"; */
+"mjU-mj-ihX.normalTitle" = "编辑";
+
+
+/* Class = "UILabel"; text = "Fund Name"; ObjectID = "otz-Cl-9YH"; */
+"otz-Cl-9YH.text" = "基金名称";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "pJZ-3e-kOf"; */
+"pJZ-3e-kOf.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "rfq-1i-cI7"; */
+"rfq-1i-cI7.text" = "Label";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "tUN-v9-6m9"; */
+"tUN-v9-6m9.text" = "Title";
+
+/* Class = "UITabBarItem"; title = "Main"; ObjectID = "toE-gW-EA8"; */
+"toE-gW-EA8.title" = "管理";
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "vbp-02-gnY"; */
+"vbp-02-gnY.text" = "0.0";
+
+/* Class = "UILabel"; text = "Amount"; ObjectID = "x02-Sx-stb"; */
+"x02-Sx-stb.text" = "持有份数 (份)";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "xAI-Ko-5hR"; */
+"xAI-Ko-5hR.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "xgb-ZM-NqS"; */
+"xgb-ZM-NqS.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "y4r-XN-gI8"; */
+"y4r-XN-gI8.text" = "Label";
+
+

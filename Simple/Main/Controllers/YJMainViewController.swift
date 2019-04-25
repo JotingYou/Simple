@@ -34,7 +34,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     }()
 
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 11.0, *) {
@@ -42,8 +42,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         } else {
             navigationItem.titleView?.addSubview(searchBar)
         }
-        navigationController?.view.backgroundColor = .white
-
+        extendedLayoutIncludesOpaqueBars = true
         searchBar.delegate = self
         setTableView()
         setRefresh()
