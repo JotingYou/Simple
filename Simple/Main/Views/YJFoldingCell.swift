@@ -59,7 +59,7 @@ class YJFoldingCell: FoldingCell {
         fundNameLabel.text = person.stock?.name
         
         updateTimeLabel.text = YJCache.shared.dateFormatter.string(from: person.stock!.update_time!)
-        detailValueLabel.text =  String(format:"%.3lf", person.stock!.value)
+        detailValueLabel.text =  String(format:"%.3lf", person.stock!.unit_value)
         detailFundNameLabel.text = person.stock?.name
         detailTitleLabel.text = person.name
         
@@ -72,8 +72,8 @@ class YJFoldingCell: FoldingCell {
         
         
         if person.isValued {
-            profitLabel.text = String(format: "%.2lf", person.profit)
-            detailProfitLabel.text = String(format: "%.2lf", person.profit)
+            profitLabel.text = String(format: "%.3lf", person.profit)
+            detailProfitLabel.text = String(format: "%.3lf", person.profit)
 
             if person.profit >= 0 {
                 profitLabel.textColor = .red

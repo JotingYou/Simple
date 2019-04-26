@@ -12,6 +12,7 @@ import FoldingCell
 class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate {
     
     var searchResults = Array<People>()
+    let headerView = YJMainHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: YJConst.headerHeight))
     
     lazy var normalCellHeights:[CGFloat] = (0..<YJCache.shared.people.count).map { _ in YJConst.closeCellHeight }
     lazy var searchCellHeights:[CGFloat] = (0..<searchResults.count).map { _ in YJConst.closeCellHeight }
@@ -43,9 +44,12 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             navigationItem.titleView?.addSubview(searchBar)
         }
         extendedLayoutIncludesOpaqueBars = true
+        
         searchBar.delegate = self
+        
         setTableView()
         setRefresh()
+        
     }
     //MARK: - REFRESH
     func setTableView() {
@@ -58,19 +62,24 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(refreshStateChange), for: .valueChanged)
         tableView.addSubview(refreshControl)
+        refreshDataAndView()
     }
     @objc func refreshStateChange(_ refreshControl:UIRefreshControl) {
         let deadlineTime = DispatchTime.now() + .seconds(1)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: { [weak self] in
-            if #available(iOS 10.0, *) {
-               refreshControl.endRefreshing()
-                
-            }
-            if YJCache.shared.refreshPeople() {
-                self?.tableView.reloadData()
-            }
+            refreshControl.endRefreshing()
+            self?.refreshDataAndView()
+            
+
         })
 
+    }
+    func refreshDataAndView() {
+        if YJCache.shared.refreshPeople() {
+            YJCache.shared.refreshRecord()
+            
+            self.tableView.reloadData()
+        }
     }
     //MARK: -
     //MARK: searchBar Delegate
@@ -115,6 +124,12 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     }
     //MARK: -
     //MARK: tableview
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return headerView
+    }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return YJConst.headerHeight
+    }
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         if case let cell as YJFoldingCell = cell {
@@ -156,6 +171,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             YJCache.shared.deletePersonAt(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             normalCellHeights.remove(at: indexPath.row)
+            YJCache.shared.refreshRecord()
         }
     }
 
@@ -190,7 +206,14 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
 //    }
     
     // MARK: - Navigation
-
+    func editPerson(cell: YJFoldingCell) {
+        guard let index = self.tableView.indexPath(for: cell) else {
+            return
+        }
+        let sender = ["type":1,"indexPath":index,"person":cell.person!] as [String : Any]
+        
+        performSegue(withIdentifier: "toEdit", sender: sender)
+    }
     @IBAction func toAdd(_ sender: Any) {
         performSegue(withIdentifier: "toEdit", sender: ["type":0])
     }
@@ -273,14 +296,8 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             normalCellHeights[indexPath!.row] = YJConst.closeCellHeight
             self.tableView.reloadRows(at: [indexPath!], with: .automatic)
         }
+        YJCache.shared.refreshRecord()
+    }
 
-    }
-    func editPerson(cell: YJFoldingCell) {
-        guard let index = self.tableView.indexPath(for: cell) else {
-            return
-        }
-        let sender = ["type":1,"indexPath":index,"person":cell.person!] as [String : Any]
-        
-        performSegue(withIdentifier: "toEdit", sender: sender)
-    }
+
 }

@@ -66,7 +66,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
             break;
         case 4:
             cell.textLabel?.text = NSLocalizedString("Value", comment: "")
-            cell.detailTextLabel?.text = String(person!.stock!.value)
+            cell.detailTextLabel?.text = String(person!.stock!.unit_value)
             break;
         case 5:
             cell.textLabel?.text = NSLocalizedString("Cost", comment: "")

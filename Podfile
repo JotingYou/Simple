@@ -6,4 +6,6 @@ pod 'MBProgressHUD'
 pod 'AFNetworking'
 pod 'SwiftSoup'
 pod 'FoldingCell'
+pod 'SnapKit'
+ pod 'LTScrollView'
 end

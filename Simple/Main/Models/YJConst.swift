@@ -11,4 +11,14 @@ import UIKit
 class YJConst: NSObject {
     static let openCellHeight:CGFloat = 330
     static let closeCellHeight:CGFloat = 80
+    static let headerHeight:CGFloat = 138
+    static let recordChangedNotification = "recordChangedNotification"
+    static func isSameDay(_ day1:Date,_ day2:Date) -> Bool {
+        let calendar = Calendar.current
+        let cmp1 = calendar.dateComponents([.year,.month,.day], from: day1)
+        let cmp2 = calendar.dateComponents([.year,.month,.day], from: day2)
+        return cmp1.day == cmp2.day && cmp1.month == cmp2.month && cmp1.year == cmp2.year
+        
+    }
+
 }
