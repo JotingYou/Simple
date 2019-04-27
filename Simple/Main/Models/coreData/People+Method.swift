@@ -57,6 +57,7 @@ extension People {
         }
         return true
     }
+
     func refreshStock() {
         if stock!.update(){
             setValues(name!, amount,stock!,cost,buy_date!)

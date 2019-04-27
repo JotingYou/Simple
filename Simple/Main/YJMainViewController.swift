@@ -53,9 +53,12 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     }
     //MARK: - REFRESH
     func setTableView() {
-        tableView.estimatedRowHeight = YJConst.closeCellHeight
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "background"))
+        //fix odd scroll bug
+        self.tableView.estimatedRowHeight = 0;
+        self.tableView.estimatedSectionHeaderHeight = 0;
+        self.tableView.estimatedSectionFooterHeight = 0;
     }
     func setRefresh() {
         let refreshControl = UIRefreshControl()
@@ -69,7 +72,6 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: { [weak self] in
             refreshControl.endRefreshing()
             self?.refreshDataAndView()
-            
 
         })
 
@@ -77,7 +79,6 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     func refreshDataAndView() {
         if YJCache.shared.refreshPeople() {
             YJCache.shared.updateRecord()
-            
             self.tableView.reloadData()
         }
     }
@@ -263,14 +264,16 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             return
         }        
         var duration = 0.0
-        
+
         if !cell.isUnfolded {
             if isFiltering() {
                 searchCellHeights[indexPath.row] = YJConst.openCellHeight
             }else{
                 normalCellHeights[indexPath.row] = YJConst.openCellHeight
             }
-
+//            if rectInScreen.maxY + YJConst.openCellHeight - YJConst.closeCellHeight > UIScreen.main.bounds.height{
+//                self.tableView.scrollToRow(at: indexPath, at:.top , animated: true)
+//            }
             cell.unfold(true, animated: true, completion: nil)
             duration = 0.3
         } else {
@@ -279,24 +282,30 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             }else{
                 normalCellHeights[indexPath.row] = YJConst.closeCellHeight
             }
+
             cell.unfold(false, animated:true, completion: nil)
             duration = 0.5
         }
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
                 self.tableView.beginUpdates()
                 self.tableView.endUpdates()
+            //fix odd scroll bug
+            if cell.frame.maxY > self.tableView.frame.maxY {
+                self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.bottom, animated: true)
+            }
         }, completion: nil)
     }
     func didFinished(tag:Int,indexPath:IndexPath?) {
+        YJCache.shared.updateRecord()
         if tag == 0 {
-            let index = IndexPath.init(row: 0, section: 0)
+            //let index = IndexPath.init(row: 0, section: 0)
             normalCellHeights.insert(YJConst.closeCellHeight, at: 0)
-            self.tableView.insertRows(at: [index], with: .automatic)
+            //self.tableView.insertRows(at: [index], with: .automatic)
         }else{
             normalCellHeights[indexPath!.row] = YJConst.closeCellHeight
-            self.tableView.reloadRows(at: [indexPath!], with: .automatic)
+            //self.tableView.reloadRows(at: [indexPath!], with: .automatic)
         }
-        YJCache.shared.updateRecord()
+        self.tableView.reloadData()
     }
 
 

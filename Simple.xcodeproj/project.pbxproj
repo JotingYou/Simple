@@ -130,9 +130,11 @@
 		3E0E986A226F0FC400FD7ACE /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				3E80E5B8225E302D005E9FBA /* Models */,
-				3E80E5BA225E303E005E9FBA /* Views */,
+				3E80E5BD225E30D3005E9FBA /* YJMainViewController.swift */,
 				3E80E5B9225E3035005E9FBA /* Controllers */,
+				3E80E5B8225E302D005E9FBA /* Models */,
+				3E89381C22748DA30095EC7D /* Views */,
+				3E80E5BA225E303E005E9FBA /* ViewModels */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -162,6 +164,7 @@
 		3E80E583225D98D7005E9FBA /* Simple */ = {
 			isa = PBXGroup;
 			children = (
+				3E80E584225D98D7005E9FBA /* AppDelegate.swift */,
 				3E80E58A225D98D7005E9FBA /* Main.storyboard */,
 				3E80E58F225D98D9005E9FBA /* LaunchScreen.storyboard */,
 				3E0E986A226F0FC400FD7ACE /* Main */,
@@ -205,23 +208,20 @@
 		3E80E5B9225E3035005E9FBA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3E80E584225D98D7005E9FBA /* AppDelegate.swift */,
 				3E80E588225D98D7005E9FBA /* SecondViewController.swift */,
-				3E80E5BD225E30D3005E9FBA /* YJMainViewController.swift */,
 				3E80E5CF225F1F11005E9FBA /* YJEditViewController.swift */,
 				3E80E5D122605CF6005E9FBA /* YJDetailTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		3E80E5BA225E303E005E9FBA /* Views */ = {
+		3E80E5BA225E303E005E9FBA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */,
 				3E33A4132272E77200071FDE /* YJMainHeaderView.swift */,
-				3E33A41B227303B900071FDE /* YJMainHeaderView.xib */,
 			);
-			path = Views;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		3E80E5BB225E3061005E9FBA /* res */ = {
@@ -252,6 +252,14 @@
 				3E89381A2274170D0095EC7D /* Stocks+Method.swift */,
 			);
 			path = coreData;
+			sourceTree = "<group>";
+		};
+		3E89381C22748DA30095EC7D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E33A41B227303B900071FDE /* YJMainHeaderView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		AE0E2F955B8BD7417C6C61E1 /* Frameworks */ = {

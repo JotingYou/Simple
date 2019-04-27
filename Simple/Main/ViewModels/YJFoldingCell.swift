@@ -30,7 +30,7 @@ class YJFoldingCell: FoldingCell {
     @IBOutlet weak var yearsLabel:UILabel?
     //detail view label
     @IBOutlet weak var updateTimeLabel: UILabel!
-    @IBOutlet weak var detailValueLabel: UILabel!
+    @IBOutlet weak var detailUnitValueLabel: UILabel!
     @IBOutlet weak var detailFundNameLabel: UILabel!
     @IBOutlet weak var detailTitleLabel: UILabel!
     
@@ -41,7 +41,9 @@ class YJFoldingCell: FoldingCell {
     @IBOutlet weak var detailBuyDateLabel: UILabel!
     @IBOutlet weak var detailDaysLabel: UILabel!
     @IBOutlet weak var detailProfitLabel: UILabel!
-    
+    @IBOutlet weak var accountingLabel: UILabel!
+
+    @IBOutlet weak var detailValueLabel: UILabel!
     
     
     
@@ -53,13 +55,16 @@ class YJFoldingCell: FoldingCell {
     @IBAction func editPerson(_ sender: Any) {
         self.delegate?.editPerson(cell: self)
     }
+    
+    
+    
     func setPerson(person:People){
         self.person = person
         nameLabel.text = person.name
         fundNameLabel.text = person.stock?.name
         
         updateTimeLabel.text = YJCache.shared.dateFormatter.string(from: person.stock!.update_time!)
-        detailValueLabel.text =  String(format:"%.3lf", person.stock!.unit_value)
+        detailUnitValueLabel.text =  String(format:"%.3lf", person.stock!.unit_value)
         detailFundNameLabel.text = person.stock?.name
         detailTitleLabel.text = person.name
         
@@ -69,8 +74,8 @@ class YJFoldingCell: FoldingCell {
         detailAmountLabel.text = String(person.amount)
         detailBuyDateLabel.text = YJCache.shared.dateFormatter.string(from: person.buy_date!)
         detailDaysLabel.text = String(person.days)
-        
-        
+        accountingLabel.text = String(format:"%.2f", person.value_proportion * 100) + "%"
+        detailValueLabel.text = String(format:"%.3lf",person.total_value)
         if person.isValued {
             profitLabel.text = String(format: "%.3lf", person.profit)
             detailProfitLabel.text = String(format: "%.3lf", person.profit)
