@@ -25,10 +25,10 @@ class YJMainHeaderView: UIView {
 
     //MARK: - Notification
     @objc func setValueForLabels() {
-        valueLabel.text = String(format:"%.3lf",YJCache.shared.record!.total_value)
-        interestLabel.text = String(format: "%.3lf", YJCache.shared.record!.total_interest)
-        grouped.text = String(format: "%.2f", YJCache.shared.record!.grouped_rate * 100) + "%"
-        trendLabel.text = String(format: "%.2f", YJCache.shared.record!.rate_trend * 100) + "%"
+        valueLabel.text = String(format:"%.3lf",YJCache.shared.totalRecord?.total_value ?? 0)
+        interestLabel.text = String(format: "%.3lf", YJCache.shared.totalRecord?.total_interest ?? 0)
+        grouped.text = String(format: "%.2f", (YJCache.shared.totalRecord?.grouped_rate ?? 0) * 100) + "%"
+        trendLabel.text = String(format: "%.2f", (YJCache.shared.totalRecord?.rate_trend ?? 0) * 100) + "%"
     }
     //MARK: - init
     override init(frame: CGRect) {

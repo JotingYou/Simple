@@ -92,7 +92,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
         }
         if type == 0 {
             //新增顾客
-            if !YJCache.shared.insertPerson(name: name, amount: amount,stock:stock!,cost: cost, buy_date: buy_date){
+            if !YJCache.shared.insertPerson(name,amount,stock!,cost, buy_date){
                 YJProgressHUD.showError(message: "创建用户失败")
                 return
             }

@@ -15,7 +15,7 @@ class YJCache: NSObject {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
-    var record:Statistics?
+    var totalRecord:Statistics?
     var lastRecord:Statistics?
     
     var people = Array<People>();
@@ -61,11 +61,8 @@ class YJCache: NSObject {
         }else{
             shared.updateTime = lastTime as! Date;
         }
-        if shared.checkUpdate() {
-            shared.update();
-        }else{
-            shared.readStocks();
-        }
+
+        shared.readStocks();
         
         //读取顾客信息
         shared.readPeople();
@@ -79,68 +76,23 @@ class YJCache: NSObject {
     }
     //MARK:- People
     ///读取顾客信息
-    private func readPeople(){
-        //        步骤二：建立一个获取的请求
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "People")
-        let sort = NSSortDescriptor.init(key: "create_time", ascending: false)
-        fetchRequest.sortDescriptors = [sort]
-        fetchRequest.fetchOffset = 0
-        fetchRequest.fetchLimit = 30
-        //        步骤三：执行请求
-        do {
-            let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [People]
-            if let results = fetchedResults {
-                people = results
-            }
-            
-        } catch  {
-            fatalError("读取顾客失败")
-        }
-        
+    func readPeople() {
+        people = People.read()
     }
     ///插入顾客信息
-    func insertPerson(name:String,amount:Double,stock:Stocks,cost:Double,buy_date:Date) -> Bool{
-        let entity = NSEntityDescription.entity(forEntityName: "People", in: managedObjectContext)!
-        let person = People.init(entity: entity, insertInto: managedObjectContext)
-        person.create_time = Date()
-        people.insert(person, at: 0)
-        return updatePerson(person: person, name: name, amount: amount, stock: stock, cost: cost, buy_date: buy_date)
+    func insertPerson(_ name:String,_ amount:Double,_ stock:Stocks,_ cost:Double,_ buy_date:Date) -> Bool{
+        if let person = People.insert(name, amount, stock, cost, buy_date) {
+            people.insert(person, at: 0)
+            return true
+        }
+        return false
     }
     //更新顾客信息
     func updatePerson(person:People,name:String,amount:Double,stock:Stocks,cost:Double,buy_date:Date) -> Bool{
         
-        person.stock = stock
-        
-        if !updateValueForStock(stock: stock){
-            //TODO: WARNING
-        }
-        
-        setValuesFor(person: person, name: name, amount: amount,stock: stock, cost: cost, buy_date: buy_date)
-        
-        do {
-            try managedObjectContext.save();
-        } catch  {
-            print("update People failed:CoreData can't save!")
-            return false
-        }
-        return true
+        return person.update(name, amount, stock, cost, buy_date)
     }
-    func updateValueForStock(stock:Stocks)->Bool{
-        let dic = YJHttpTool.shared.getFundValue(id: stock.id!)
-        if dic["status"] == "1"{
-            let updateTime = dateFormatter.date(from: dic["updateTime"]!)!
-            if stock.update_time! < updateTime{
-                stock.unit_value = Double(dic["value"]!)!
-                stock.update_time = updateTime
-                return true
-            }else{
-                return false
-            }
-            
-        }else{
-            return false
-        }
-    }
+
     //删除顾客信息
     func deletePersonAt(row:Int){
         managedObjectContext.delete(people[row])
@@ -154,37 +106,12 @@ class YJCache: NSObject {
     //MARK: REFRESH
     func refreshPeople() -> Bool {
         for person in people {
-            refresh(person: person)
+            person.refreshStock()
         }
         return true
     }
-    func refresh(person:People) {
-        if updateValueForStock(stock: person.stock!){
-            setValuesFor(person: person, name: person.name!, amount: person.amount, stock: person.stock!, cost: person.cost, buy_date: person.buy_date!)
-        }else{
-            //TODO:WARNING
-        }
-        
-        
-    }
-    func setValuesFor(person:People,name:String,amount:Double,stock:Stocks,cost:Double,buy_date:Date){
-        person.stock = stock
-        person.name = name;
-        person.amount = amount;
-        person.cost = cost;
-        person.total_value = stock.unit_value * amount
-        person.buy_date = buy_date;
-        let calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
-        let components = calendar.dateComponents([.day],  from: buy_date, to: Date())
-        person.days = Int16(components.day!)
-        if person.days>0 {
-            person.isValued = true
-            person.profit = (stock.unit_value-cost) * Double(amount);
-            person.simple = Float((stock.unit_value-cost) / cost);
-            person.annualized = person.simple * 365 / Float(person.days);
-        }
-        
-    }
+
+
     //MARK:- Stocks
     ///读取股票信息
     private func readStocks(){
@@ -197,25 +124,11 @@ class YJCache: NSObject {
         }
     }
     private func readStocksFromCoreData()->Bool{
-        //        建立一个获取的请求
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Stocks")
-        
-        //        执行请求
-        do {
-            let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [Stocks]
-            if fetchedResults?.count == 0 {
-                return false
-            }
-            if let results = fetchedResults {
-                stocks = results
-            }
-            
-        } catch  {
-            print("CoreData Error:读取股票失败")
-            return false
+        if let results = Stocks.readFromCoreDate() {
+            stocks = results
+            return true
         }
-        
-        return true
+        return false
     }
     private func readStocksFromFile()->Bool{
         let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("fundcode_search.js")
@@ -251,15 +164,10 @@ class YJCache: NSObject {
     }
     ///将股票信息存储到本地
     private func insertStock(stockString:YJStockStringObject){
-        let entity = NSEntityDescription.entity(forEntityName: "Stocks", in: managedObjectContext)!
-        let stock = Stocks.init(entity: entity, insertInto: managedObjectContext)
-        stock.name = stockString.name
-        stock.id = stockString.id
-        stock.code = stockString.code
-        stock.name_spell = stockString.name_spell
-        stock.type = stockString.type
-        stocks.insert(stock, at: 0)
+
+        stocks.insert(Stocks.insert(stockString), at: 0)
     }
+
     private func saveStocks(){
         do {
             try managedObjectContext.save();
@@ -273,7 +181,7 @@ class YJCache: NSObject {
         let records = Statistics.read()
         if records.count > 0{
             if YJConst.isSameDay(Date(), records[0].create_time!){
-                record = records[0]
+                totalRecord = records[0]
                 if records.count > 1{
                     lastRecord = records[1]
                 }
@@ -283,32 +191,25 @@ class YJCache: NSObject {
         }
     }
     private func insertRecord()->Bool{
-        if record != nil {
-            if YJConst.isSameDay(record!.create_time!, Date()){
+        if totalRecord != nil {
+            if YJConst.isSameDay(totalRecord!.create_time!, Date()){
                 print("Create Statistics record failed:has existed a record today")
                 return false
             }
+            lastRecord = self.totalRecord
         }
         
-        let entity = NSEntityDescription.entity(forEntityName: "Statistics", in: managedObjectContext)
-        let record = Statistics.init(entity: entity!, insertInto: managedObjectContext)
-        record.create_time = Date()
-
-        
-        if  self.record != nil {
-            lastRecord = self.record
-        }
-        self.record = record
-        
-        if record.update() {
+        guard let record =  Statistics.insert(lastRecord,people) else {
             return false
         }
-        
+    
+        self.totalRecord = record
+
         return true
     }
     
-    func refreshRecord() -> Bool{
-        return record?.update() ?? false
+    func updateRecord(){
+        totalRecord?.update(lastRecord,people)
     }
     
  

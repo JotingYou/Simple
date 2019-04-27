@@ -11,7 +11,7 @@
 		3E08DB8A2269C59E00CD0070 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E08DB8C2269C59E00CD0070 /* Localizable.strings */; };
 		3E33A4142272E77200071FDE /* YJMainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33A4132272E77200071FDE /* YJMainHeaderView.swift */; };
 		3E33A419227303B900071FDE /* YJMainHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E33A41B227303B900071FDE /* YJMainHeaderView.xib */; };
-		3E33A4222273348900071FDE /* YJRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33A4212273348900071FDE /* YJRecord.swift */; };
+		3E33A4222273348900071FDE /* Statistics+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33A4212273348900071FDE /* Statistics+Method.swift */; };
 		3E57524122672105002BD654 /* YJStockStringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E57524022672105002BD654 /* YJStockStringObject.swift */; };
 		3E80E585225D98D7005E9FBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E584225D98D7005E9FBA /* AppDelegate.swift */; };
 		3E80E589225D98D7005E9FBA /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E588225D98D7005E9FBA /* SecondViewController.swift */; };
@@ -28,6 +28,8 @@
 		3E80E5D0225F1F11005E9FBA /* YJEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5CF225F1F11005E9FBA /* YJEditViewController.swift */; };
 		3E80E5D222605CF6005E9FBA /* YJDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5D122605CF6005E9FBA /* YJDetailTableViewController.swift */; };
 		3E80E5D422607DFF005E9FBA /* YJHttpTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */; };
+		3E893819227416E50095EC7D /* People+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E893818227416E50095EC7D /* People+Method.swift */; };
+		3E89381B2274170D0095EC7D /* Stocks+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89381A2274170D0095EC7D /* Stocks+Method.swift */; };
 		3E9051ED226C64FB006DD597 /* YJFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */; };
 		3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EE226C6B60006DD597 /* YJConst.swift */; };
 		3EF47E57226AC4B600890E0D /* fundcode_search.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EF47E56226AC4B600890E0D /* fundcode_search.js */; };
@@ -56,7 +58,7 @@
 		3E33A4132272E77200071FDE /* YJMainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJMainHeaderView.swift; sourceTree = "<group>"; };
 		3E33A41C227303BC00071FDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/YJMainHeaderView.xib; sourceTree = "<group>"; };
 		3E33A41E227303D400071FDE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/YJMainHeaderView.strings"; sourceTree = "<group>"; };
-		3E33A4212273348900071FDE /* YJRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJRecord.swift; sourceTree = "<group>"; };
+		3E33A4212273348900071FDE /* Statistics+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Statistics+Method.swift"; sourceTree = "<group>"; };
 		3E57524022672105002BD654 /* YJStockStringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJStockStringObject.swift; sourceTree = "<group>"; };
 		3E80E581225D98D7005E9FBA /* Simple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E80E584225D98D7005E9FBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,8 @@
 		3E80E5CF225F1F11005E9FBA /* YJEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJEditViewController.swift; sourceTree = "<group>"; };
 		3E80E5D122605CF6005E9FBA /* YJDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJDetailTableViewController.swift; sourceTree = "<group>"; };
 		3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJHttpTool.swift; sourceTree = "<group>"; };
+		3E893818227416E50095EC7D /* People+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "People+Method.swift"; sourceTree = "<group>"; };
+		3E89381A2274170D0095EC7D /* Stocks+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stocks+Method.swift"; sourceTree = "<group>"; };
 		3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJFoldingCell.swift; sourceTree = "<group>"; };
 		3E9051EE226C6B60006DD597 /* YJConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJConst.swift; sourceTree = "<group>"; };
 		3ED36CFE227193C30082F18B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -243,7 +247,9 @@
 			isa = PBXGroup;
 			children = (
 				3E80E5CC225E499E005E9FBA /* Save.xcdatamodeld */,
-				3E33A4212273348900071FDE /* YJRecord.swift */,
+				3E33A4212273348900071FDE /* Statistics+Method.swift */,
+				3E893818227416E50095EC7D /* People+Method.swift */,
+				3E89381A2274170D0095EC7D /* Stocks+Method.swift */,
 			);
 			path = coreData;
 			sourceTree = "<group>";
@@ -448,11 +454,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E80E5D422607DFF005E9FBA /* YJHttpTool.swift in Sources */,
+				3E89381B2274170D0095EC7D /* Stocks+Method.swift in Sources */,
 				3E80E5BE225E30D3005E9FBA /* YJMainViewController.swift in Sources */,
 				3E80E5D0225F1F11005E9FBA /* YJEditViewController.swift in Sources */,
 				3E9051ED226C64FB006DD597 /* YJFoldingCell.swift in Sources */,
 				3E57524122672105002BD654 /* YJStockStringObject.swift in Sources */,
 				3E80E589225D98D7005E9FBA /* SecondViewController.swift in Sources */,
+				3E893819227416E50095EC7D /* People+Method.swift in Sources */,
 				3E80E5C0225E3103005E9FBA /* YJCache.swift in Sources */,
 				3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */,
 				3E80E5CE225E499E005E9FBA /* Save.xcdatamodeld in Sources */,
@@ -460,7 +468,7 @@
 				3E80E5D222605CF6005E9FBA /* YJDetailTableViewController.swift in Sources */,
 				3E80E5B7225D9C76005E9FBA /* YJProgressHUD.swift in Sources */,
 				3E33A4142272E77200071FDE /* YJMainHeaderView.swift in Sources */,
-				3E33A4222273348900071FDE /* YJRecord.swift in Sources */,
+				3E33A4222273348900071FDE /* Statistics+Method.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

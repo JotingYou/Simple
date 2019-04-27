@@ -76,7 +76,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     }
     func refreshDataAndView() {
         if YJCache.shared.refreshPeople() {
-            YJCache.shared.refreshRecord()
+            YJCache.shared.updateRecord()
             
             self.tableView.reloadData()
         }
@@ -171,7 +171,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             YJCache.shared.deletePersonAt(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             normalCellHeights.remove(at: indexPath.row)
-            YJCache.shared.refreshRecord()
+            YJCache.shared.updateRecord()
         }
     }
 
@@ -296,7 +296,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             normalCellHeights[indexPath!.row] = YJConst.closeCellHeight
             self.tableView.reloadRows(at: [indexPath!], with: .automatic)
         }
-        YJCache.shared.refreshRecord()
+        YJCache.shared.updateRecord()
     }
 
 

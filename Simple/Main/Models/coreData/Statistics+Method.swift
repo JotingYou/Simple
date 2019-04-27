@@ -29,10 +29,21 @@ extension Statistics {
         }
         return Array<Statistics>()
     }
-
-    func update()->Bool{
+    
+    static func insert(_ lastRecord:Statistics?,_ people:[People]) -> Statistics? {
         
-        setValuesWith(YJCache.shared.lastRecord,YJCache.shared.people)
+        let entity = NSEntityDescription.entity(forEntityName: "Statistics", in: YJCache.shared.managedObjectContext)
+        let record = Statistics.init(entity: entity!, insertInto: YJCache.shared.managedObjectContext)
+        record.create_time = Date()
+        if record.update(lastRecord, people){
+            return record
+        }
+        return nil
+    }
+    
+    func update(_ lastRecord:Statistics?, _ people:[People])->Bool{
+        
+        setValuesWith(lastRecord,people)
         do {
             try YJCache.shared.managedObjectContext.save()
         } catch  {
@@ -40,11 +51,6 @@ extension Statistics {
             return false
         }
         return true
-    }
-    func removePerson(_ person:People){
-        if (self.people?.contains(person) ?? false) {
-            setValuesWith(YJCache.shared.lastRecord,YJCache.shared.people)
-        }
     }
     func setValuesWith(_ lastRecord:Statistics?,_ people:[People]){
         modified_time = Date()
@@ -54,9 +60,6 @@ extension Statistics {
         for person in people {
             total_value += person.total_value
             total_interest += person.profit
-            if !(self.people?.contains(person) ?? false){
-                self.people?.adding(person)
-            }
         }
         for person in people {
             person.value_proportion = Float(person.total_value / total_value)

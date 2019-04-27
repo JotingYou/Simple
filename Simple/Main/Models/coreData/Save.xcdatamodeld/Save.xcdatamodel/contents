@@ -14,7 +14,7 @@
         <attribute name="total_value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updateTime" optional="YES" attributeType="Date" defaultDateTimeInterval="-211143660" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="value_proportion" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="statistics" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Statistics" inverseName="people" inverseEntity="Statistics" syncable="YES"/>
+        <relationship name="statistics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Statistics" inverseName="people" inverseEntity="Statistics" syncable="YES"/>
         <relationship name="stock" maxCount="1" deletionRule="Nullify" destinationEntity="Stocks" inverseName="owners" inverseEntity="Stocks" syncable="YES"/>
     </entity>
     <entity name="Statistics" representedClassName="Statistics" syncable="YES" codeGenerationType="class">
@@ -25,14 +25,14 @@
         <attribute name="rate_trend" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="total_interest" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="total_value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="people" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="People" inverseName="statistics" inverseEntity="People" syncable="YES"/>
+        <relationship name="people" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="People" inverseName="statistics" inverseEntity="People" syncable="YES"/>
     </entity>
     <entity name="Stocks" representedClassName="Stocks" syncable="YES" codeGenerationType="class">
-        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name_spell" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="code" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>
+        <attribute name="name_spell" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>
         <attribute name="unit_value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="update_time" optional="YES" attributeType="Date" defaultDateTimeInterval="-978336000" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="owners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="People" inverseName="stock" inverseEntity="People" syncable="YES"/>
