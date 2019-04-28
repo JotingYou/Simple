@@ -58,11 +58,12 @@ extension People {
         return true
     }
 
-    func refreshStock() {
+    func refreshStock() -> Bool{
         if stock!.update(){
             setValues(name!, amount,stock!,cost,buy_date!)
+            return true
         }else{
-            //TODO:WARNING
+            return false
         }
         
         

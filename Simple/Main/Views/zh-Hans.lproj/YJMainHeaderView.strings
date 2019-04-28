@@ -6,7 +6,7 @@
 "bao-qw-A2x.text" = "Label";
 
 /* Class = "UILabel"; text = "Rate Trend"; ObjectID = "h5H-01-VMv"; */
-"h5H-01-VMv.text" = "变化利率";
+"h5H-01-VMv.text" = "收益率变化";
 
 /* Class = "UILabel"; text = "Total Interest"; ObjectID = "n5Q-LF-JM4"; */
 "n5Q-LF-JM4.text" = "总收益";

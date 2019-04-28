@@ -124,7 +124,7 @@
 "lOD-Gh-k4b.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "EDIT"; ObjectID = "mjU-mj-ihX"; */
-"mjU-mj-ihX.normalTitle" = "编辑";
+"mjU-mj-ihX.normalTitle" = "详情";
 
 
 /* Class = "UILabel"; text = "Fund Name"; ObjectID = "otz-Cl-9YH"; */
@@ -157,4 +157,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "y4r-XN-gI8"; */
 "y4r-XN-gI8.text" = "Label";
 
+/* Class = "UILabel"; text = "Value"; ObjectID = "ZfA-EV-79Q"; */
+"ZfA-EV-79Q.text" = "市值 (元)";
 
+/* Class = "UILabel"; text = "Accounting"; ObjectID = "liz-hr-fq5"; */
+"liz-hr-fq5.text" = "市值占比";

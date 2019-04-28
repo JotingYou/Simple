@@ -31,6 +31,18 @@ class YJHttpTool: NSObject {
         }
         return stocks
     }
+    func getImageForFund(_ id:String) -> UIImage? {
+        let url = URL.init(string: "http://j4.dfcfw.com/charts/pic6/" + id + ".png")
+        do {
+            let data = try  Data.init(contentsOf: url!)
+            let image = UIImage.init(data: data)
+            return image
+        } catch {
+            print("get Image failed")
+            return nil
+        }
+        
+    }
     /**
      请求基金净值数据
      返回[status:0,value:0]

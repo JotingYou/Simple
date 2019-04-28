@@ -105,10 +105,11 @@ class YJCache: NSObject {
     }
     //MARK: REFRESH
     func refreshPeople() -> Bool {
+        var flag = false
         for person in people {
-            person.refreshStock()
+            flag = person.refreshStock() || flag
         }
-        return true
+        return flag
     }
 
 

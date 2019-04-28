@@ -9,7 +9,8 @@
 import UIKit
 import FoldingCell
 
-class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate {
+class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate,YJDetailTVCDelegate {
+
     
     var searchResults = Array<People>()
     let headerView = YJMainHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: YJConst.headerHeight))
@@ -49,7 +50,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         
         setTableView()
         setRefresh()
-        
+
     }
     //MARK: - REFRESH
     func setTableView() {
@@ -77,8 +78,8 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
 
     }
     func refreshDataAndView() {
+        YJCache.shared.updateRecord()
         if YJCache.shared.refreshPeople() {
-            YJCache.shared.updateRecord()
             self.tableView.reloadData()
         }
     }
@@ -196,7 +197,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             return cell
         }
         cell.setPerson(person: person)
-        let durations: [TimeInterval] = [0.26, 0.25, 0.23,0.2]
+        let durations: [TimeInterval] = [0.26, 0.2, 0.2,0.2,0.2]
         cell.durationsForExpandedState = durations
         cell.durationsForCollapsedState = durations
         cell.delegate = self
@@ -207,13 +208,14 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
 //    }
     
     // MARK: - Navigation
-    func editPerson(cell: YJFoldingCell) {
+    func showDetail(cell: YJFoldingCell) {
         guard let index = self.tableView.indexPath(for: cell) else {
             return
         }
-        let sender = ["type":1,"indexPath":index,"person":cell.person!] as [String : Any]
+//        let sender = ["type":1,"indexPath":index,"person":cell.person!] as [String : Any]
+        let sender = index
         
-        performSegue(withIdentifier: "toEdit", sender: sender)
+        performSegue(withIdentifier: "toDetail", sender: sender)
     }
     @IBAction func toAdd(_ sender: Any) {
         performSegue(withIdentifier: "toEdit", sender: ["type":0])
@@ -241,25 +243,26 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
                 dest.person = person
             }
         }
-//        else if segue.destination.isKind(of: YJDetailTableViewController.self){
-//            let dest = segue.destination as! YJDetailTableViewController
-//            if let index:IndexPath = sender as? IndexPath {
-//                if isFiltering(){
-//                    dest.person = searchResults[index.row]
-//                }else{
-//                    dest.person = YJCache.shared.people[index.row]
-//
-//                }
-//                dest.delegate = self
-//                dest.indexPath = index
-//            }
-//
-//        }
+        else if segue.destination.isKind(of: YJDetailTableViewController.self){
+            let dest = segue.destination as! YJDetailTableViewController
+            if let index:IndexPath = sender as? IndexPath {
+                if isFiltering(){
+                    dest.person = searchResults[index.row]
+                }else{
+                    dest.person = YJCache.shared.people[index.row]
+
+                }
+                dest.delegate = self
+                dest.indexPath = index
+            }
+
+        }
     }
  
     //MARK: -
     //MARK: Custom Delegate
     func foldCell(cell:YJFoldingCell){
+        self.tableView.isUserInteractionEnabled = false
         guard let indexPath = self.tableView.indexPath(for: cell)else{
             return
         }        
@@ -275,7 +278,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
 //                self.tableView.scrollToRow(at: indexPath, at:.top , animated: true)
 //            }
             cell.unfold(true, animated: true, completion: nil)
-            duration = 0.3
+            duration = 0.5
         } else {
             if isFiltering() {
                 searchCellHeights[indexPath.row] = YJConst.closeCellHeight
@@ -284,26 +287,27 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             }
 
             cell.unfold(false, animated:true, completion: nil)
-            duration = 0.5
+            duration = 0.8
         }
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
                 self.tableView.beginUpdates()
                 self.tableView.endUpdates()
-            //fix odd scroll bug
-            if cell.frame.maxY > self.tableView.frame.maxY {
-                self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.bottom, animated: true)
-            }
+            self.tableView.isUserInteractionEnabled = true
         }, completion: nil)
     }
+    func didEdited(index: IndexPath) {
+        //TODO
+        YJCache.shared.updateRecord()
+        self.tableView.reloadData()
+
+    }
+    
     func didFinished(tag:Int,indexPath:IndexPath?) {
         YJCache.shared.updateRecord()
         if tag == 0 {
             //let index = IndexPath.init(row: 0, section: 0)
             normalCellHeights.insert(YJConst.closeCellHeight, at: 0)
             //self.tableView.insertRows(at: [index], with: .automatic)
-        }else{
-            normalCellHeights[indexPath!.row] = YJConst.closeCellHeight
-            //self.tableView.reloadRows(at: [indexPath!], with: .automatic)
         }
         self.tableView.reloadData()
     }

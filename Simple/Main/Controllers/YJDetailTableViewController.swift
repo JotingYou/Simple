@@ -21,7 +21,10 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
     var indexPath:IndexPath?
     
     var person:People?
-    
+    lazy var image = {
+        return YJHttpTool.shared.getImageForFund(person!.stock!.id!)
+        
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,59 +44,80 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 11
+        return 14
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
+        var cell:UITableViewCell!
+        if indexPath.row == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "imageCell")
+        }else{
+            cell = tableView.dequeueReusableCell(withIdentifier: "detailCell")
+        }
+
         switch indexPath.row {
         case 0:
+            guard let imageView:UIImageView = cell.viewWithTag(1) as? UIImageView else{
+                print("Cell set failed:Not found imageView")
+                return cell
+            }
+            imageView.image = image
+            break
+        case 1:
             cell.textLabel?.text = NSLocalizedString("Name", comment: "")
             cell.detailTextLabel?.text = person!.name
             break;
-        case 1:
+        case 2:
             cell.textLabel?.text = NSLocalizedString("Stock Name", comment: "")
             cell.detailTextLabel?.text = person!.stock?.name
             break;
-        case 2:
+        case 3:
             cell.textLabel?.text = NSLocalizedString("Stock Number", comment: "")
             cell.detailTextLabel?.text = person!.stock?.id
             break;
-        case 3:
+        case 4:
             cell.textLabel?.text = NSLocalizedString("Amount", comment: "")
             cell.detailTextLabel?.text = String(person!.amount)
             break;
-        case 4:
-            cell.textLabel?.text = NSLocalizedString("Value", comment: "")
+        case 5:
+            cell.textLabel?.text = NSLocalizedString("Unit Value", comment: "")
             cell.detailTextLabel?.text = String(person!.stock!.unit_value)
             break;
-        case 5:
+        case 6:
             cell.textLabel?.text = NSLocalizedString("Cost", comment: "")
             cell.detailTextLabel?.text = String(person!.cost)
             break;
-        case 6:
+        case 7:
             cell.textLabel?.text = NSLocalizedString("Interest", comment: "")
-            cell.detailTextLabel?.text = String(format:"%.2lf",person!.profit)
+            cell.detailTextLabel?.text = String(format:"%.3lf",person!.profit)
             if person!.profit >= 0{
                 cell.detailTextLabel?.textColor = .red
             }else{
                 cell.detailTextLabel?.textColor = .green
             }
             break;
-        case 7:
+        case 8:
+            cell.textLabel?.text = NSLocalizedString("Value", comment: "")
+            cell.detailTextLabel?.text = String(format:"%.3lf",person!.total_value)
+            break;
+        case 9:
             cell.textLabel?.text = NSLocalizedString("Simple", comment: "")
             cell.detailTextLabel?.text = String(format:"%.2lf",person!.simple*100) + "%"
             break;
-        case 8:
+        case 10:
             cell.textLabel?.text = NSLocalizedString("Years", comment: "")
             cell.detailTextLabel?.text = String(format:"%.2lf",person!.annualized*100) + "%"
             break;
-        case 9:
-            cell.textLabel?.text = NSLocalizedString("Buy Date", comment: "")
-            cell.detailTextLabel?.text = YJCache.shared.dateFormatter.string(from: person!.buy_date!)
+        case 11:
+            cell.textLabel?.text = NSLocalizedString("Years", comment: "")
+            cell.detailTextLabel?.text = String(format:"%.2lf",person!.annualized*100) + "%"
             break;
-        case 10:
+        case 12:
+            cell.textLabel?.text = NSLocalizedString("Accounting", comment: "")
+            cell.detailTextLabel?.text = String(format:"%.2f", person!.value_proportion * 100) + "%"
+            break;
+        case 13:
             cell.textLabel?.text = NSLocalizedString("Days", comment: "")
             cell.detailTextLabel?.text = String(person!.days)
             break;

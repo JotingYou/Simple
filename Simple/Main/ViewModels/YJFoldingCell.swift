@@ -11,7 +11,7 @@ import FoldingCell
 
 protocol YJFoldingCellDelegate:NSObjectProtocol {
     func foldCell(cell:YJFoldingCell)
-    func editPerson(cell:YJFoldingCell)
+    func showDetail(cell:YJFoldingCell)
 }
 
 
@@ -53,7 +53,7 @@ class YJFoldingCell: FoldingCell {
     }
     
     @IBAction func editPerson(_ sender: Any) {
-        self.delegate?.editPerson(cell: self)
+        self.delegate?.showDetail(cell: self)
     }
     
     
@@ -115,7 +115,7 @@ class YJFoldingCell: FoldingCell {
     override func animationDuration(_ itemIndex:NSInteger, type:AnimationType)-> TimeInterval {
         
         // durations count equal it itemCount
-        let durations = [0.26, 0.25, 0.23,0.2]// timing animation for each view
+        let durations = [0.26, 0.2, 0.2,0.2]// timing animation for each view
         return durations[itemIndex]
     }
     override func setSelected(_ selected: Bool, animated: Bool) {

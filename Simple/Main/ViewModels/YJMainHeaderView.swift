@@ -11,6 +11,13 @@ import SnapKit
 class YJMainHeaderView: UIView {
     
     
+    @IBOutlet weak var calendarView: UIView!
+    @IBOutlet weak var monthLabel: UILabel!
+    
+    @IBOutlet weak var dayLabel: UILabel!
+    
+    @IBOutlet weak var timeLabel: UILabel!
+    
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var grouped: UILabel!
     
@@ -25,6 +32,15 @@ class YJMainHeaderView: UIView {
 
     //MARK: - Notification
     @objc func setValueForLabels() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM,dd,hh:mm a"
+        let timeStr = dateFormatter.string(from: YJCache.shared.totalRecord?.modified_time ?? Date())
+        let strs:[Substring] = timeStr.split(separator: ",")
+        
+        monthLabel.text = String(strs.first!)
+        dayLabel.text = String(strs[1])
+        timeLabel.text = String(strs[2])
+        
         valueLabel.text = String(format:"%.3lf",YJCache.shared.totalRecord?.total_value ?? 0)
         interestLabel.text = String(format: "%.3lf", YJCache.shared.totalRecord?.total_interest ?? 0)
         grouped.text = String(format: "%.2f", (YJCache.shared.totalRecord?.grouped_rate ?? 0) * 100) + "%"
@@ -39,6 +55,9 @@ class YJMainHeaderView: UIView {
         view.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        //calendarView.layer.masksToBounds = true
+        //calendarView.layer.cornerRadius = 10
         
         NotificationCenter.default.addObserver(self, selector: #selector(setValueForLabels), name: NSNotification.Name(rawValue: YJConst.recordChangedNotification), object: nil)
     }

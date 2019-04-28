@@ -9,7 +9,8 @@
 "Stock Number" = "基金代码";
 "Stock Name" = "基金名称";
 "Amount" = "份数";
-"Value" = "单位净值";
+"Value" = "市值";
+"Unit Value" = "单位净值";
 "Cost" = "成本";
 "Interest" = "收益";
 "Simple" = "收益率";
@@ -17,3 +18,4 @@
 "Buy Date" = "购买日期";
 "Days" = "持有天数";
 "Waiting" = "未更新";
+"Accounting" = "市值占比";
