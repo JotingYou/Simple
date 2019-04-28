@@ -7,29 +7,21 @@
 //
 
 import UIKit
-import AFNetworking
+import SwiftyJSON
+import SDWebImage
+import Alamofire
 import SwiftSoup
 class YJHttpTool: NSObject {
     
     static let shared = YJHttpTool()
     
-    let httpManager: AFHTTPSessionManager = {
-        let manager = AFHTTPSessionManager.init(sessionConfiguration: .default)
-        manager.requestSerializer = AFHTTPRequestSerializer()
-        manager.responseSerializer = AFHTTPResponseSerializer()
+    let httpManager: SessionManager = {
+        let manager = SessionManager()
         return manager
     }()
-    func getData() -> Array<Stocks> {
-        let stocks = Array<Stocks>()
-        let para = ["":""]
-        
-        httpManager.post("http://api.tushare.pro", parameters: para, progress: { (Progress) in
-        }, success: { (URLSessionDataTask, Any) in
-            
-        }) { (URLSessionDataTask, Error) in
-            
-        }
-        return stocks
+    static func setImageFor(_ view:UIImageView,_ id:String?) {
+        let url = URL.init(string: "http://j4.dfcfw.com/charts/pic6/" + (id ?? "") + ".png")
+        view.sd_setImage(with: url,placeholderImage: UIImage(named: "placeholder"), completed: nil)
     }
     func getImageForFund(_ id:String) -> UIImage? {
         let url = URL.init(string: "http://j4.dfcfw.com/charts/pic6/" + id + ".png")
@@ -87,17 +79,25 @@ class YJHttpTool: NSObject {
  
         return["status":"0","valus":"0","updateTime":"0"]
     }
-    func getFundInfo() -> Bool {
-        let url = URL.init(string: "http://fund.eastmoney.com/js/fundcode_search.js")
-        let request = URLRequest.init(url: url!)
+    func getFundInfo(success:((Bool) -> Void)?){
+        let url = URL(string: "http://fund.eastmoney.com/js/fundcode_search.js")
+        let request = URLRequest(url: url!)
         
-        
-        let task = httpManager.downloadTask(with: request, progress: nil, destination: { (destUrl, response) -> URL in
-            return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("fundcode_search.js")
-        }) { (response, url, error) in
+
+        let destination:DownloadRequest.DownloadFileDestination = {_,_ in
+            return (YJConst.fundFileUrl,[.createIntermediateDirectories,.removePreviousFile])
         }
-        task.resume()
-        return false
+        httpManager.download(request, to: destination).response { (response) in
+            var flag = true
+            
+            if response.error != nil{
+                flag = false
+                print(response.error!)
+            }
+            if success != nil{
+                success!(flag)
+            }
+        }
     }
     func getDictionFor(resonseStr:String) -> Dictionary<String,String> {
         var dic = Dictionary<String,String>()

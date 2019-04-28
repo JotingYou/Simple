@@ -13,6 +13,7 @@ class YJConst: NSObject {
     static let closeCellHeight:CGFloat = 80
     static let headerHeight:CGFloat = 140
     static let recordChangedNotification = "recordChangedNotification"
+    static let fundFileUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("fundcode_search.js")
     static func isSameDay(_ day1:Date,_ day2:Date) -> Bool {
         let calendar = Calendar.current
         let cmp1 = calendar.dateComponents([.year,.month,.day], from: day1)

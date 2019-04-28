@@ -36,7 +36,13 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
     }
 
     // MARK: - Table view data source
-
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 260
+        }else{
+            return 44
+        }
+    }
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -62,7 +68,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
                 print("Cell set failed:Not found imageView")
                 return cell
             }
-            imageView.image = image
+            YJHttpTool.setImageFor(imageView,person?.stock!.id)
             break
         case 1:
             cell.textLabel?.text = NSLocalizedString("Name", comment: "")

@@ -1,50 +1,46 @@
 PODS:
-  - AFNetworking (3.2.1):
-    - AFNetworking/NSURLSession (= 3.2.1)
-    - AFNetworking/Reachability (= 3.2.1)
-    - AFNetworking/Security (= 3.2.1)
-    - AFNetworking/Serialization (= 3.2.1)
-    - AFNetworking/UIKit (= 3.2.1)
-  - AFNetworking/NSURLSession (3.2.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.2.1)
-  - AFNetworking/Security (3.2.1)
-  - AFNetworking/Serialization (3.2.1)
-  - AFNetworking/UIKit (3.2.1):
-    - AFNetworking/NSURLSession
+  - Alamofire (4.7.2)
   - FoldingCell (3.1.1)
   - LTScrollView (0.1.6)
+  - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
-  - SnapKit (4.0.0)
+  - SDWebImage (4.4.0):
+    - SDWebImage/Core (= 4.4.0)
+  - SDWebImage/Core (4.4.0)
   - SwiftSoup (1.7.1)
+  - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
-  - AFNetworking
+  - Alamofire
   - FoldingCell
   - LTScrollView
+  - Masonry
   - MBProgressHUD
-  - SnapKit
+  - SDWebImage
   - SwiftSoup
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - AFNetworking
+    - Alamofire
     - FoldingCell
     - LTScrollView
+    - Masonry
     - MBProgressHUD
-    - SnapKit
+    - SDWebImage
     - SwiftSoup
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
-  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   FoldingCell: 238c33ae8d9cd655090c9c4c5ff32596cfd18c6e
   LTScrollView: 54ad587a9664434c6b25eefd2b8095eb5641c79c
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SDWebImage: b534502786e43dde36dfcaee89356fe6df30e203
   SwiftSoup: 277f7ef548826e0ca7603a06b30d4a5df3ee0587
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 778a070251039718b6b6b9385849cec95fbca252
+PODFILE CHECKSUM: 363824ad95d0350b9f57201b43e5ef5ae068cc0c
 
 COCOAPODS: 1.5.3

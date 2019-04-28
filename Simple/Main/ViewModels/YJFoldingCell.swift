@@ -64,7 +64,7 @@ class YJFoldingCell: FoldingCell {
         fundNameLabel.text = person.stock?.name
         
         updateTimeLabel.text = YJCache.shared.dateFormatter.string(from: person.stock!.update_time!)
-        detailUnitValueLabel.text =  String(format:"%.3lf", person.stock!.unit_value)
+        detailUnitValueLabel.text =  String( person.stock!.unit_value)
         detailFundNameLabel.text = person.stock?.name
         detailTitleLabel.text = person.name
         

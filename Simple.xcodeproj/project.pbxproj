@@ -83,7 +83,6 @@
 		3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJHttpTool.swift; sourceTree = "<group>"; };
 		3E893818227416E50095EC7D /* People+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "People+Method.swift"; sourceTree = "<group>"; };
 		3E89381A2274170D0095EC7D /* Stocks+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stocks+Method.swift"; sourceTree = "<group>"; };
-		3E8CE8682275D08B0060D8B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJFoldingCell.swift; sourceTree = "<group>"; };
 		3E9051EE226C6B60006DD597 /* YJConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJConst.swift; sourceTree = "<group>"; };
 		3ED36CFE227193C30082F18B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -416,21 +415,25 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Simple/Pods-Simple-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FoldingCell/FoldingCell.framework",
 				"${BUILT_PRODUCTS_DIR}/LTScrollView/LTScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FoldingCell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LTScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -535,7 +538,6 @@
 			children = (
 				3E80E58B225D98D7005E9FBA /* Base */,
 				3ED36CFE227193C30082F18B /* zh-Hans */,
-				3E8CE8682275D08B0060D8B4 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

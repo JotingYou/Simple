@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SnapKit
+import Masonry
 class YJMainHeaderView: UIView {
     
     
@@ -52,9 +52,10 @@ class YJMainHeaderView: UIView {
         view.subviews.last?.layer.masksToBounds = true
         view.subviews.last?.layer.cornerRadius = 10
         addSubview(view)
-        view.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        view.mas_makeConstraints {
+            $0?.edges.equalTo()
         }
+
         
         //calendarView.layer.masksToBounds = true
         //calendarView.layer.cornerRadius = 10
@@ -65,9 +66,7 @@ class YJMainHeaderView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         addSubview(view)
-        view.snp.makeConstraints { (ConstraintMaker) in
-            ConstraintMaker.edges.equalToSuperview()
-        }
+        view.mas_makeConstraints{$0?.edges.equalTo()}
 
     }
     deinit{

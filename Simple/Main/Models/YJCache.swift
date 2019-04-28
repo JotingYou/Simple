@@ -117,24 +117,30 @@ class YJCache: NSObject {
     ///读取股票信息
     private func readStocks(){
         if readStocksFromCoreData() {
-            print("Read From CoreData")
         }else if readStocksFromFile(){
-            print("Read From File")
         }else{
-            stocks = YJHttpTool.shared.getData()
+             YJHttpTool.shared.getFundInfo(success: { (flag) in
+                if(flag){
+                    if self.readStocksFromFile() {
+                        return
+                    }
+                }
+                fatalError("Read Stocks failed")
+                
+            })
         }
     }
     private func readStocksFromCoreData()->Bool{
         if let results = Stocks.readFromCoreDate() {
             stocks = results
+            print("Read From CoreData")
             return true
         }
         return false
     }
     private func readStocksFromFile()->Bool{
-        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("fundcode_search.js")
         
-        var data = NSData.init(contentsOf: url)
+        var data = NSData.init(contentsOf: YJConst.fundFileUrl)
         
         if data == nil {
             let  path = Bundle.main.path(forResource: "fundcode_search", ofType: "js")!
@@ -160,6 +166,7 @@ class YJCache: NSObject {
             }
             
         }
+        print("Read From File")
         saveStocks()
         return true
     }
