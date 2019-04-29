@@ -70,7 +70,7 @@ class YJFoldingCell: FoldingCell {
         
         detailFundCodeLabel.text = person.stock?.id
         
-        detailCostLabel.text = String(person.cost)
+        detailCostLabel.text = String(format:"%.4lf",person.cost)
         detailAmountLabel.text = String(person.amount)
         detailBuyDateLabel.text = YJCache.shared.dateFormatter.string(from: person.buy_date!)
         detailDaysLabel.text = String(person.days)

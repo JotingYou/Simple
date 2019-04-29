@@ -7,13 +7,15 @@
         <attribute name="cost" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="create_time" attributeType="Date" defaultDateTimeInterval="576735780" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="days" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isValued" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="fee_rate" optional="YES" attributeType="Float" minValueString="0" maxValueString="1" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isValued" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" minValueString="0" defaultValueString="name" syncable="YES"/>
         <attribute name="profit" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="simple" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="total_cost" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="total_value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updateTime" optional="YES" attributeType="Date" defaultDateTimeInterval="-211143660" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="value_proportion" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="value_proportion" optional="YES" attributeType="Float" minValueString="0" maxValueString="1" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="statistics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Statistics" inverseName="people" inverseEntity="Statistics" syncable="YES"/>
         <relationship name="stock" maxCount="1" deletionRule="Nullify" destinationEntity="Stocks" inverseName="owners" inverseEntity="Stocks" syncable="YES"/>
     </entity>
@@ -38,7 +40,7 @@
         <relationship name="owners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="People" inverseName="stock" inverseEntity="People" syncable="YES"/>
     </entity>
     <elements>
-        <element name="People" positionX="-36" positionY="45" width="128" height="270"/>
+        <element name="People" positionX="-36" positionY="45" width="128" height="300"/>
         <element name="Statistics" positionX="-45" positionY="108" width="128" height="165"/>
         <element name="Stocks" positionX="-63" positionY="-18" width="128" height="165"/>
     </elements>

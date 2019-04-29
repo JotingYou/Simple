@@ -21,10 +21,6 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
     var indexPath:IndexPath?
     
     var person:People?
-    lazy var image = {
-        return YJHttpTool.shared.getImageForFund(person!.stock!.id!)
-        
-    }()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -92,7 +88,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
             break;
         case 6:
             cell.textLabel?.text = NSLocalizedString("Cost", comment: "")
-            cell.detailTextLabel?.text = String(person!.cost)
+            cell.detailTextLabel?.text = String(format:"%.4lf",person!.cost)
             break;
         case 7:
             cell.textLabel?.text = NSLocalizedString("Interest", comment: "")

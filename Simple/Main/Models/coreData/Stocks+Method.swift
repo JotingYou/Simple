@@ -23,28 +23,37 @@ extension Stocks {
                 return results
             }
     
-        } catch  {
+        } catch{
             print("CoreData Error:读取股票失败")
             return nil
         }
         return nil
     }
-    func update()->Bool{
-        let dic = YJHttpTool.shared.getFundValue(id: id!)
-        if dic["status"] == "1"{
-            let updateTime = YJCache.shared.dateFormatter.date(from: dic["updateTime"]!)!
-            if self.update_time! < updateTime{
-                unit_value = Double(dic["value"]!)!
-                self.update_time = updateTime
-                return true
-            }else{
-                return false
+    func update(_ complication: ((Bool)-> Void)? = nil){
+        YJHttpTool.shared.getFundValue(id: id!,complication: {
+            [weak self](dic) in
+            if dic["status"] == "1"{
+                let updateTime = YJCache.shared.dateFormatter.date(from: dic["updateTime"]!)!
+                if self?.update_time ?? Date() < updateTime{
+                    self?.unit_value = Double(dic["value"]!)!
+                    self?.update_time = updateTime
+                    complication?(true)
+                    return
+                }
             }
-            
-        }else{
-            return false
-        }
+            complication?(false)
+        })
     }
+
+//                return true
+//            }else{
+//                return false
+//            }
+//
+//        }else{
+//            return false
+//        }
+//    }
     static func insert(_ stockString:YJStockStringObject) -> Stocks {
         let entity = NSEntityDescription.entity(forEntityName: "Stocks", in: YJCache.shared.managedObjectContext)!
         let stock = Stocks.init(entity: entity, insertInto: YJCache.shared.managedObjectContext)

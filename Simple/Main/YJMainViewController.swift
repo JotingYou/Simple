@@ -50,7 +50,19 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         
         setTableView()
         setRefresh()
-
+        //NotificationCenter.default.addObserver(self, selector: #selector(reloadPersonCell(notification:)), name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: nil)
+    }
+    //MARK: - Notification
+    @objc func reloadPersonCell(notification:NSNotification){
+        guard let person:People = notification.object as? People else {
+            return
+        }
+        guard let row = YJCache.shared.people.index(of: person) else{
+            return
+        }
+        YJCache.shared.updateRecord()
+        let index = IndexPath(row: row, section: 0)
+        self.tableView.reloadRows(at: [index], with: .automatic)
     }
     //MARK: - REFRESH
     func setTableView() {
@@ -70,7 +82,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
     }
     @objc func refreshStateChange(_ refreshControl:UIRefreshControl) {
         let deadlineTime = DispatchTime.now() + .seconds(1)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {[weak self] in
             refreshControl.endRefreshing()
             self?.refreshDataAndView()
 
@@ -78,10 +90,13 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
 
     }
     func refreshDataAndView() {
-        YJCache.shared.updateRecord()
-        if YJCache.shared.refreshPeople() {
-            self.tableView.reloadData()
-        }
+        YJCache.shared.refreshPeople({
+            YJCache.shared.updateRecord()
+            OperationQueue.main.addOperation {
+                self.tableView.reloadData()
+            }
+        })
+
     }
     //MARK: -
     //MARK: searchBar Delegate
@@ -296,7 +311,6 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         }, completion: nil)
     }
     func didEdited(index: IndexPath) {
-        //TODO
         YJCache.shared.updateRecord()
         self.tableView.reloadData()
 
@@ -311,6 +325,8 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         }
         self.tableView.reloadData()
     }
-
+    deinit{
+        //NotificationCenter.default.removeObserver(self)
+    }
 
 }

@@ -83,6 +83,7 @@
 		3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJHttpTool.swift; sourceTree = "<group>"; };
 		3E893818227416E50095EC7D /* People+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "People+Method.swift"; sourceTree = "<group>"; };
 		3E89381A2274170D0095EC7D /* Stocks+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stocks+Method.swift"; sourceTree = "<group>"; };
+		3E8CE86A2276CBF60060D8B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJFoldingCell.swift; sourceTree = "<group>"; };
 		3E9051EE226C6B60006DD597 /* YJConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJConst.swift; sourceTree = "<group>"; };
 		3ED36CFE227193C30082F18B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -538,6 +539,7 @@
 			children = (
 				3E80E58B225D98D7005E9FBA /* Base */,
 				3ED36CFE227193C30082F18B /* zh-Hans */,
+				3E8CE86A2276CBF60060D8B4 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

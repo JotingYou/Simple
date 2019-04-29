@@ -72,6 +72,9 @@ class YJCache: NSObject {
         
         shared.insertRecord()
 
+//        YJHttpTool.shared.getBasicRate { (rate) in
+//            print(rate)
+//        }
 
     }
     //MARK:- People
@@ -80,17 +83,22 @@ class YJCache: NSObject {
         people = People.read()
     }
     ///插入顾客信息
-    func insertPerson(_ name:String,_ amount:Double,_ stock:Stocks,_ cost:Double,_ buy_date:Date) -> Bool{
-        if let person = People.insert(name, amount, stock, cost, buy_date) {
+    func insertPerson(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date) -> Bool{
+        if let person = People.insert(name, totalCost, stock, amount, buy_date) {
             people.insert(person, at: 0)
+            person.refreshStock()
             return true
         }
         return false
     }
     //更新顾客信息
-    func updatePerson(person:People,name:String,amount:Double,stock:Stocks,cost:Double,buy_date:Date) -> Bool{
-        
-        return person.update(name, amount, stock, cost, buy_date)
+    func updatePerson(_ person:People,_ name:String,_ total_cost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->Bool{
+        if person.update(name, total_cost, stock, amount, buy_date){
+            person.refreshStock()
+            return true
+        }else{
+            return false
+        }
     }
 
     //删除顾客信息
@@ -104,12 +112,16 @@ class YJCache: NSObject {
         }
     }
     //MARK: REFRESH
-    func refreshPeople() -> Bool {
-        var flag = false
+    func refreshPeople(_ complication:(()-> Void)?){
+        var num = 0
         for person in people {
-            flag = person.refreshStock() || flag
+            person.refreshStock({[weak self](isUpdated) in
+                num += 1
+                if num == self?.people.count{
+                    complication?()
+                }
+            })
         }
-        return flag
     }
 
 

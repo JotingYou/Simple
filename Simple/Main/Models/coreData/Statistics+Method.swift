@@ -25,7 +25,7 @@ extension Statistics {
             }
             
         } catch  {
-            fatalError("读取顾客失败")
+            fatalError("记录失败")
         }
         return Array<Statistics>()
     }
@@ -46,8 +46,8 @@ extension Statistics {
         setValuesWith(lastRecord,people)
         do {
             try YJCache.shared.managedObjectContext.save()
-        } catch  {
-            print("Update Record failed:Core Date Save Error!")
+        } catch    let error{
+            print("Update Record failed:Core Date Save Error! \(error)")
             return false
         }
         return true
@@ -62,6 +62,9 @@ extension Statistics {
             total_interest += person.profit
         }
         for person in people {
+            if total_value == 0{
+                return
+            }
             person.value_proportion = Float(person.total_value / total_value)
             grouped_rate += person.value_proportion * person.simple
         }

@@ -519,14 +519,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="name"/>
                             </textField>
-                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input cost" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3Ah-8Q-G1h">
-                                <rect key="frame" x="61" y="127.5" width="299" height="30"/>
+                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input amount" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3Ah-8Q-G1h">
+                                <rect key="frame" x="85" y="127.5" width="275" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
-                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input amount" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1R0-gY-39p">
-                                <rect key="frame" x="90" y="76.5" width="270" height="30"/>
+                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input total Cost" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1R0-gY-39p">
+                                <rect key="frame" x="107" y="76.5" width="253" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -537,14 +537,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zjo-I4-UOM">
-                                <rect key="frame" x="15" y="81" width="65" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Cost:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zjo-I4-UOM">
+                                <rect key="frame" x="15" y="81" width="82" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cost:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ilI-fu-rf4">
-                                <rect key="frame" x="15" y="132" width="41" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ilI-fu-rf4">
+                                <rect key="frame" x="15" y="132" width="65" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -602,12 +602,12 @@
                             <constraint firstItem="zZn-1F-Lp7" firstAttribute="leading" secondItem="5gM-44-nNa" secondAttribute="trailing" constant="5" id="RHU-WA-5df"/>
                             <constraint firstAttribute="bottom" secondItem="RO5-BJ-uKv" secondAttribute="bottom" id="TOE-jx-fC4"/>
                             <constraint firstItem="TPn-jN-AKl" firstAttribute="trailing" secondItem="1R0-gY-39p" secondAttribute="trailing" constant="15" id="bmp-kq-fzi"/>
-                            <constraint firstItem="ilI-fu-rf4" firstAttribute="top" secondItem="Zjo-I4-UOM" secondAttribute="bottom" constant="30" id="cVK-E7-jNJ"/>
                             <constraint firstItem="5gM-44-nNa" firstAttribute="leading" secondItem="TPn-jN-AKl" secondAttribute="leading" constant="15" id="dBt-TP-d9k"/>
                             <constraint firstItem="RO5-BJ-uKv" firstAttribute="top" secondItem="bqE-7X-m8I" secondAttribute="bottom" id="fth-W5-nqG"/>
                             <constraint firstItem="TPn-jN-AKl" firstAttribute="trailing" secondItem="3Ah-8Q-G1h" secondAttribute="trailing" constant="15" id="jgH-SM-E40"/>
                             <constraint firstItem="5gM-44-nNa" firstAttribute="top" secondItem="ilI-fu-rf4" secondAttribute="bottom" constant="30" id="k60-ws-ckD"/>
                             <constraint firstItem="Zjo-I4-UOM" firstAttribute="leading" secondItem="TPn-jN-AKl" secondAttribute="leading" constant="15" id="pKN-1n-bhb"/>
+                            <constraint firstItem="ilI-fu-rf4" firstAttribute="top" secondItem="Zjo-I4-UOM" secondAttribute="bottom" constant="30" id="qN6-Rc-xXh"/>
                             <constraint firstItem="3Ah-8Q-G1h" firstAttribute="centerY" secondItem="ilI-fu-rf4" secondAttribute="centerY" id="qcZ-Px-tdm"/>
                             <constraint firstItem="RO5-BJ-uKv" firstAttribute="leading" secondItem="bqE-7X-m8I" secondAttribute="leading" constant="15" id="qdZ-Em-uS9"/>
                             <constraint firstItem="nez-7B-rcQ" firstAttribute="leading" secondItem="TPn-jN-AKl" secondAttribute="leading" constant="15" id="szB-Os-s7v"/>
@@ -624,18 +624,18 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="amountField" destination="1R0-gY-39p" id="dIY-sJ-1a7"/>
-                        <outlet property="costField" destination="3Ah-8Q-G1h" id="IBS-e9-TJ7"/>
+                        <outlet property="amountField" destination="3Ah-8Q-G1h" id="4EF-ly-BkV"/>
                         <outlet property="dateField" destination="zZn-1F-Lp7" id="V54-63-Tau"/>
                         <outlet property="displayView" destination="RO5-BJ-uKv" id="W7O-MM-dlf"/>
                         <outlet property="nameField" destination="OgV-0Q-coy" id="wWq-4m-6vr"/>
                         <outlet property="searchBar" destination="bqE-7X-m8I" id="Cnv-gn-KW4"/>
                         <outlet property="stockLabel" destination="fEg-pY-FjU" id="wRg-Ww-3oJ"/>
+                        <outlet property="totalCostField" destination="1R0-gY-39p" id="nhp-xH-ow2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FSM-wZ-p5Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2138" y="-1200"/>
+            <point key="canvasLocation" x="2136.8000000000002" y="-1200.4497751124438"/>
         </scene>
         <!--Settings-->
         <scene sceneID="wg7-f3-ORb">
@@ -712,7 +712,7 @@
         <image name="icon_tabbar_lab_selected" width="24" height="24"/>
         <image name="icon_tabbar_uikit" width="24" height="24"/>
         <image name="icon_tabbar_uikit_selected" width="24" height="24"/>
-        <image name="placeholder" width="730" height="379"/>
+        <image name="placeholder" width="365" height="249.5"/>
         <image name="plus" width="13" height="13"/>
         <image name="white" width="826" height="536"/>
     </resources>

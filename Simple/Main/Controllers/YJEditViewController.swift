@@ -29,9 +29,9 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
     @IBOutlet weak var nameField: UITextField!
     
     @IBOutlet weak var dateField: UITextField!
+    @IBOutlet weak var totalCostField: UITextField!
     @IBOutlet weak var amountField: UITextField!
-    @IBOutlet weak var costField: UITextField!
-
+   // @IBOutlet weak var feeField:UITextField!
     
     @IBOutlet weak var stockLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -69,8 +69,8 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
             nameField.becomeFirstResponder()
             return
         }
-        guard let amount:Double = Double(amountField.text!)else{
-            amountField.becomeFirstResponder()
+        guard let totalCost:Double = Double(totalCostField.text!)else{
+            totalCostField.becomeFirstResponder()
             return
         }
         let fund_number = searchBar.text!
@@ -81,8 +81,8 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
             return
         }
         let stock = searchResults.first
-        guard let cost = Double(costField.text!)else{
-            costField.becomeFirstResponder()
+        guard let amount = Double(amountField.text!)else{
+            amountField.becomeFirstResponder()
             return
         }
         
@@ -90,15 +90,17 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
             dateField.becomeFirstResponder()
             return
         }
+
+        
         if type == 0 {
             //新增顾客
-            if !YJCache.shared.insertPerson(name,amount,stock!,cost, buy_date){
+            if !YJCache.shared.insertPerson(name,totalCost,stock!,amount, buy_date){
                 YJProgressHUD.showError(message: "创建用户失败")
                 return
             }
         }else{
             //编辑顾客信息
-            if !YJCache.shared.updatePerson(person:person!,name: name, amount: amount, stock: stock!, cost: cost, buy_date: buy_date)
+            if !YJCache.shared.updatePerson(person!,name, totalCost, stock!, amount,buy_date)
             {
                 YJProgressHUD.showError(message: "更新用户信息失败")
                 return
@@ -125,18 +127,20 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
         dateField.text = YJCache.shared.dateFormatter.string(from: (datePicker?.date)!)
     }
     func setFields(){
+        self.totalCostField.delegate = self
         self.amountField.delegate = self
-        self.costField.delegate = self
         self.nameField.delegate = self
         self.dateField.delegate = self
         if type == 1 {
             //填充文本信息
-            self.amountField.text = String(person!.amount)
+            self.totalCostField.text = String(person!.total_cost)
             dateField.text = YJCache.shared.dateFormatter.string(from: person!.buy_date!)
-            self.costField.text = String(person!.cost)
+            self.amountField.text = String(person!.amount)
             self.nameField.text = String(person!.name!)
-            self.title = "Edit"
+            self.title = NSLocalizedString("Edit", comment: "")
             searchBar.text = person?.stock?.id
+            //self.feeField.text = String(person!.fee_rate * 100)
+            
         }else{
 
             dateField.text = YJCache.shared.dateFormatter.string(from: Date())

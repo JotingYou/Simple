@@ -1,9 +1,9 @@
 
 /* Class = "UITextField"; placeholder = "input amount"; ObjectID = "1R0-gY-39p"; */
-"1R0-gY-39p.placeholder" = "购买数量";
+"1R0-gY-39p.placeholder" = "购买金额";
 
 /* Class = "UITextField"; placeholder = "input cost"; ObjectID = "3Ah-8Q-G1h"; */
-"3Ah-8Q-G1h.placeholder" = "成本";
+"3Ah-8Q-G1h.placeholder" = "持有份额";
 
 /* Class = "UILabel"; text = "Date:"; ObjectID = "5gM-44-nNa"; */
 "5gM-44-nNa.text" = "购买日期:";
@@ -33,7 +33,7 @@
 "ZW5-rB-V9z.title" = "添加";
 
 /* Class = "UILabel"; text = "Amount:"; ObjectID = "Zjo-I4-UOM"; */
-"Zjo-I4-UOM.text" = "持有份数:";
+"Zjo-I4-UOM.text" = "购买金额 (元):";
 
 /* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "bqE-7X-m8I"; */
 "bqE-7X-m8I.placeholder" = "搜索";
@@ -54,7 +54,7 @@
 "fEg-pY-FjU.text" = "基金:";
 
 /* Class = "UILabel"; text = "Cost:"; ObjectID = "ilI-fu-rf4"; */
-"ilI-fu-rf4.text" = "成本:";
+"ilI-fu-rf4.text" = "持有份额:";
 
 /* Class = "UILabel"; text = "Name:"; ObjectID = "nez-7B-rcQ"; */
 "nez-7B-rcQ.text" = "姓名:";
