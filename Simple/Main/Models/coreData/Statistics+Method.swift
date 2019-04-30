@@ -52,6 +52,17 @@ extension Statistics {
         }
         return true
     }
+    func refreshBasic() {
+        YJHttpTool.shared.getBasicRate({[weak self](dic) in
+                let now = Double(dic["now"]!)!
+                let yesterday = Double(dic["yesterday"]!)!
+                self?.basic = now/yesterday - 1
+                NotificationCenter.default.post(name: Notification.Name(rawValue: YJConst.recordChangedBasic), object: nil, userInfo: nil)
+            }
+        
+        )
+    }
+
     func setValuesWith(_ lastRecord:Statistics?,_ people:[People]){
         modified_time = Date()
         total_value = 0

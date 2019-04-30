@@ -23,7 +23,7 @@ class YJMainHeaderView: UIView {
     
     @IBOutlet weak var interestLabel: UILabel!
     
-    @IBOutlet weak var trendLabel: UILabel!
+    @IBOutlet weak var basicLabel: UILabel!
     
     lazy var view:UIView = {
         
@@ -44,7 +44,10 @@ class YJMainHeaderView: UIView {
         valueLabel.text = String(format:"%.3lf",YJCache.shared.totalRecord?.total_value ?? 0)
         interestLabel.text = String(format: "%.3lf", YJCache.shared.totalRecord?.total_interest ?? 0)
         grouped.text = String(format: "%.2f", (YJCache.shared.totalRecord?.grouped_rate ?? 0) * 100) + "%"
-        trendLabel.text = String(format: "%.2f", (YJCache.shared.totalRecord?.rate_trend ?? 0) * 100) + "%"
+
+    }
+    @objc func setBasicLabel(){
+        basicLabel.text = String(format: "%.2f", (YJCache.shared.totalRecord?.basic ?? 0) * 100) + "%"
     }
     //MARK: - init
     override init(frame: CGRect) {
@@ -55,12 +58,9 @@ class YJMainHeaderView: UIView {
         view.mas_makeConstraints {
             $0?.edges.equalTo()
         }
-
-        
-        //calendarView.layer.masksToBounds = true
-        //calendarView.layer.cornerRadius = 10
         
         NotificationCenter.default.addObserver(self, selector: #selector(setValueForLabels), name: NSNotification.Name(rawValue: YJConst.recordChangedNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setBasicLabel), name: NSNotification.Name(rawValue: YJConst.recordChangedBasic), object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -1,24 +1,24 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "QBm-Zf-EEq"; */
-"QBm-Zf-EEq.text" = "Label";
+"QBm-Zf-EEq.text" = "无数据";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "bao-qw-A2x"; */
-"bao-qw-A2x.text" = "Label";
+"bao-qw-A2x.text" = "无数据";
 
 /* Class = "UILabel"; text = "Rate Trend"; ObjectID = "h5H-01-VMv"; */
-"h5H-01-VMv.text" = "收益率变化";
+"h5H-01-VMv.text" = "沪深300";
 
 /* Class = "UILabel"; text = "Total Interest"; ObjectID = "n5Q-LF-JM4"; */
-"n5Q-LF-JM4.text" = "总收益";
+"n5Q-LF-JM4.text" = "总收益 (元)";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "p90-jO-UjV"; */
-"p90-jO-UjV.text" = "Label";
+"p90-jO-UjV.text" = "无数据";
 
 /* Class = "UILabel"; text = "Grouped Rate"; ObjectID = "q9M-RO-ZNi"; */
 "q9M-RO-ZNi.text" = "组合收益率";
 
 /* Class = "UILabel"; text = "Total Value"; ObjectID = "uNS-Aq-kC0"; */
-"uNS-Aq-kC0.text" = "总市值";
+"uNS-Aq-kC0.text" = "总市值 (元)";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "vpa-dR-7kd"; */
-"vpa-dR-7kd.text" = "Label";
+"vpa-dR-7kd.text" = "无数据";

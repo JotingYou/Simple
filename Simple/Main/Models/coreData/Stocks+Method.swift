@@ -29,19 +29,27 @@ extension Stocks {
         }
         return nil
     }
-    func update(_ complication: ((Bool)-> Void)? = nil){
-        YJHttpTool.shared.getFundValue(id: id!,complication: {
+    func update(_ stockString:YJStockStringObject){
+        name = stockString.name
+        id = stockString.id
+        code = stockString.code
+        name_spell = stockString.name_spell
+        type = stockString.type
+    }
+    func update(_ complition: ((Bool)-> Void)? = nil){
+
+        YJHttpTool.shared.getFundValue(id: id!,complition: {
             [weak self](dic) in
             if dic["status"] == "1"{
                 let updateTime = YJCache.shared.dateFormatter.date(from: dic["updateTime"]!)!
                 if self?.update_time ?? Date() < updateTime{
                     self?.unit_value = Double(dic["value"]!)!
                     self?.update_time = updateTime
-                    complication?(true)
+                    complition?(true)
                     return
                 }
             }
-            complication?(false)
+            complition?(false)
         })
     }
 

@@ -29,8 +29,11 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        NotificationCenter.default.addObserver(self, selector: #selector(needReload), name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: nil)
     }
-
+    @objc func needReload(){
+        tableView.reloadData()
+    }
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
@@ -180,6 +183,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
             
         }
     }
- 
+    deinit {        NotificationCenter.default.removeObserver(self)
+    }
 
 }

@@ -19,7 +19,6 @@ class YJCache: NSObject {
     var lastRecord:Statistics?
     
     var people = Array<People>();
-    var updateTime = Date()
     static let shared = YJCache();
     let managedObjectContext:NSManagedObjectContext = {
         let container = NSPersistentContainer(name: "Save")
@@ -33,34 +32,10 @@ class YJCache: NSObject {
     }()
     
 
-    ///更新数据
-    public func update(){
-        //检查更新
-        if !checkUpdate() {return}
-        //从API获取数据
-
-        //更新数组
-        stocks.removeAll();
-
-        //更新时间
-        updateTime = Date();
-        //存储
-        saveStocks();
-    }
-    ///检查是否需要更新
-    public func checkUpdate()->Bool{
-        return false;
-    }
     //MARK: *Recover*
     ///从本地存储中恢复
     static func recovery(){
         //恢复股票信息
-        let lastTime = UserDefaults.standard.value(forKey: "updateTime" )
-        if lastTime == nil {
-            shared.updateTime = Date();
-        }else{
-            shared.updateTime = lastTime as! Date;
-        }
 
         shared.readStocks();
         
@@ -70,11 +45,9 @@ class YJCache: NSObject {
         
         shared.readRecord()
         
-        shared.insertRecord()
-
-//        YJHttpTool.shared.getBasicRate { (rate) in
-//            print(rate)
-//        }
+        if !shared.insertRecord(){
+            shared.updateRecord()
+        }
 
     }
     //MARK:- People
@@ -86,7 +59,7 @@ class YJCache: NSObject {
     func insertPerson(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date) -> Bool{
         if let person = People.insert(name, totalCost, stock, amount, buy_date) {
             people.insert(person, at: 0)
-            person.refreshStock()
+
             return true
         }
         return false
@@ -94,7 +67,6 @@ class YJCache: NSObject {
     //更新顾客信息
     func updatePerson(_ person:People,_ name:String,_ total_cost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->Bool{
         if person.update(name, total_cost, stock, amount, buy_date){
-            person.refreshStock()
             return true
         }else{
             return false
@@ -112,13 +84,13 @@ class YJCache: NSObject {
         }
     }
     //MARK: REFRESH
-    func refreshPeople(_ complication:(()-> Void)?){
+    func refreshPeople(_ complition:(()-> Void)?){
         var num = 0
         for person in people {
             person.refreshStock({[weak self](isUpdated) in
                 num += 1
                 if num == self?.people.count{
-                    complication?()
+                    complition?()
                 }
             })
         }
@@ -131,14 +103,13 @@ class YJCache: NSObject {
         if readStocksFromCoreData() {
         }else if readStocksFromFile(){
         }else{
-             YJHttpTool.shared.getFundInfo(success: { (flag) in
+             YJHttpTool.shared.getFundList({ (flag) in
                 if(flag){
                     if self.readStocksFromFile() {
                         return
                     }
                 }
                 fatalError("Read Stocks failed")
-                
             })
         }
     }
@@ -150,7 +121,7 @@ class YJCache: NSObject {
         }
         return false
     }
-    private func readStocksFromFile()->Bool{
+    open func readStocksFromFile()->Bool{
         
         var data = NSData.init(contentsOf: YJConst.fundFileUrl)
         
@@ -171,30 +142,53 @@ class YJCache: NSObject {
         }
         let original = content[startRange.upperBound...endRange.lowerBound]
         let stockStrs = original.components(separatedBy: "]")
-        for str in stockStrs {
-            if str.count > 0{
-                let obj = YJStockStringObject.init(str: str)
-                insertStock(stockString: obj)
-            }
-            
+        if stocks.count == 0 {
+            createStocks(strs: stockStrs)
+        }else{
+            updateStocks(strs: stockStrs)
         }
-        print("Read From File")
-        saveStocks()
+        print("Read From File");
         return true
     }
     ///将股票信息存储到本地
+    private func createStocks(strs:[String]){
+            for str in strs {
+                if str.count > 0{
+                    let obj = YJStockStringObject(str: str)
+                    insertStock(stockString: obj)
+                }
+            }        
+            saveStocks()
+    }
     private func insertStock(stockString:YJStockStringObject){
-
         stocks.insert(Stocks.insert(stockString), at: 0)
     }
+    private func updateStocks(strs:[String]){
+        OperationQueue().addOperation {[weak self] in
+            for str in strs {
+                if str.count > 0{
+                    let obj = YJStockStringObject(str: str)
+                    if let stock = self?.stocks.first(where: {$0.id == obj.id}){
+                        stock.update(obj)
+                        continue
+                    }
+                    self?.insertStock(stockString: obj)
+                }
+            }
+            OperationQueue.main.addOperation {
+                YJProgressHUD.showSuccess(message: "Stock List update finished")
+                self?.saveStocks()
+            }
+        }
 
+    }
     private func saveStocks(){
         do {
             try managedObjectContext.save();
-        } catch  {
-            fatalError("无法保存")
+        } catch let error {
+            fatalError("无法保存:\(error)")
         }
-        UserDefaults.standard.setValue(updateTime, forKey: "updateTime");
+        
     }
     //MARK:- Statistics
     private func readRecord(){
@@ -227,7 +221,10 @@ class YJCache: NSObject {
 
         return true
     }
-    
+    func refreshRecord(){
+        totalRecord?.refreshBasic()
+        updateRecord()
+    }
     func updateRecord(){
         totalRecord?.update(lastRecord,people)
     }

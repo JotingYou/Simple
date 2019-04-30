@@ -42,6 +42,11 @@ extension People {
     func update(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->Bool{
         
         self.stock = stock
+        refreshStock({(flag) in
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: flag)
+            
+        })
         setValues(name,totalCost,stock,amount,buy_date)
         do {
             try YJCache.shared.managedObjectContext.save();
@@ -52,16 +57,15 @@ extension People {
         
         return true
     }
-
-    func refreshStock(_ complication:((Bool)-> Void)? = nil){
+    func refreshStock(_ complition:((Bool)-> Void)? = nil){
         stock!.update { [weak self](isUpdated) in
-            if !isUpdated {complication?(false);return}
+            if !isUpdated {complition?(false);return}
             guard let person = self else{
                 return
             }
             person.setValues(person.name!, person.total_cost,person.stock!,person.amount,person.buy_date!)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: self)
-            complication?(true)
+
+            complition?(true)
         }
         
         
@@ -87,10 +91,8 @@ extension People {
         
     }
     func setStatistics() {
-        let records = statistics?.filter({ return YJConst.isSameDay(($0 as! Statistics).create_time!, Date())
-        })
-        if let record:Statistics = records?.first as? Statistics {
-            
+         if let record = statistics?.first(where:{
+            YJConst.isSameDay(($0 as! Statistics).create_time!, Date())}) as? Statistics{
             if record.update(nil, [self]){
                 return
             }

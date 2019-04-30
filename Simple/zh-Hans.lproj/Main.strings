@@ -88,7 +88,7 @@
 "GHV-gP-c8e.text" = "年化收益率";
 
 /* Class = "UILabel"; text = "Interest"; ObjectID = "Ghg-oB-KuM"; */
-"Ghg-oB-KuM.text" = "收益 (元)";
+"Ghg-oB-KuM.text" = "参考收益 (元)";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "J7Z-6w-9kb"; */
 "J7Z-6w-9kb.text" = "姓名";

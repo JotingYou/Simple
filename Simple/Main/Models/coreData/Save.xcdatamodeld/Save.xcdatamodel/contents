@@ -30,7 +30,7 @@
         <relationship name="people" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="People" inverseName="statistics" inverseEntity="People" syncable="YES"/>
     </entity>
     <entity name="Stocks" representedClassName="Stocks" syncable="YES" codeGenerationType="class">
-        <attribute name="code" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>
         <attribute name="name_spell" optional="YES" attributeType="String" defaultValueString="&quot;&quot;" syncable="YES"/>

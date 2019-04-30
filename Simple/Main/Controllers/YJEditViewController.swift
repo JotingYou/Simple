@@ -75,7 +75,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
         }
         let fund_number = searchBar.text!
         filterContentForSearchText(fund_number)
-        if searchResults.count != 1 {
+        if searchResults.count == 0 {
             print("请选择基金")
             searchBar.becomeFirstResponder()
             return

@@ -46,7 +46,7 @@ class YJProgressHUD: NSObject {
         hud.removeFromSuperViewOnHide = true;
 //        hud.label.textColor = .white
         // 3秒之后再消失
-        hud.hide(animated: true, afterDelay:5)
+        //hud.hide(animated: true, afterDelay:5)
         
         view.addSubview(hud)
     }
@@ -92,7 +92,7 @@ class YJProgressHUD: NSObject {
     static private func hideHUD(forView:UIView){
         MBProgressHUD.hide(for: forView, animated: true)
     }
-    static private func hideHUD(){
+    static func hideHUD(){
         let view = UIApplication.shared.keyWindow!
         MBProgressHUD.hide(for: view, animated: true)
     }

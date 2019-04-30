@@ -9,9 +9,9 @@
 import UIKit
 import FoldingCell
 
-class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate,YJDetailTVCDelegate {
+class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate,YJDetailTVCDelegate {
 
-    
+    var tableViewRefreshControl: UIRefreshControl?
     var searchResults = Array<People>()
     let headerView = YJMainHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: YJConst.headerHeight))
     
@@ -49,22 +49,32 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         searchBar.delegate = self
         
         setTableView()
+        setNotifications()
+
         setRefresh()
-        //NotificationCenter.default.addObserver(self, selector: #selector(reloadPersonCell(notification:)), name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: nil)
+
     }
+
     //MARK: - Notification
-    @objc func reloadPersonCell(notification:NSNotification){
-        guard let person:People = notification.object as? People else {
-            return
-        }
-        guard let row = YJCache.shared.people.index(of: person) else{
-            return
-        }
-        YJCache.shared.updateRecord()
-        let index = IndexPath(row: row, section: 0)
-        self.tableView.reloadRows(at: [index], with: .automatic)
+    func setNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadPersonCell(notification:)), name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(internetTimeout(noti:)), name: NSNotification.Name(rawValue:YJConst.internetTimeout), object: nil)
     }
-    //MARK: - REFRESH
+    @objc func reloadPersonCell(notification:NSNotification){
+        guard let isUpdated:Bool = notification.object as? Bool else {
+            return
+        }
+        if isUpdated {
+            YJCache.shared.updateRecord()
+            self.tableView.reloadData()
+        }
+        
+    }
+    @objc func internetTimeout(noti:Notification) {
+        YJProgressHUD.showError(message: YJConst.internetTimeout)
+    }
+
+    //MARK: - SETUP
     func setTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "background"))
@@ -73,31 +83,37 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         self.tableView.estimatedSectionHeaderHeight = 0;
         self.tableView.estimatedSectionFooterHeight = 0;
     }
+    //MARK: REFRESH
     func setRefresh() {
         let refreshControl = UIRefreshControl()
+        tableViewRefreshControl = refreshControl
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(refreshStateChange), for: .valueChanged)
         tableView.addSubview(refreshControl)
-        refreshDataAndView()
+        refreshStateChange(refreshControl)
     }
     @objc func refreshStateChange(_ refreshControl:UIRefreshControl) {
-        let deadlineTime = DispatchTime.now() + .seconds(1)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {[weak self] in
-            refreshControl.endRefreshing()
-            self?.refreshDataAndView()
+            YJCache.shared.refreshPeople({
+                YJCache.shared.refreshRecord()
+                OperationQueue.main.addOperation {
+                    [weak self] in
+                    refreshControl.endRefreshing()
+                    self?.tableView.reloadData()
+                }
+            })
 
-        })
+//        let deadlineTime = DispatchTime.now() + .seconds(1)
+//        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {[weak self] in
+//            refreshControl.endRefreshing()
+//            self?.refreshDataAndView()
+//
+//        })
 
     }
-    func refreshDataAndView() {
-        YJCache.shared.refreshPeople({
-            YJCache.shared.updateRecord()
-            OperationQueue.main.addOperation {
-                self.tableView.reloadData()
-            }
-        })
-
-    }
+//    func refreshDataAndView() {
+//
+//
+//    }
     //MARK: -
     //MARK: searchBar Delegate
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -289,9 +305,6 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             }else{
                 normalCellHeights[indexPath.row] = YJConst.openCellHeight
             }
-//            if rectInScreen.maxY + YJConst.openCellHeight - YJConst.closeCellHeight > UIScreen.main.bounds.height{
-//                self.tableView.scrollToRow(at: indexPath, at:.top , animated: true)
-//            }
             cell.unfold(true, animated: true, completion: nil)
             duration = 0.5
         } else {
@@ -300,15 +313,23 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
             }else{
                 normalCellHeights[indexPath.row] = YJConst.closeCellHeight
             }
-
+            
             cell.unfold(false, animated:true, completion: nil)
             duration = 0.8
         }
+
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+            //fix odd bugs
+            let rect = self.tableView.rectForRow(at: indexPath)
+            let rectInScreen = self.tableView.convert(rect, to: self.tableView.superview)
+            if rectInScreen.maxY > UIScreen.main.bounds.maxY {
+                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
             self.tableView.isUserInteractionEnabled = true
-        }, completion: nil)
+        }, completion:nil)
+
     }
     func didEdited(index: IndexPath) {
         YJCache.shared.updateRecord()
@@ -326,7 +347,7 @@ class YJMainViewController: UITableViewController,YJEditViewControllerDelegate,U
         self.tableView.reloadData()
     }
     deinit{
-        //NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
 }
