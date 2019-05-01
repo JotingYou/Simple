@@ -8,21 +8,20 @@ pod 'MBProgressHUD'
 #pod 'AFNetworking'
 pod 'Alamofire'
 pod 'SDWebImage'
-
-#html
 pod 'SwiftSoup'
 
 #json
-pod 'SwiftyJSON'
+#pod 'SwiftyJSON'
 
-#cell
+#UI
 pod 'FoldingCell'
+pod 'LTScrollView'
+pod "BouncyPageViewController"
 
 #layout
 pod 'Masonry'
 #pod 'SnapKit'
 #pod 'MJRefresh'
-pod 'LTScrollView'
 
 #CoreData
 #pod 'RealmSwift'

@@ -1,46 +1,50 @@
 PODS:
   - Alamofire (4.7.2)
+  - BouncyPageViewController (0.1.0):
+    - RBBAnimation (= 0.4.0)
   - FoldingCell (3.1.1)
   - LTScrollView (0.1.6)
   - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
+  - RBBAnimation (0.4.0)
   - SDWebImage (4.4.0):
     - SDWebImage/Core (= 4.4.0)
   - SDWebImage/Core (4.4.0)
   - SwiftSoup (1.7.1)
-  - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
   - Alamofire
+  - BouncyPageViewController
   - FoldingCell
   - LTScrollView
   - Masonry
   - MBProgressHUD
   - SDWebImage
   - SwiftSoup
-  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - BouncyPageViewController
     - FoldingCell
     - LTScrollView
     - Masonry
     - MBProgressHUD
+    - RBBAnimation
     - SDWebImage
     - SwiftSoup
-    - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  BouncyPageViewController: e62e46c88a200e1c8baf10fe1f0294fbddd75bc7
   FoldingCell: 238c33ae8d9cd655090c9c4c5ff32596cfd18c6e
   LTScrollView: 54ad587a9664434c6b25eefd2b8095eb5641c79c
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
   SDWebImage: b534502786e43dde36dfcaee89356fe6df30e203
   SwiftSoup: 277f7ef548826e0ca7603a06b30d4a5df3ee0587
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 363824ad95d0350b9f57201b43e5ef5ae068cc0c
+PODFILE CHECKSUM: 069c956cf39db7535e363373492ddb88309e69d4
 
 COCOAPODS: 1.5.3

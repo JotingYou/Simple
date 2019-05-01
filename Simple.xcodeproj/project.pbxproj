@@ -33,6 +33,10 @@
 		3E89381B2274170D0095EC7D /* Stocks+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89381A2274170D0095EC7D /* Stocks+Method.swift */; };
 		3E9051ED226C64FB006DD597 /* YJFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */; };
 		3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EE226C6B60006DD597 /* YJConst.swift */; };
+		3ED4714D22797B410059294B /* YJPageViewControllerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4714C22797B410059294B /* YJPageViewControllerPresenter.swift */; };
+		3ED4715922798C020059294B /* YJHeartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4715822798C020059294B /* YJHeartController.swift */; };
+		3ED4715D22798F890059294B /* YJRecommenderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4715C22798F890059294B /* YJRecommenderManager.swift */; };
+		3ED471602279A0DD0059294B /* YJHeartController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED471622279A0DD0059294B /* YJHeartController.xib */; };
 		3EEEEE1A22788F6B0024EA85 /* fundcode_search.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EEEEE1922788F6B0024EA85 /* fundcode_search.js */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +93,11 @@
 		3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJFoldingCell.swift; sourceTree = "<group>"; };
 		3E9051EE226C6B60006DD597 /* YJConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJConst.swift; sourceTree = "<group>"; };
 		3ED36CFE227193C30082F18B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		3ED4714C22797B410059294B /* YJPageViewControllerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJPageViewControllerPresenter.swift; sourceTree = "<group>"; };
+		3ED4715822798C020059294B /* YJHeartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJHeartController.swift; sourceTree = "<group>"; };
+		3ED4715C22798F890059294B /* YJRecommenderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJRecommenderManager.swift; sourceTree = "<group>"; };
+		3ED471612279A0DD0059294B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/YJHeartController.xib; sourceTree = "<group>"; };
+		3ED471642279A0EA0059294B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/YJHeartController.strings"; sourceTree = "<group>"; };
 		3EEEEE1922788F6B0024EA85 /* fundcode_search.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = fundcode_search.js; sourceTree = "<group>"; };
 		A4D649D7DDBE97C43A175A3B /* Pods-Simple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Simple/Pods-Simple.debug.xcconfig"; sourceTree = "<group>"; };
 		ED63F39216DEBECD81CF8BDE /* Pods_Simple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +198,7 @@
 				3E80E58A225D98D7005E9FBA /* Main.storyboard */,
 				3E80E58F225D98D9005E9FBA /* LaunchScreen.storyboard */,
 				3E0E986A226F0FC400FD7ACE /* Main */,
+				3ED4714B22797B120059294B /* Recomender */,
 				3E2CB623227861B400BF60C3 /* Settings */,
 				3E2CB6262278630A00BF60C3 /* Universal */,
 				3E80E592225D98D9005E9FBA /* Info.plist */,
@@ -280,6 +290,33 @@
 				3E33A41B227303B900071FDE /* YJMainHeaderView.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		3ED4714B22797B120059294B /* Recomender */ = {
+			isa = PBXGroup;
+			children = (
+				3ED4715C22798F890059294B /* YJRecommenderManager.swift */,
+				3ED4715E227990270059294B /* Controller */,
+				3ED4715F227990790059294B /* View */,
+			);
+			path = Recomender;
+			sourceTree = "<group>";
+		};
+		3ED4715E227990270059294B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3ED4714C22797B410059294B /* YJPageViewControllerPresenter.swift */,
+				3ED4715822798C020059294B /* YJHeartController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3ED4715F227990790059294B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3ED471622279A0DD0059294B /* YJHeartController.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		AE0E2F955B8BD7417C6C61E1 /* Frameworks */ = {
@@ -402,6 +439,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E80E591225D98D9005E9FBA /* LaunchScreen.storyboard in Resources */,
+				3ED471602279A0DD0059294B /* YJHeartController.xib in Resources */,
 				3E80E5B5225D9C69005E9FBA /* MBProgressHUD.bundle in Resources */,
 				3E80E58E225D98D9005E9FBA /* Assets.xcassets in Resources */,
 				3E08DB8A2269C59E00CD0070 /* Localizable.strings in Resources */,
@@ -436,24 +474,26 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Simple/Pods-Simple-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BouncyPageViewController/BouncyPageViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/FoldingCell/FoldingCell.framework",
 				"${BUILT_PRODUCTS_DIR}/LTScrollView/LTScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/RBBAnimation/RBBAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BouncyPageViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FoldingCell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LTScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RBBAnimation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -491,14 +531,17 @@
 				3E80E5D0225F1F11005E9FBA /* YJEditViewController.swift in Sources */,
 				3E9051ED226C64FB006DD597 /* YJFoldingCell.swift in Sources */,
 				3E57524122672105002BD654 /* YJStockStringObject.swift in Sources */,
+				3ED4715922798C020059294B /* YJHeartController.swift in Sources */,
 				3E80E589225D98D7005E9FBA /* SecondViewController.swift in Sources */,
 				3E893819227416E50095EC7D /* People+Method.swift in Sources */,
 				3E80E5C0225E3103005E9FBA /* YJCache.swift in Sources */,
 				3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */,
 				3E80E5CE225E499E005E9FBA /* Save.xcdatamodeld in Sources */,
+				3ED4714D22797B410059294B /* YJPageViewControllerPresenter.swift in Sources */,
 				3E80E585225D98D7005E9FBA /* AppDelegate.swift in Sources */,
 				3E80E5D222605CF6005E9FBA /* YJDetailTableViewController.swift in Sources */,
 				3E80E5B7225D9C76005E9FBA /* YJProgressHUD.swift in Sources */,
+				3ED4715D22798F890059294B /* YJRecommenderManager.swift in Sources */,
 				3E2CB625227861D600BF60C3 /* YJSettingsController.swift in Sources */,
 				3E33A4142272E77200071FDE /* YJMainHeaderView.swift in Sources */,
 				3E33A4222273348900071FDE /* Statistics+Method.swift in Sources */,
@@ -571,6 +614,15 @@
 				3E08DB852269A2FE00CD0070 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		3ED471622279A0DD0059294B /* YJHeartController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3ED471612279A0DD0059294B /* Base */,
+				3ED471642279A0EA0059294B /* zh-Hans */,
+			);
+			name = YJHeartController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -710,7 +762,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.youjoting.Simple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -730,7 +782,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.youjoting.Simple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

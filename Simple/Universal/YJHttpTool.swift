@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 import SDWebImage
 import Alamofire
 import SwiftSoup

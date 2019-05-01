@@ -1,0 +1,12 @@
+
+/* Class = "UIButton"; normalTitle = "SETTINGS"; ObjectID = "9nh-qZ-w7F"; */
+"9nh-qZ-w7F.normalTitle" = "设置";
+
+/* Class = "UIButton"; normalTitle = "MORE INFO"; ObjectID = "Ssq-dv-nMi"; */
+"Ssq-dv-nMi.normalTitle" = "更多";
+
+/* Class = "UILabel"; text = "Today"; ObjectID = "dee-8K-KNT"; */
+"dee-8K-KNT.text" = "Today";
+
+/* Class = "UILabel"; text = "180/300"; ObjectID = "pxV-II-Msp"; */
+"pxV-II-Msp.text" = "180/300";
