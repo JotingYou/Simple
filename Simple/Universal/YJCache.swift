@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+
+
 class YJCache: NSObject {
     var stocks = Array<Stocks>()
     let dateFormatter:DateFormatter = {
@@ -57,31 +59,31 @@ class YJCache: NSObject {
     }
     ///插入顾客信息
     func insertPerson(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date) -> Bool{
-        if let person = People.insert(name, totalCost, stock, amount, buy_date) {
-            people.insert(person, at: 0)
-
-            return true
-        }
-        return false
+        let person = People.insert(name, totalCost, stock, amount, buy_date)
+        people.insert(person, at: 0)
+        person.refreshStock({(flag) in
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: flag)
+            
+        })
+        return save()
     }
     //更新顾客信息
     func updatePerson(_ person:People,_ name:String,_ total_cost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->Bool{
-        if person.update(name, total_cost, stock, amount, buy_date){
-            return true
-        }else{
-            return false
-        }
+        person.update(name, total_cost, stock, amount, buy_date)
+        person.refreshStock({(flag) in
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: flag)
+            
+        })
+        return save()
     }
 
     //删除顾客信息
     func deletePersonAt(row:Int){
         managedObjectContext.delete(people[row])
         people.remove(at: row)
-        do {
-            try managedObjectContext.save();
-        } catch  {
-            fatalError("无法删除")
-        }
+        saveAndPrint(funcName: #function)
     }
     //MARK: REFRESH
     func refreshPeople(_ complition:(()-> Void)?){
@@ -90,6 +92,7 @@ class YJCache: NSObject {
             person.refreshStock({[weak self](isUpdated) in
                 num += 1
                 if num == self?.people.count{
+                    self?.saveAndPrint(funcName: #function)
                     complition?()
                 }
             })
@@ -151,44 +154,67 @@ class YJCache: NSObject {
         return true
     }
     ///将股票信息存储到本地
-    private func createStocks(strs:[String]){
-            for str in strs {
-                if str.count > 0{
-                    let obj = YJStockStringObject(str: str)
-                    insertStock(stockString: obj)
-                }
-            }        
-            saveStocks()
+
+    private func insertStock(stockString:YJStockStringObject,_ row:Int = -1){
+        if row == -1{
+            stocks.append(Stocks.insert(stockString))
+        }else{
+            stocks.insert(Stocks.insert(stockString), at: row)
+        }
     }
-    private func insertStock(stockString:YJStockStringObject){
-        stocks.insert(Stocks.insert(stockString), at: 0)
+    private func createStocks(strs:[String]){
+        for str in strs {
+            if str.count > 0{
+                let obj = YJStockStringObject(str: str)
+                insertStock(stockString: obj)
+            }
+        }
+        if !save(){
+            print("\(#function)failed")
+        }
     }
     private func updateStocks(strs:[String]){
         OperationQueue().addOperation {[weak self] in
+            var index = 0
             for str in strs {
                 if str.count > 0{
                     let obj = YJStockStringObject(str: str)
-                    if let stock = self?.stocks.first(where: {$0.id == obj.id}){
-                        stock.update(obj)
-                        continue
+                    if index < self?.stocks.count ?? 0{
+                        if let stock = self?.stocks[index]{
+                            if stock.id == obj.id {
+                                stock.update(obj)
+                                index += 1
+                                continue
+                            }
+                        }
+
                     }
-                    self?.insertStock(stockString: obj)
+                    self?.insertStock(stockString: obj,index)
+                    index += 1
                 }
             }
             OperationQueue.main.addOperation {
                 YJProgressHUD.showSuccess(message: "Stock List update finished")
-                self?.saveStocks()
+                self?.saveAndPrint(funcName: #function)
             }
         }
 
     }
-    private func saveStocks(){
+    private func saveAndPrint(funcName:String){
+        if save(){
+            print("\(funcName) passed")
+        }else{
+            print("\(funcName) failed")
+        }
+    }
+    private func save() -> Bool{
         do {
             try managedObjectContext.save();
         } catch let error {
-            fatalError("无法保存:\(error)")
+            print("无法保存:\(error)")
+            return false
         }
-        
+        return true
     }
     //MARK:- Statistics
     private func readRecord(){
@@ -213,13 +239,9 @@ class YJCache: NSObject {
             lastRecord = self.totalRecord
         }
         
-        guard let record =  Statistics.insert(lastRecord,people) else {
-            return false
-        }
-    
+        let record =  Statistics.insert(lastRecord,people)
         self.totalRecord = record
-
-        return true
+        return save()
     }
     func refreshRecord(){
         totalRecord?.refreshBasic()
@@ -227,6 +249,7 @@ class YJCache: NSObject {
     }
     func updateRecord(){
         totalRecord?.update(lastRecord,people)
+        saveAndPrint(funcName: #function)
     }
     
  

@@ -28,34 +28,17 @@ extension People {
         }
         return Array<People>()
     }
-    static func insert(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->People?{
+    static func insert(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->People{
         let entity = NSEntityDescription.entity(forEntityName: "People", in: YJCache.shared.managedObjectContext)!
         let person = People.init(entity: entity, insertInto: YJCache.shared.managedObjectContext)
         person.create_time = Date()
-        if person.update(name, totalCost, stock, amount,buy_date){
-            return person
-        }else{
-            return nil
-        }
+        person.setValues(name, totalCost, stock, amount,buy_date)
+        return person
+
     }
     //更新顾客信息
-    func update(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->Bool{
-        
-        self.stock = stock
-        refreshStock({(flag) in
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: flag)
-            
-        })
-        setValues(name,totalCost,stock,amount,buy_date)
-        do {
-            try YJCache.shared.managedObjectContext.save();
-        } catch  {
-            print("update People failed:CoreData can't save!")
-            return false
-        }
-        
-        return true
+    func update(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date){
+        setValues(name, totalCost, stock, amount,buy_date)
     }
     func refreshStock(_ complition:((Bool)-> Void)? = nil){
         stock!.update { [weak self](isUpdated) in
@@ -93,13 +76,10 @@ extension People {
     func setStatistics() {
          if let record = statistics?.first(where:{
             YJConst.isSameDay(($0 as! Statistics).create_time!, Date())}) as? Statistics{
-            if record.update(nil, [self]){
-                return
-            }
+            record.update(nil, [self])
         }
-        if let record = Statistics.insert(nil, [self]){
-            statistics?.adding(record)
-        }
+        let record = Statistics.insert(nil, [self])
+        statistics?.adding(record)        
 
     }
 }

@@ -30,27 +30,26 @@ extension Statistics {
         return Array<Statistics>()
     }
     
-    static func insert(_ lastRecord:Statistics?,_ people:[People]) -> Statistics? {
+    static func insert(_ lastRecord:Statistics?,_ people:[People]) -> Statistics {
         
         let entity = NSEntityDescription.entity(forEntityName: "Statistics", in: YJCache.shared.managedObjectContext)
         let record = Statistics.init(entity: entity!, insertInto: YJCache.shared.managedObjectContext)
         record.create_time = Date()
-        if record.update(lastRecord, people){
-            return record
-        }
-        return nil
+        record.update(lastRecord, people)
+        return record
+
     }
     
-    func update(_ lastRecord:Statistics?, _ people:[People])->Bool{
+    func update(_ lastRecord:Statistics?, _ people:[People]){
         
         setValuesWith(lastRecord,people)
-        do {
-            try YJCache.shared.managedObjectContext.save()
-        } catch    let error{
-            print("Update Record failed:Core Date Save Error! \(error)")
-            return false
-        }
-        return true
+//        do {
+//            try YJCache.shared.managedObjectContext.save()
+//        } catch    let error{
+//            print("Update Record failed:Core Date Save Error! \(error)")
+//            return false
+//        }
+
     }
     func refreshBasic() {
         YJHttpTool.shared.getBasicRate({[weak self](dic) in

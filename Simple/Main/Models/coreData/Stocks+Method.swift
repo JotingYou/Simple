@@ -12,7 +12,8 @@ extension Stocks {
     static func readFromCoreDate() -> [Stocks]?{
         //        建立一个获取的请求
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Stocks")
-    
+        let sort = NSSortDescriptor.init(key: "id", ascending: true)
+        fetchRequest.sortDescriptors = [sort]
         //        执行请求
         do {
             let fetchedResults = try YJCache.shared.managedObjectContext.fetch(fetchRequest) as? [Stocks]
@@ -52,16 +53,6 @@ extension Stocks {
             complition?(false)
         })
     }
-
-//                return true
-//            }else{
-//                return false
-//            }
-//
-//        }else{
-//            return false
-//        }
-//    }
     static func insert(_ stockString:YJStockStringObject) -> Stocks {
         let entity = NSEntityDescription.entity(forEntityName: "Stocks", in: YJCache.shared.managedObjectContext)!
         let stock = Stocks.init(entity: entity, insertInto: YJCache.shared.managedObjectContext)
@@ -71,12 +62,5 @@ extension Stocks {
         stock.name_spell = stockString.name_spell
         stock.type = stockString.type
         return stock
-    }
-    func save(){
-        do {
-            try YJCache.shared.managedObjectContext.save();
-        } catch  {
-            fatalError("无法保存")
-        }
     }
 }
