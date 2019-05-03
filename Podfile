@@ -11,16 +11,17 @@ pod 'SDWebImage'
 pod 'SwiftSoup'
 
 #json
-#pod 'SwiftyJSON'
+pod 'HandyJSON', '~> 5.0.0-beta.1'
+pod 'Kingfisher'
+pod 'SwiftyJSON'
 
 #UI
 pod 'FoldingCell'
 pod 'LTScrollView'
-pod "BouncyPageViewController"
-
+pod 'BouncyPageViewController'
+pod 'SwiftWebVC'
 #layout
-pod 'Masonry'
-#pod 'SnapKit'
+pod 'SnapKit'
 #pod 'MJRefresh'
 
 #CoreData

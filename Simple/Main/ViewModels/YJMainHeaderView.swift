@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Masonry
+import SnapKit
 class YJMainHeaderView: UIView {
     
     
@@ -55,10 +55,9 @@ class YJMainHeaderView: UIView {
         view.subviews.last?.layer.masksToBounds = true
         view.subviews.last?.layer.cornerRadius = 10
         addSubview(view)
-        view.mas_makeConstraints {
-            $0?.edges.equalTo()
+        view.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-        
         NotificationCenter.default.addObserver(self, selector: #selector(setValueForLabels), name: NSNotification.Name(rawValue: YJConst.recordChangedNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setBasicLabel), name: NSNotification.Name(rawValue: YJConst.recordChangedBasic), object: nil)
     }
@@ -66,7 +65,9 @@ class YJMainHeaderView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         addSubview(view)
-        view.mas_makeConstraints{$0?.edges.equalTo()}
+        view.snp.makeConstraints({
+            $0.edges.equalToSuperview()
+        })
 
     }
     deinit{
