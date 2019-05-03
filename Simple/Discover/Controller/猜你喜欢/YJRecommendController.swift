@@ -10,10 +10,9 @@ import UIKit
 import LTScrollView
 class YJRecommendController: UIViewController,LTTableViewProtocal {
 
-    private let YJRecommendCellID = "YJRecommendCell"
     private lazy var tableView: UITableView = {
-        let tableView = tableViewConfig(CGRect(x: 0, y: 56, width:YJConst.screenWidth, height: YJConst.screenHeight - YJConst.navBarHeight - YJConst.tabBarHeight), self, self, nil)
-        tableView.register(YJAttentionCell.self, forCellReuseIdentifier: YJConst.recommendCellSI)
+        let tableView = tableViewConfig(CGRect(x: 0, y: 0, width:YJConst.screenWidth, height: YJConst.screenHeight - YJConst.navBarHeight - YJConst.tabBarHeight), self, self, nil)
+        tableView.register(YJRecommendCell.self, forCellReuseIdentifier: YJConst.recommendCellSI)
         return tableView
     }()
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YJRecommendPicViewCell: UICollectionViewCell {
+class YJRecommendPicCell: UICollectionViewCell {
     private lazy var imageView : UIImageView = {
         let imageView = UIImageView()
         return imageView

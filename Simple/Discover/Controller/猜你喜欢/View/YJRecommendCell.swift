@@ -48,8 +48,8 @@ class YJRecommendCell: UITableViewCell {
         return imageView
     }()
     // 评论
-    lazy var commnetLabel : UILabel = {
-        let label = UILabel()
+    lazy var commnetLabel : YJCommendLabel = {
+        let label = YJCommendLabel()
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.lightGray
         return label
@@ -113,7 +113,7 @@ class YJRecommendCell: UITableViewCell {
         self.dateLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.picView)
             make.bottom.equalToSuperview().offset(-15)
-            make.width.equalTo(100)
+            //make.width.equalTo(156)
             make.height.equalTo(20)
         }
         

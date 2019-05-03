@@ -15,7 +15,7 @@ class YJDiscoverController: UIViewController {
         view.backgroundColor = UIColor.white
         return view
     }()
-    
+    var transparentLayer:UIView?
     private lazy var viewControllers: [UIViewController] = {
         let attentionVC = YJAttentionController()
         let recommendVC = YJRecommendController()
@@ -85,9 +85,28 @@ class YJDiscoverController: UIViewController {
         // 导航栏左右item
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftBarButton)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightBarButton)
-
+        transparentLayer = self.navigationController!.navigationBar.subviews.first
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+
+            hideNavigationBar()
+        
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        showNavigationBar()
+    }
+    func hideNavigationBar(){
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        //line?.alpha = 0
+        transparentLayer?.alpha = 0
+    }
+    func showNavigationBar(){
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        //line?.alpha = 1
+        transparentLayer?.alpha = 1
+    }
     // - 导航栏左边消息点击事件
     @objc func leftBarButtonClick() {
         

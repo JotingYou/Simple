@@ -10,9 +10,11 @@ import UIKit
 import FoldingCell
 
 class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate,YJDetailTVCDelegate {
-
+    //@IBOutlet var tableView:UITableView!
     var tableViewRefreshControl: UIRefreshControl?
     var searchResults = Array<People>()
+    var line:UIImageView?
+    var transparentLayer:UIView?
     let headerView = YJMainHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: YJConst.headerHeight))
     
     lazy var normalCellHeights:[CGFloat] = (0..<YJCache.shared.people.count).map { _ in YJConst.closeCellHeight }
@@ -44,7 +46,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         } else {
             navigationItem.titleView?.addSubview(searchBar)
         }
-        extendedLayoutIncludesOpaqueBars = true
+        //extendedLayoutIncludesOpaqueBars = true
         
         searchBar.delegate = self
         
@@ -52,9 +54,22 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         setNotifications()
 
         setRefresh()
+        setNavigationBar()
 
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if tableView.contentOffset.y > -64{
+            showNavigationBar()
+        }else{
+            hideNavigationBar()
+        }
+        
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        showNavigationBar()
+    }
     //MARK: - Notification
     func setNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPersonCell(notification:)), name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: nil)
@@ -75,9 +90,34 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     }
 
     //MARK: - SETUP
+    func setNavigationBar(){
+       transparentLayer = self.navigationController!.navigationBar.subviews.first
+        for (_,view) in self.navigationController!.navigationBar.subviews.first!.subviews.enumerated(){
+            if view.isKind(of: UIImageView.self){
+                line = view as? UIImageView
+            }
+        }
+        //修改导航栏标题文字颜色
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [.foregroundColor: UIColor.white]
+        //修改导航栏按钮颜色
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+        //设置视图的背景图片（自动拉伸）
+        self.view.layer.contents = #imageLiteral(resourceName: "background").cgImage
+    }
+    func hideNavigationBar(){
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        //line?.alpha = 0
+        transparentLayer?.alpha = 0
+    }
+    func showNavigationBar(){
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        //line?.alpha = 1
+        //transparentLayer?.alpha = 1
+    }
     func setTableView() {
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "background"))
         //fix odd scroll bug
         self.tableView.estimatedRowHeight = 0;
         self.tableView.estimatedSectionHeaderHeight = 0;
@@ -102,18 +142,8 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
                 }
             })
 
-//        let deadlineTime = DispatchTime.now() + .seconds(1)
-//        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {[weak self] in
-//            refreshControl.endRefreshing()
-//            self?.refreshDataAndView()
-//
-//        })
 
     }
-//    func refreshDataAndView() {
-//
-//
-//    }
     //MARK: -
     //MARK: searchBar Delegate
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -155,85 +185,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         searchCellHeights = (0..<searchResults.count).map { _ in YJConst.closeCellHeight }
         tableView.reloadData()
     }
-    //MARK: -
-    //MARK: tableview
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerView
-    }
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return YJConst.headerHeight
-    }
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if case let cell as YJFoldingCell = cell {
-            let cellHeight:CGFloat = {
-                if isFiltering() {
-                    return searchCellHeights[indexPath.row]
-                }else{
-                    return normalCellHeights[indexPath.row]
-                }
-            }()
-            
-            if cellHeight == YJConst.closeCellHeight {
-                cell.isUnfolded = false
-                cell.unfold(false, animated: false, completion: nil)
-            } else {
-                cell.isUnfolded = true
-                cell.unfold(true, animated: false, completion: nil)
-            }
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if isFiltering() {
-            return searchCellHeights[indexPath.row]
-        }else{
-            return normalCellHeights[indexPath.row]
-        }
-
-    }
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        if isFiltering() {
-            return false
-        }
-        return true
-    }
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            YJCache.shared.deletePersonAt(row: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            normalCellHeights.remove(at: indexPath.row)
-            YJCache.shared.updateRecord()
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
-            return searchResults.count
-        }
-        return YJCache.shared.people.count
-    }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var person = YJCache.shared.people[indexPath.row]
-        if isFiltering() {
-            person = searchResults[indexPath.row]
-        }
-        let reusableID = "personCell"
-        guard let cell:YJFoldingCell = tableView.dequeueReusableCell(withIdentifier: reusableID) as? YJFoldingCell else {
-            let cell = YJFoldingCell.init(style: .value1, reuseIdentifier: "personCell")
-            cell.setPerson(person: person)
-            cell.delegate = self
-            return cell
-        }
-        cell.setPerson(person: person)
-        let durations: [TimeInterval] = [0.26, 0.2, 0.2,0.2,0.2]
-        cell.durationsForExpandedState = durations
-        cell.durationsForCollapsedState = durations
-        cell.delegate = self
-        return cell
-    }
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        performSegue(withIdentifier: "toDetail", sender: indexPath)
 //    }
@@ -350,4 +302,99 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         NotificationCenter.default.removeObserver(self)
     }
 
+}
+//MARK: -
+//MARK: tableview
+extension YJMainController{
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return headerView
+    }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return YJConst.headerHeight
+    }
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if case let cell as YJFoldingCell = cell {
+            let cellHeight:CGFloat = {
+                if isFiltering() {
+                    return searchCellHeights[indexPath.row]
+                }else{
+                    return normalCellHeights[indexPath.row]
+                }
+            }()
+            
+            if cellHeight == YJConst.closeCellHeight {
+                cell.isUnfolded = false
+                cell.unfold(false, animated: false, completion: nil)
+            } else {
+                cell.isUnfolded = true
+                cell.unfold(true, animated: false, completion: nil)
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if isFiltering() {
+            return searchCellHeights[indexPath.row]
+        }else{
+            return normalCellHeights[indexPath.row]
+        }
+        
+    }
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        if isFiltering() {
+            return false
+        }
+        return true
+    }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            YJCache.shared.deletePersonAt(row: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            normalCellHeights.remove(at: indexPath.row)
+            YJCache.shared.updateRecord()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            return searchResults.count
+        }
+        return YJCache.shared.people.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var person = YJCache.shared.people[indexPath.row]
+        if isFiltering() {
+            person = searchResults[indexPath.row]
+        }
+        let reusableID = "personCell"
+        guard let cell:YJFoldingCell = tableView.dequeueReusableCell(withIdentifier: reusableID) as? YJFoldingCell else {
+            let cell = YJFoldingCell.init(style: .value1, reuseIdentifier: "personCell")
+            cell.setPerson(person: person)
+            cell.delegate = self
+            return cell
+        }
+        cell.setPerson(person: person)
+        let durations: [TimeInterval] = [0.26, 0.2, 0.2,0.2,0.2]
+        cell.durationsForExpandedState = durations
+        cell.durationsForCollapsedState = durations
+        cell.delegate = self
+        return cell
+    }
+}
+extension YJMainController {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffSet = scrollView.contentOffset.y
+        let alphaHeight = (currentOffSet+170)/100
+        let alpha = alphaHeight<1 ? alphaHeight : 1
+        transparentLayer?.alpha = alpha
+        if alpha > 0.9{
+            showNavigationBar()
+        }else{
+            hideNavigationBar()
+        }
+    }
 }
