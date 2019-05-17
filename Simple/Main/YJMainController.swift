@@ -25,7 +25,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         searchController.hidesNavigationBarDuringPresentation = true
         definesPresentationContext = true
         searchController.obscuresBackgroundDuringPresentation = false
-
+        searchController.delegate = self
         return searchController
     }()
 
@@ -47,7 +47,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
             navigationItem.titleView?.addSubview(searchBar)
         }
         //extendedLayoutIncludesOpaqueBars = true
-        
+        //searchController.searchBar.setNeedsDisplay()
         searchBar.delegate = self
         
         setTableView()
@@ -96,6 +96,11 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
             if view.isKind(of: UIImageView.self){
                 line = view as? UIImageView
             }
+        }
+        if #available(iOS 11.0, *) {
+            self.navigationController?.navigationItem.hidesSearchBarWhenScrolling = true
+        } else {
+            // Fallback on earlier versions
         }
         //修改导航栏标题文字颜色
         self.navigationController?.navigationBar.titleTextAttributes =
@@ -245,7 +250,6 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     //MARK: -
     //MARK: Custom Delegate
     func foldCell(cell:YJFoldingCell){
-        self.tableView.isUserInteractionEnabled = false
         guard let indexPath = self.tableView.indexPath(for: cell)else{
             return
         }        
@@ -273,15 +277,13 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
-            //fix odd bugs
-            let rect = self.tableView.rectForRow(at: indexPath)
-            let rectInScreen = self.tableView.convert(rect, to: self.tableView.superview)
-            if rectInScreen.maxY > UIScreen.main.bounds.maxY {
-                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-            }
-            self.tableView.isUserInteractionEnabled = true
         }, completion:nil)
-
+        //fix odd bugs
+        let rect = self.tableView.rectForRow(at: indexPath)
+        let rectInScreen = self.tableView.convert(rect, to: self.tableView.superview)
+        if rectInScreen.maxY > UIScreen.main.bounds.maxY {
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
     func didEdited(index: IndexPath) {
         YJCache.shared.updateRecord()
@@ -311,6 +313,9 @@ extension YJMainController{
         return headerView
     }
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if searchController.isActive {
+            return 0
+        }
         return YJConst.headerHeight
     }
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -388,13 +393,29 @@ extension YJMainController{
 extension YJMainController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentOffSet = scrollView.contentOffset.y
-        let alphaHeight = (currentOffSet+170)/100
+        print(scrollView.contentOffset.y)
+        let alphaHeight = (currentOffSet+YJConst.navBarHeight + YJConst.scrollOffSetConst)/YJConst.scrollOffSetConst
         let alpha = alphaHeight<1 ? alphaHeight : 1
-        transparentLayer?.alpha = alpha
+        //transparentLayer?.alpha = alpha
         if alpha > 0.9{
+            if #available(iOS 11.0, *) {
+                navigationController?.navigationBar.prefersLargeTitles = false
+            } else {
+                // Fallback on earlier versions
+            }
             showNavigationBar()
         }else{
+            if #available(iOS 11.0, *) {
+                navigationController?.navigationBar.prefersLargeTitles = true
+            } else {
+                // Fallback on earlier versions
+            }
             hideNavigationBar()
         }
+    }
+}
+extension YJMainController:UISearchControllerDelegate{
+    func willDismissSearchController(_ searchController: UISearchController) {
+        
     }
 }

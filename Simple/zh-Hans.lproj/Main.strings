@@ -142,6 +142,15 @@
 /* Class = "UITabBarItem"; title = "Main"; ObjectID = "toE-gW-EA8"; */
 "toE-gW-EA8.title" = "管理";
 
+/* Class = "UITabBarItem"; title = "Heart"; ObjectID = "Ew2-7L-OSn"; */
+"Ew2-7L-OSn.title" = "心跳";
+
+/* Class = "UITabBarItem"; title = "Discovery"; ObjectID = "Pr8-Sp-8wh"; */
+"Pr8-Sp-8wh.title" = "发现";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "fAe-ej-abs"; */
+"fAe-ej-abs.title" = "设置";
+
 /* Class = "UILabel"; text = "0.0"; ObjectID = "vbp-02-gnY"; */
 "vbp-02-gnY.text" = "0.0";
 

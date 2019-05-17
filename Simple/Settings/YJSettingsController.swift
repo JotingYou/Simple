@@ -34,7 +34,7 @@ class YJSettingsController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         YJHttpTool.shared.getFundList(
             {
-                (flag) in
+                (_) in
                 YJCache.shared.readStocksFromFile()
             }
         )

@@ -8,7 +8,6 @@
 //
 
 import UIKit
-//import Kingfisher
 class YJAttentionCell: UITableViewCell {
     private var eventInfos:YJEventInfosModel?
     

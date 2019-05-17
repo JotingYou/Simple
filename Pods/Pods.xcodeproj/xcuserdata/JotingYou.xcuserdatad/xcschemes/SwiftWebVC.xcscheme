@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A401958817E04B0540385151368EC079"
+               BlueprintIdentifier = "C1653F9B309C526598199557938D6E2F"
                BlueprintName = "SwiftWebVC"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "SwiftWebVC.framework">

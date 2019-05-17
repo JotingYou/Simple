@@ -19,7 +19,8 @@ class YJHttpTool: NSObject {
         manager.session.configuration.timeoutIntervalForRequest = 10
         return manager
     }()
-    
+    func cancelTask() {
+    }
     ///获取沪深300指数收益率
     func getBasicRate(_ complition:((Dictionary<String,String>) -> Void)?) {
         let url = URL(string: "http://hq.sinajs.cn/list=sz399300")!
@@ -172,8 +173,7 @@ class YJHttpTool: NSObject {
                 failure?(error)
                 return
             }
-            var flag = true
-            success?(flag)
+            success?(true)
         }
     }
     func getBasicDicFrom(_ str:String) -> Dictionary<String,String> {

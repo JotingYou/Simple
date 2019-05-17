@@ -21,7 +21,7 @@ class YJConst: NSObject {
     static let isIphoneX = (screenHeight == 812 || screenHeight == 896) ? true : false
     static let navBarHeight : CGFloat = isIphoneX ? 88:64
     static let tabBarHeight : CGFloat = isIphoneX ? 83:49
-    
+    static let scrollOffSetConst : CGFloat = 100
     //MARK:-
         //MARK:URL
     static let newsURLSrting = "https://www.yicai.com/news/info/"

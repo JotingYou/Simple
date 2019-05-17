@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9F4B4ABC1A20B7D281E5E2B8525F642"
+               BlueprintIdentifier = "EEF9513C9F797F965DF06112E6AD5BD2"
                BuildableName = "SwiftWebVCResources.bundle"
                BlueprintName = "SwiftWebVC-SwiftWebVCResources"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E9F4B4ABC1A20B7D281E5E2B8525F642"
+            BlueprintIdentifier = "EEF9513C9F797F965DF06112E6AD5BD2"
             BuildableName = "SwiftWebVCResources.bundle"
             BlueprintName = "SwiftWebVC-SwiftWebVCResources"
             ReferencedContainer = "container:Pods.xcodeproj">

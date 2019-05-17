@@ -12,7 +12,7 @@ pod 'SwiftSoup'
 
 #json
 pod 'HandyJSON', '~> 5.0.0-beta.1'
-pod 'Kingfisher'
+#pod 'Kingfisher'
 pod 'SwiftyJSON'
 
 #UI
@@ -20,7 +20,6 @@ pod 'FoldingCell'
 pod 'LTScrollView'
 pod 'BouncyPageViewController'
 pod 'SwiftWebVC'
-#layout
 pod 'SnapKit'
 #pod 'MJRefresh'
 
@@ -28,5 +27,7 @@ pod 'SnapKit'
 #pod 'RealmSwift'
 
 #logging
-#pod 'CocoaLumberjack/Swift'
+pod 'CocoaLumberjack/Swift'
+pod 'Flurry-iOS-SDK/FlurrySDK' #Analytics Pod
+pod 'Flurry-iOS-SDK/FlurryAds' #Advertising Pod (requires Analytics)
 end
