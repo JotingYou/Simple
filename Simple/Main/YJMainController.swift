@@ -17,7 +17,6 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     var line:UIImageView?
     var transparentLayer:UIView?
     let headerView = YJMainHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: YJConst.headerHeight))
-    
     lazy var normalCellHeights:[CGFloat] = (0..<YJCache.shared.people.count).map { _ in YJConst.closeCellHeight }
     lazy var searchCellHeights:[CGFloat] = (0..<searchResults.count).map { _ in YJConst.closeCellHeight }
     lazy var searchController:UISearchController = {
@@ -26,7 +25,6 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         searchController.hidesNavigationBarDuringPresentation = true
         definesPresentationContext = true
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.delegate = self
         return searchController
     }()
 
@@ -90,7 +88,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
 
     //MARK: - SETUP
     func setNavigationBar(){
-        extendedLayoutIncludesOpaqueBars = true;
+        extendedLayoutIncludesOpaqueBars = true
         transparentLayer = self.navigationController!.navigationBar.subviews.first
         for (_,view) in self.navigationController!.navigationBar.subviews.first!.subviews.enumerated(){
             if view.isKind(of: UIImageView.self){
@@ -278,7 +276,6 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
             cell.unfold(false, animated:true, completion: nil)
             duration = 0.8
         }
-
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
             [weak self] in
             guard let wSelf = self else{
@@ -289,7 +286,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
             //fix odd bugs
             let rect = wSelf.tableView.rectForRow(at: indexPath)
             let rectInScrollView = wSelf.tableView.convert(rect, to: wSelf.tableView.superview)
-            if rectInScrollView.maxY > wSelf.tableView.bounds.maxY{
+            if rectInScrollView.maxY > UIScreen.main.bounds.maxY{
                 wSelf.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             }
         },completion:nil)
@@ -407,26 +404,17 @@ extension YJMainController {
         DDLogDebug("\(scrollView.contentOffset.y)")
         let alphaHeight = (currentOffSet+YJConst.navBarHeight + YJConst.scrollOffSetConst)/YJConst.scrollOffSetConst
         let alpha = alphaHeight<1 ? alphaHeight : 1
-        //transparentLayer?.alpha = alpha
         if alpha > 0.9{
             if #available(iOS 11.0, *) {
                 navigationController?.navigationBar.prefersLargeTitles = false
-            } else {
-                // Fallback on earlier versions
             }
             showNavigationBar()
         }else{
             if #available(iOS 11.0, *) {
                 navigationController?.navigationBar.prefersLargeTitles = true
-            } else {
-                // Fallback on earlier versions
             }
             hideNavigationBar()
         }
     }
 }
-extension YJMainController:UISearchControllerDelegate{
-    func willDismissSearchController(_ searchController: UISearchController) {
-        
-    }
-}
+
