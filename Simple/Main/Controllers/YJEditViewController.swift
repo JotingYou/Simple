@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 protocol YJEditViewControllerDelegate:NSObjectProtocol {
     ///tag:0 for add;1 for edit
     func didFinished(tag:Int,indexPath:IndexPath?);
@@ -76,7 +77,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
         let fund_number = searchBar.text!
         filterContentForSearchText(fund_number)
         if searchResults.count == 0 {
-            print("请选择基金")
+            DDLogDebug("请选择基金")
             searchBar.becomeFirstResponder()
             return
         }

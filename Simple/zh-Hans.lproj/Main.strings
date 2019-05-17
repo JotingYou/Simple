@@ -21,13 +21,11 @@
 "OgV-0Q-coy.placeholder" = "输入姓名";
 
 /* Class = "UINavigationItem"; title = "List"; ObjectID = "VJB-LD-PdW"; */
-"VJB-LD-PdW.title" = "财管";
+"VJB-LD-PdW.title" = "我的财富";
 
 /* Class = "UILabel"; text = "name"; ObjectID = "VVE-5s-sDB"; */
 "VVE-5s-sDB.text" = "姓名";
 
-/* Class = "UITabBarItem"; title = "Main"; ObjectID = "WfP-9H-EJX"; */
-"WfP-9H-EJX.title" = "清单";
 
 /* Class = "UINavigationItem"; title = "Title"; ObjectID = "ZW5-rB-V9z"; */
 "ZW5-rB-V9z.title" = "添加";
@@ -140,7 +138,7 @@
 "tUN-v9-6m9.text" = "Title";
 
 /* Class = "UITabBarItem"; title = "Main"; ObjectID = "toE-gW-EA8"; */
-"toE-gW-EA8.title" = "管理";
+"toE-gW-EA8.title" = "财富";
 
 /* Class = "UITabBarItem"; title = "Heart"; ObjectID = "Ew2-7L-OSn"; */
 "Ew2-7L-OSn.title" = "心跳";

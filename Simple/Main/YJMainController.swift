@@ -8,10 +8,11 @@
 
 import UIKit
 import FoldingCell
+import CocoaLumberjack
 
 class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate,YJDetailTVCDelegate {
     //@IBOutlet var tableView:UITableView!
-    var tableViewRefreshControl: UIRefreshControl?
+    //var tableViewRefreshControl: UIRefreshControl?
     var searchResults = Array<People>()
     var line:UIImageView?
     var transparentLayer:UIView?
@@ -44,10 +45,8 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
-            navigationItem.titleView?.addSubview(searchBar)
+            present(searchController, animated: true, completion: nil)
         }
-        //extendedLayoutIncludesOpaqueBars = true
-        //searchController.searchBar.setNeedsDisplay()
         searchBar.delegate = self
         
         setTableView()
@@ -59,7 +58,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        if tableView.contentOffset.y > -64{
+        if tableView.contentOffset.y >= -YJConst.navBarHeight {
             showNavigationBar()
         }else{
             hideNavigationBar()
@@ -91,16 +90,15 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
 
     //MARK: - SETUP
     func setNavigationBar(){
-       transparentLayer = self.navigationController!.navigationBar.subviews.first
+        extendedLayoutIncludesOpaqueBars = true;
+        transparentLayer = self.navigationController!.navigationBar.subviews.first
         for (_,view) in self.navigationController!.navigationBar.subviews.first!.subviews.enumerated(){
             if view.isKind(of: UIImageView.self){
                 line = view as? UIImageView
             }
         }
         if #available(iOS 11.0, *) {
-            self.navigationController?.navigationItem.hidesSearchBarWhenScrolling = true
-        } else {
-            // Fallback on earlier versions
+            navigationItem.hidesSearchBarWhenScrolling = true
         }
         //修改导航栏标题文字颜色
         self.navigationController?.navigationBar.titleTextAttributes =
@@ -117,9 +115,10 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         transparentLayer?.alpha = 0
     }
     func showNavigationBar(){
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        //line?.alpha = 1
-        //transparentLayer?.alpha = 1
+        UIView.animate(withDuration: 0.5) {            self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+            //line?.alpha = 1
+            self.transparentLayer?.alpha = 1
+        }
     }
     func setTableView() {
         tableView.rowHeight = UITableView.automaticDimension
@@ -130,14 +129,18 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     }
     //MARK: REFRESH
     func setRefresh() {
-        let refreshControl = UIRefreshControl()
-        tableViewRefreshControl = refreshControl
-        refreshControl.tintColor = .white
-        refreshControl.addTarget(self, action: #selector(refreshStateChange), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-        refreshStateChange(refreshControl)
+        refreshControl = UIRefreshControl()
+        refreshControl!.tintColor = .white
+        refreshControl!.addTarget(self, action: #selector(refreshStateChange), for: .valueChanged)
+        refreshStateChange(refreshControl!)
     }
     @objc func refreshStateChange(_ refreshControl:UIRefreshControl) {
+        if YJCache.shared.people.count == 0 {
+            YJCache.shared.refreshRecord()
+            OperationQueue.main.addOperation {
+                refreshControl.endRefreshing()
+            }
+        }else{
             YJCache.shared.refreshPeople({
                 YJCache.shared.refreshRecord()
                 OperationQueue.main.addOperation {
@@ -146,6 +149,8 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
                     self?.tableView.reloadData()
                 }
             })
+        }
+
 
 
     }
@@ -275,15 +280,21 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         }
 
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-        }, completion:nil)
-        //fix odd bugs
-        let rect = self.tableView.rectForRow(at: indexPath)
-        let rectInScreen = self.tableView.convert(rect, to: self.tableView.superview)
-        if rectInScreen.maxY > UIScreen.main.bounds.maxY {
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-        }
+            [weak self] in
+            guard let wSelf = self else{
+                return
+            }
+            wSelf.tableView.beginUpdates()
+            wSelf.tableView.endUpdates()
+            //fix odd bugs
+            let rect = wSelf.tableView.rectForRow(at: indexPath)
+            let rectInScrollView = wSelf.tableView.convert(rect, to: wSelf.tableView.superview)
+            if rectInScrollView.maxY > wSelf.tableView.bounds.maxY{
+                wSelf.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
+        },completion:nil)
+        
+
     }
     func didEdited(index: IndexPath) {
         YJCache.shared.updateRecord()
@@ -393,7 +404,7 @@ extension YJMainController{
 extension YJMainController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentOffSet = scrollView.contentOffset.y
-        print(scrollView.contentOffset.y)
+        DDLogDebug("\(scrollView.contentOffset.y)")
         let alphaHeight = (currentOffSet+YJConst.navBarHeight + YJConst.scrollOffSetConst)/YJConst.scrollOffSetConst
         let alpha = alphaHeight<1 ? alphaHeight : 1
         //transparentLayer?.alpha = alpha

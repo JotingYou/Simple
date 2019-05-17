@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import CocoaLumberjack
+
 extension Stocks {
     static func readFromCoreDate() -> [Stocks]?{
         //        建立一个获取的请求
@@ -25,7 +27,7 @@ extension Stocks {
             }
     
         } catch{
-            print("CoreData Error:读取股票失败")
+            DDLogError("CoreData Error:读取股票失败")
             return nil
         }
         return nil

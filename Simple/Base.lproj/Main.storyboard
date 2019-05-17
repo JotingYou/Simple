@@ -497,7 +497,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="List" id="VJB-LD-PdW">
-                        <barButtonItem key="rightBarButtonItem" image="plus" springLoaded="YES" style="plain" id="pFq-g5-YMs">
+                        <barButtonItem key="rightBarButtonItem" springLoaded="YES" style="plain" systemItem="add" id="pFq-g5-YMs">
                             <connections>
                                 <action selector="toAdd:" destination="P9f-qu-FIO" id="gbx-hY-yHZ"/>
                             </connections>
@@ -802,10 +802,9 @@
         <image name="icon_tabbar_uikit" width="24" height="24"/>
         <image name="icon_tabbar_uikit_selected" width="24" height="24"/>
         <image name="placeholder" width="365" height="249.5"/>
-        <image name="plus" width="13" height="13"/>
         <image name="white" width="826" height="536"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lYJ-6h-vin"/>
+        <segue reference="Kri-iZ-7rM"/>
     </inferredMetricsTieBreakers>
 </document>

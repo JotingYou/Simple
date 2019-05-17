@@ -10,6 +10,8 @@ import UIKit
 import SDWebImage
 import Alamofire
 import SwiftSoup
+import CocoaLumberjack
+
 class YJHttpTool: NSObject {
     
     static let shared = YJHttpTool()
@@ -31,7 +33,7 @@ class YJHttpTool: NSObject {
                     case 200:
                         break
                     default:
-                        print("error with response status: \(status)")
+                        DDLogError("error with response status: \(status)")
                         return
                 }
             }
@@ -63,7 +65,7 @@ class YJHttpTool: NSObject {
             if let error = response.error {
                 if (error._code == NSURLErrorTimedOut) || (error._code == -1009) {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue:YJConst.internetTimeout), object: nil)
-                    print("Time out for value of fund:\(id)")
+                    DDLogError("Time out for value of fund:\(id)")
                     
                 }
                 complition?(["status":"0","valus":"0","updateTime":"0"])
@@ -73,7 +75,7 @@ class YJHttpTool: NSObject {
                 case 200:
                     break
                 default:
-                    print("error:\(status)")
+                    DDLogError("error:\(status)")
                     complition?(["status":"0","valus":"0","updateTime":"0"])
                     return
                 }
@@ -93,7 +95,7 @@ class YJHttpTool: NSObject {
                     fatalError("Http manager has be freed")
                 }
                 guard let html = dic["content"] else{
-                    print("html has no content")
+                    DDLogError("html has no content")
                     complition?(["status":"0","valus":"0","updateTime":"0"])
                     return
                 }
@@ -115,7 +117,7 @@ class YJHttpTool: NSObject {
                     let value = try valueTD.text()
                     complition?(["status":"1","value":value,"updateTime":updateTime])
                 }catch let error{
-                    print("HTML parse error:\(error)")
+                    DDLogError("HTML parse error:\(error)")
                     complition?(["status":"0","valus":"0","updateTime":"0"])
                     return
                 }
@@ -169,7 +171,7 @@ class YJHttpTool: NSObject {
         }
         httpManager.download(request, to: destination).response { (response) in
             if let error = response.error{
-                print("Get fund list failed:\(error)")
+                DDLogError("Get fund list failed:\(error)")
                 failure?(error)
                 return
             }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CocoaLumberjack
+
 protocol YJDetailTVCDelegate:NSObjectProtocol {
     func didEdited(index:IndexPath)
 }
@@ -64,7 +66,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
         switch indexPath.row {
         case 0:
             guard let imageView:UIImageView = cell.viewWithTag(1) as? UIImageView else{
-                print("Cell set failed:Not found imageView")
+                DDLogError("Cell set failed:Not found imageView")
                 return cell
             }
             YJHttpTool.setImageFor(imageView,person?.stock!.id)

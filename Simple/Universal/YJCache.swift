@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-
+import CocoaLumberjack
 
 class YJCache: NSObject {
     var stocks = Array<Stocks>()
@@ -119,7 +119,7 @@ class YJCache: NSObject {
     private func readStocksFromCoreData()->Bool{
         if let results = Stocks.readFromCoreDate() {
             stocks = results
-            print("Read From CoreData")
+            DDLogInfo("Read From CoreData")
             return true
         }
         return false
@@ -150,7 +150,7 @@ class YJCache: NSObject {
         }else{
             updateStocks(strs: stockStrs)
         }
-        print("Read From File");
+        DDLogInfo("Read From File");
         return true
     }
     ///将股票信息存储到本地
@@ -170,48 +170,52 @@ class YJCache: NSObject {
             }
         }
         if !save(){
-            print("\(#function)failed")
+            DDLogError("\(#function)failed")
         }
     }
     private func updateStocks(strs:[String]){
-        OperationQueue().addOperation {[weak self] in
-            var index = 0
-            for str in strs {
-                if str.count > 0{
-                    let obj = YJStockStringObject(str: str)
-                    if index < self?.stocks.count ?? 0{
-                        if let stock = self?.stocks[index]{
-                            if stock.id == obj.id {
-                                stock.update(obj)
-                                index += 1
-                                continue
+        autoreleasepool{
+            OperationQueue().addOperation {[weak self] in
+                var index = 0
+                for str in strs {
+                    autoreleasepool {
+                        if str.count > 0{
+                            let obj = YJStockStringObject(str: str)
+                            if index < self?.stocks.count ?? 0 {
+                                if let stock = self?.stocks[index]{
+                                    if stock.id == obj.id {
+                                        stock.update(obj)
+                                        index += 1
+                                    }else if Int(stock.id!)! > Int(obj.id)! {
+                                        self?.insertStock(stockString: obj,index)
+                                        index += 1
+                                    }
+                                }
                             }
                         }
-
                     }
-                    self?.insertStock(stockString: obj,index)
-                    index += 1
                 }
-            }
-            OperationQueue.main.addOperation {
-                YJProgressHUD.showSuccess(message: "Stock List update finished")
+                OperationQueue.main.addOperation {
+                    YJProgressHUD.showSuccess(message: "Stock List update finished")
+                }
                 self?.saveAndPrint(funcName: #function)
             }
+
         }
 
     }
     private func saveAndPrint(funcName:String){
         if save(){
-            print("\(funcName) passed")
+            DDLogVerbose("\(funcName) passed")
         }else{
-            print("\(funcName) failed")
+            DDLogError("\(funcName) failed")
         }
     }
     private func save() -> Bool{
         do {
             try managedObjectContext.save();
         } catch let error {
-            print("无法保存:\(error)")
+            DDLogError("无法保存:\(error)")
             return false
         }
         return true
@@ -233,7 +237,7 @@ class YJCache: NSObject {
     private func insertRecord()->Bool{
         if totalRecord != nil {
             if YJConst.isSameDay(totalRecord!.create_time!, Date()){
-                print("Create Statistics record failed:has existed a record today")
+                DDLogWarn("Create Statistics record failed:has existed a record today")
                 return false
             }
             lastRecord = self.totalRecord

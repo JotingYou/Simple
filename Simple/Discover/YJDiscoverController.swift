@@ -8,6 +8,8 @@
 
 import UIKit
 import LTScrollView
+import CocoaLumberjack
+
 class YJDiscoverController: UIViewController {
     // - headerView
     private lazy var headerView:UIView = {
@@ -132,7 +134,7 @@ extension YJDiscoverController : LTAdvancedScrollViewDelegate {
     private func advancedManagerConfig() {
         // 选中事件
         advancedManager.advancedDidSelectIndexHandle = {
-            print("选中了 -> \($0)")
+            DDLogDebug("选中了 -> \($0)")
         }
     }
     
