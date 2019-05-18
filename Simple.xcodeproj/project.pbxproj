@@ -43,6 +43,7 @@
 		3E89381B2274170D0095EC7D /* Stocks+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89381A2274170D0095EC7D /* Stocks+Method.swift */; };
 		3E9051ED226C64FB006DD597 /* YJFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */; };
 		3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EE226C6B60006DD597 /* YJConst.swift */; };
+		3EB4B675228FCBFE0049E2D9 /* fundcode_search_test.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EB4B674228FCBFE0049E2D9 /* fundcode_search_test.js */; };
 		3ED4714D22797B410059294B /* YJPageViewControllerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4714C22797B410059294B /* YJPageViewControllerPresenter.swift */; };
 		3ED4715922798C020059294B /* YJHeartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4715822798C020059294B /* YJHeartController.swift */; };
 		3ED4715D22798F890059294B /* YJHeartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4715C22798F890059294B /* YJHeartManager.swift */; };
@@ -116,6 +117,7 @@
 		3E8CE86A2276CBF60060D8B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJFoldingCell.swift; sourceTree = "<group>"; };
 		3E9051EE226C6B60006DD597 /* YJConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJConst.swift; sourceTree = "<group>"; };
+		3EB4B674228FCBFE0049E2D9 /* fundcode_search_test.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = fundcode_search_test.js; sourceTree = "<group>"; };
 		3ED36CFE227193C30082F18B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		3ED4714C22797B410059294B /* YJPageViewControllerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJPageViewControllerPresenter.swift; sourceTree = "<group>"; };
 		3ED4715822798C020059294B /* YJHeartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJHeartController.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 		3E80E5BB225E3061005E9FBA /* res */ = {
 			isa = PBXGroup;
 			children = (
+				3EB4B674228FCBFE0049E2D9 /* fundcode_search_test.js */,
 				3E3BFA7F227C582300720383 /* DiscoverRecommend.json */,
 				3E3BFA7B227C0C6200720383 /* DiscoverAttention.json */,
 				3EEEEE1922788F6B0024EA85 /* fundcode_search.js */,
@@ -560,6 +563,7 @@
 				3E08DB8A2269C59E00CD0070 /* Localizable.strings in Resources */,
 				3EEEEE1A22788F6B0024EA85 /* fundcode_search.js in Resources */,
 				3E3BFA80227C582300720383 /* DiscoverRecommend.json in Resources */,
+				3EB4B675228FCBFE0049E2D9 /* fundcode_search_test.js in Resources */,
 				3E33A419227303B900071FDE /* YJMainHeaderView.xib in Resources */,
 				3E80E58C225D98D7005E9FBA /* Main.storyboard in Resources */,
 			);
@@ -897,6 +901,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG -DFOO";
 				PRODUCT_BUNDLE_IDENTIFIER = com.youjoting.Simple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -917,8 +922,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.youjoting.Simple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

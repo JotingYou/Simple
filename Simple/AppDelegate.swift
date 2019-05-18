@@ -18,8 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         YJCache.recovery();
+        #if DUBUG
         Flurry.startSession("JPGYQMHT47Q3V35N8YD8", with: FlurrySessionBuilder.init().withCrashReporting(true).withLogLevel(FlurryLogLevelDebug))
-        
+        #endif
         DDLog.add(DDOSLogger.sharedInstance) // Uses os_log
         
         let fileLogger: DDFileLogger = DDFileLogger() // File Logger

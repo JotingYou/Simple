@@ -9,7 +9,7 @@
 import UIKit
 
 class YJConst: NSObject {
-    //MARK:- DATA
+    //MARK:- NUMBER
     static let screenWidth:CGFloat = UIScreen.main.bounds.width
     static let screenHeight = UIScreen.main.bounds.height
     
@@ -25,7 +25,15 @@ class YJConst: NSObject {
     //MARK:-
         //MARK:URL
     static let newsURLSrting = "https://www.yicai.com/news/info/"
+    
+    #if DEBUG
+    static let localFundPath = Bundle.main.path(forResource: "fundcode_search_test", ofType: "js")!
+    #else
+    static let localFundPath = Bundle.main.path(forResource: "fundcode_search", ofType: "js")!
+    #endif
     static let fundFileUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("fundcode_search.js")
+    
+    
     static let attendJsonURL = URL(fileURLWithPath: Bundle.main.path(forResource: "DiscoverAttention", ofType: "json")!)
         //MARK:NOTIFICATION
     static let recordChangedNotification = "recordChangedNotification"

@@ -125,13 +125,10 @@ class YJCache: NSObject {
         return false
     }
     open func readStocksFromFile()->Bool{
-        
         var data = NSData.init(contentsOf: YJConst.fundFileUrl)
-        
         if data == nil {
-            let  path = Bundle.main.path(forResource: "fundcode_search", ofType: "js")!
-            
-            data = NSData.init(contentsOfFile: path)
+            DDLogDebug("\(YJConst.localFundPath)")
+            data = NSData.init(contentsOfFile: YJConst.localFundPath)
         }
         
         guard let content = String.init(data: data! as Data, encoding: String.Encoding.utf8)else{
@@ -169,6 +166,7 @@ class YJCache: NSObject {
                 insertStock(stockString: obj)
             }
         }
+        deleteRepeatStock()
         if !save(){
             DDLogError("\(#function)failed")
         }
@@ -176,25 +174,46 @@ class YJCache: NSObject {
     private func updateStocks(strs:[String]){
         autoreleasepool{
             OperationQueue().addOperation {[weak self] in
-                var index = 0
-                for str in strs {
+                guard let wself = self else{
+                    DDLogWarn("\(#function) failed:YJChache has been deinit!")
+                    return
+                }
+                var i = 0
+                var j = 0
+                while( j < strs.count ){
                     autoreleasepool {
+                        let str = strs[j]
                         if str.count > 0{
                             let obj = YJStockStringObject(str: str)
-                            if index < self?.stocks.count ?? 0 {
-                                if let stock = self?.stocks[index]{
+                            if i < wself.stocks.count{
+                                if let stock = self?.stocks[i]{
                                     if stock.id == obj.id {
+                                        //已存在数据，更新
                                         stock.update(obj)
-                                        index += 1
+                                        i += 1
+                                        j += 1
                                     }else if Int(stock.id!)! > Int(obj.id)! {
-                                        self?.insertStock(stockString: obj,index)
-                                        index += 1
+                                        //新数据，插入
+                                        self?.insertStock(stockString: obj,i)
+                                        i += 1
+                                        j += 1
+                                    }else{
+                                        //缺少数据，跳过
+                                        i += 1
                                     }
                                 }
+                            }else{
+                                //新数据，插入
+                                wself.insertStock(stockString: obj,i)
+                                i += 1
+                                j += 1
                             }
+                        }else{
+                            j += 1
                         }
                     }
                 }
+                wself.deleteRepeatStock()
                 OperationQueue.main.addOperation {
                     YJProgressHUD.showSuccess(message: "Stock List update finished")
                 }
@@ -203,6 +222,21 @@ class YJCache: NSObject {
 
         }
 
+    }
+    private func deleteRepeatStock(){
+        var i = 0
+        while i < stocks.count {
+            for j in i+1..<stocks.count{
+                if stocks[i].id == stocks[j].id{
+                    DDLogWarn("Stock:\(stocks[j].id!) has been deleted")
+                    managedObjectContext.delete(stocks[j])
+                    stocks.remove(at: j)
+                }else{
+                    break
+                }
+            }
+            i += 1
+        }
     }
     private func saveAndPrint(funcName:String){
         if save(){
