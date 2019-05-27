@@ -13,6 +13,8 @@
 		3E33A4142272E77200071FDE /* YJMainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33A4132272E77200071FDE /* YJMainHeaderView.swift */; };
 		3E33A419227303B900071FDE /* YJMainHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E33A41B227303B900071FDE /* YJMainHeaderView.xib */; };
 		3E33A4222273348900071FDE /* Statistics+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33A4212273348900071FDE /* Statistics+Method.swift */; };
+		3E346747229BC4FC00132FFF /* YJTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E346746229BC4FC00132FFF /* YJTimer.swift */; };
+		3E346749229BCC5900132FFF /* YJFlurry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E346748229BCC5900132FFF /* YJFlurry.swift */; };
 		3E3BFA70227BFA3600720383 /* YJAttentionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3BFA6F227BFA3600720383 /* YJAttentionCell.swift */; };
 		3E3BFA72227BFCB600720383 /* YJAttentionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3BFA71227BFCB600720383 /* YJAttentionViewModel.swift */; };
 		3E3BFA76227BFE4000720383 /* YJDiscoverModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3BFA75227BFE4000720383 /* YJDiscoverModel.swift */; };
@@ -80,6 +82,8 @@
 		3E33A41C227303BC00071FDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/YJMainHeaderView.xib; sourceTree = "<group>"; };
 		3E33A41E227303D400071FDE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/YJMainHeaderView.strings"; sourceTree = "<group>"; };
 		3E33A4212273348900071FDE /* Statistics+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Statistics+Method.swift"; sourceTree = "<group>"; };
+		3E346746229BC4FC00132FFF /* YJTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJTimer.swift; sourceTree = "<group>"; };
+		3E346748229BCC5900132FFF /* YJFlurry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJFlurry.swift; sourceTree = "<group>"; };
 		3E3BFA6F227BFA3600720383 /* YJAttentionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJAttentionCell.swift; sourceTree = "<group>"; };
 		3E3BFA71227BFCB600720383 /* YJAttentionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJAttentionViewModel.swift; sourceTree = "<group>"; };
 		3E3BFA75227BFE4000720383 /* YJDiscoverModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJDiscoverModel.swift; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				3E80E5BF225E3103005E9FBA /* YJCache.swift */,
 				3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */,
 				3E9051EE226C6B60006DD597 /* YJConst.swift */,
+				3E346746229BC4FC00132FFF /* YJTimer.swift */,
+				3E346748229BCC5900132FFF /* YJFlurry.swift */,
 			);
 			path = Universal;
 			sourceTree = "<group>";
@@ -684,6 +690,8 @@
 				3ED4715D22798F890059294B /* YJHeartManager.swift in Sources */,
 				3ED4716C227AD0C10059294B /* YJRecommendController.swift in Sources */,
 				3E2CB625227861D600BF60C3 /* YJSettingsController.swift in Sources */,
+				3E346747229BC4FC00132FFF /* YJTimer.swift in Sources */,
+				3E346749229BCC5900132FFF /* YJFlurry.swift in Sources */,
 				3ED4716E227AD0F30059294B /* YJNewsController.swift in Sources */,
 				3E33A4142272E77200071FDE /* YJMainHeaderView.swift in Sources */,
 				3E33A4222273348900071FDE /* Statistics+Method.swift in Sources */,

@@ -12,7 +12,6 @@ import CocoaLumberjack
 
 class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate,YJDetailTVCDelegate {
     //@IBOutlet var tableView:UITableView!
-    //var tableViewRefreshControl: UIRefreshControl?
     var searchResults = Array<People>()
     var line:UIImageView?
     var transparentLayer:UIView?
@@ -27,7 +26,8 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         searchController.obscuresBackgroundDuringPresentation = false
         return searchController
     }()
-
+    var timer:YJTimer?
+    
     lazy var searchBar: UISearchBar = {
         let searchBar = searchController.searchBar
         searchBar.searchBarStyle = .minimal
@@ -52,8 +52,10 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
 
         setRefresh()
         setNavigationBar()
-
+        //开启计时器 自动刷新数据 半个小时
+        timer = YJTimer.init(1800, self, #selector(repeatRefreshPeople))
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         if tableView.contentOffset.y >= -YJConst.navBarHeight {
@@ -148,9 +150,13 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
                 }
             })
         }
-
-
-
+    }
+    @objc func repeatRefreshPeople() {
+        guard let rc = refreshControl else {
+            return
+        }
+        DDLogDebug("\(#function) perform")
+        refreshStateChange(rc)
     }
     //MARK: -
     //MARK: searchBar Delegate
@@ -310,6 +316,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     }
     deinit{
         NotificationCenter.default.removeObserver(self)
+        self.timer?.shutDown()
     }
 
 }

@@ -24,6 +24,8 @@ class YJConst: NSObject {
     static let scrollOffSetConst : CGFloat = 100
     //MARK:-
         //MARK:URL
+    static let flurryApi = "JPGYQMHT47Q3V35N8YD8"
+    
     static let newsURLSrting = "https://www.yicai.com/news/info/"
     
     #if DEBUG
