@@ -22,7 +22,7 @@ class YJFlurry: NSObject {
             guard let wself = self else {
                 return
             }
-            Flurry.startSession(wself.api, with: FlurrySessionBuilder.init().withCrashReporting(true).withLogLevel(FlurryLogLevelDebug))
+            Flurry.startSession(wself.api, with: FlurrySessionBuilder.init().withCrashReporting(true).withLogLevel(FlurryLogLevelAll))
             wself.queue.sync {
                 for event in wself.events!{
                     Flurry.logEvent(event)
