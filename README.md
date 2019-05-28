@@ -2,7 +2,7 @@
 ## Preview
 ![](https://github.com/JotingYou/Simple/raw/master/Preview/main.gif)
 ![](https://github.com/JotingYou/Simple/raw/master/Preview/heart.gif)
-![](https://github.com/JotingYou/Simple/raw/master/Preview/news.gif)
+![](https://github.com/JotingYou/Simple/raw/master/Preview/discovery.gif)
 ## Description
 This app can manage your stocks and your funds.<br />
 You can add your record to it,then it will auto-update the profit and compute the indexes you may concern about.<br />
