@@ -57,7 +57,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         if tableView.contentOffset.y >= -YJConst.navBarHeight {
             showNavigationBar()
         }else{
@@ -66,7 +66,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         
     }
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         showNavigationBar()
     }
     //MARK: - Notification
@@ -105,7 +105,6 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
             [.foregroundColor: UIColor.white]
         //修改导航栏按钮颜色
         self.navigationController?.navigationBar.tintColor = UIColor.white
-        
         //设置视图的背景图片（自动拉伸）
         self.view.layer.contents = #imageLiteral(resourceName: "background").cgImage
     }
@@ -115,10 +114,10 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         transparentLayer?.alpha = 0
     }
     func showNavigationBar(){
-        UIView.animate(withDuration: 0.5) {            self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
             //line?.alpha = 1
-            self.transparentLayer?.alpha = 1
-        }
+        self.transparentLayer?.alpha = 1
+        //navigationController?.navigationBar.isTranslucent = true
     }
     func setTableView() {
         tableView.rowHeight = UITableView.automaticDimension
@@ -165,7 +164,6 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
-        searchBar.showsScopeBar = true
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
@@ -308,9 +306,8 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     func didFinished(tag:Int,indexPath:IndexPath?) {
         YJCache.shared.updateRecord()
         if tag == 0 {
-            //let index = IndexPath.init(row: 0, section: 0)
+            //insert
             normalCellHeights.insert(YJConst.closeCellHeight, at: 0)
-            //self.tableView.insertRows(at: [index], with: .automatic)
         }
         self.tableView.reloadData()
     }
@@ -412,16 +409,16 @@ extension YJMainController {
         let alphaHeight = (currentOffSet+YJConst.navBarHeight + YJConst.scrollOffSetConst)/YJConst.scrollOffSetConst
         let alpha = alphaHeight<1 ? alphaHeight : 1
         if alpha > 0.9{
-            if #available(iOS 11.0, *) {
-                navigationController?.navigationBar.prefersLargeTitles = false
+            UIView.animate(withDuration: 0.5) {[weak self] in
+                self?.showNavigationBar()
             }
-            showNavigationBar()
         }else{
-            if #available(iOS 11.0, *) {
-                navigationController?.navigationBar.prefersLargeTitles = true
+            UIView.animate(withDuration: 0.5) {
+                [weak self] in
+                self?.hideNavigationBar()
             }
-            hideNavigationBar()
         }
     }
+
 }
 
