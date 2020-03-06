@@ -22,30 +22,35 @@ class YJSettingsController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 1
+//    }
+//
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        // #warning Incomplete implementation, return the number of rows
+//        return 1
+//    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        YJHttpTool.shared.getFundList(
-            {
-                (_) in
-                YJCache.shared.readStocksFromFile()
-            }
-        )
+        if indexPath.section == 0 && indexPath.row == 0{
+                    YJHttpTool.shared.getFundList(
+                {
+                    (_) in
+                    YJCache.shared.readStocksFromFile()
+                }
+            )
+        }else{
+            YJProgressHUD.showWarning(message: "功能正在开发中")
+        }
+
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
-
-
-        return cell
-    }
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
+//
+//
+//        return cell
+//    }
  
 
     /*
