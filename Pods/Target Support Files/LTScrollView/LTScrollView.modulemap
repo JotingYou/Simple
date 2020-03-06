@@ -1,4 +1,4 @@
-framework module LTScrollView {
+module LTScrollView {
   umbrella header "LTScrollView-umbrella.h"
 
   export *

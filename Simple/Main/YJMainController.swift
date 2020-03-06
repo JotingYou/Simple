@@ -32,7 +32,11 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         let searchBar = searchController.searchBar
         searchBar.searchBarStyle = .minimal
         searchBar.scopeButtonTitles = [NSLocalizedString("Name", comment: ""),NSLocalizedString("Stock Number", comment: ""),NSLocalizedString("Stock Name", comment: "")]
-        searchBar.tintColor = .white
+        if #available(iOS 13.0, *) {
+            searchBar.tintColor = .systemBackground
+        } else {
+            searchBar.tintColor = .white
+        }
         return searchBar
     }()
 
@@ -129,7 +133,11 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     //MARK: REFRESH
     func setRefresh() {
         refreshControl = UIRefreshControl()
-        refreshControl!.tintColor = .white
+        if #available(iOS 13.0, *) {
+            refreshControl!.tintColor = .systemBackground
+        } else {
+            refreshControl!.tintColor = .white
+        }
         refreshControl!.addTarget(self, action: #selector(refreshStateChange), for: .valueChanged)
         refreshStateChange(refreshControl!)
     }

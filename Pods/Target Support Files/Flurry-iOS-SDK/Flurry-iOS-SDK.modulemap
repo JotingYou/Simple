@@ -1,4 +1,4 @@
-framework module Flurry_iOS_SDK {
+module Flurry_iOS_SDK {
   umbrella header "Flurry-iOS-SDK-umbrella.h"
 
   export *

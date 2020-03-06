@@ -1,5 +1,6 @@
-use_frameworks!
-platform:ios,'9.0'
+#use_frameworks!
+use_modular_headers!
+platform:ios,'10.0'
 target "Simple" do
 
 pod 'MBProgressHUD'

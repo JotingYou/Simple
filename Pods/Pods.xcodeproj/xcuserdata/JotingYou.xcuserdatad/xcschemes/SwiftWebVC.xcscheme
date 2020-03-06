@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C1653F9B309C526598199557938D6E2F"
+               BlueprintIdentifier = "664D87A9A415EAF3D989A8CBA73CBE6C"
+               BuildableName = "libSwiftWebVC.a"
                BlueprintName = "SwiftWebVC"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "SwiftWebVC.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

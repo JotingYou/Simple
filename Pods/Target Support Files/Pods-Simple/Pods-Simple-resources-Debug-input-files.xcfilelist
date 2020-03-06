@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-Simple/Pods-Simple-resources.sh
+${PODS_ROOT}/SwiftWebVC/SwiftWebVC/Resources/Media.xcassets
+${PODS_CONFIGURATION_BUILD_DIR}/SwiftWebVC/SwiftWebVCResources.bundle

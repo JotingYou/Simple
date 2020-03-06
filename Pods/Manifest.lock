@@ -38,7 +38,7 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - BouncyPageViewController
     - CocoaLumberjack
@@ -70,6 +70,6 @@ SPEC CHECKSUMS:
   SwiftWebVC: ecc4feaabe5a3f75e059a0a345d3386bb0d16c44
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 774875a9057c62aff433c0bd5edc5ddbb6a672c2
+PODFILE CHECKSUM: db555805b4cc835bb553f136000ce40e033ecb78
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.0
