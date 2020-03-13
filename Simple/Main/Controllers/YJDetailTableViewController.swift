@@ -22,7 +22,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
     weak var delegate:YJDetailTVCDelegate?
     var indexPath:IndexPath?
     
-    var person:People?
+    var person:Holds?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -73,7 +73,7 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
             break
         case 1:
             cell.textLabel?.text = NSLocalizedString("Name", comment: "")
-            cell.detailTextLabel?.text = person!.name
+            cell.detailTextLabel?.text = person!.owner!.name
             break;
         case 2:
             cell.textLabel?.text = NSLocalizedString("Stock Name", comment: "")
@@ -97,8 +97,8 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
             break;
         case 7:
             cell.textLabel?.text = NSLocalizedString("Interest", comment: "")
-            cell.detailTextLabel?.text = String(format:"%.3lf",person!.profit)
-            if person!.profit >= 0{
+            cell.detailTextLabel?.text = String(format:"%.3lf",person!.currentProfit!.profit)
+            if person!.currentProfit!.profit >= 0{
                 cell.detailTextLabel?.textColor = .red
             }else{
                 cell.detailTextLabel?.textColor = .green
@@ -106,27 +106,27 @@ class YJDetailTableViewController: UITableViewController,YJEditViewControllerDel
             break;
         case 8:
             cell.textLabel?.text = NSLocalizedString("Value", comment: "")
-            cell.detailTextLabel?.text = String(format:"%.3lf",person!.total_value)
+            cell.detailTextLabel?.text = String(format:"%.3lf",person!.currentProfit!.total_value)
             break;
         case 9:
             cell.textLabel?.text = NSLocalizedString("Simple", comment: "")
-            cell.detailTextLabel?.text = String(format:"%.2lf",person!.simple*100) + "%"
+            cell.detailTextLabel?.text = String(format:"%.2lf",person!.currentProfit!.simple*100) + "%"
             break;
         case 10:
             cell.textLabel?.text = NSLocalizedString("Years", comment: "")
-            cell.detailTextLabel?.text = String(format:"%.2lf",person!.annualized*100) + "%"
+            cell.detailTextLabel?.text = String(format:"%.2lf",person!.currentProfit!.annualized*100) + "%"
             break;
         case 11:
             cell.textLabel?.text = NSLocalizedString("Years", comment: "")
-            cell.detailTextLabel?.text = String(format:"%.2lf",person!.annualized*100) + "%"
+            cell.detailTextLabel?.text = String(format:"%.2lf",person!.currentProfit!.annualized*100) + "%"
             break;
         case 12:
             cell.textLabel?.text = NSLocalizedString("Accounting", comment: "")
-            cell.detailTextLabel?.text = String(format:"%.2f", person!.value_proportion * 100) + "%"
+            cell.detailTextLabel?.text = String(format:"%.2f", person!.currentProfit!.value_proportion * 100) + "%"
             break;
         case 13:
             cell.textLabel?.text = NSLocalizedString("Days", comment: "")
-            cell.detailTextLabel?.text = String(person!.days)
+            cell.detailTextLabel?.text = String(person!.currentProfit!.days)
             break;
         default:
             break;

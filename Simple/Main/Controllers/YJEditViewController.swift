@@ -17,7 +17,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
 
     
     var type = 0//0 for add;1 for edit
-    var person:People?
+    var person:Holds?
     var indexPath:IndexPath?
     
     weak var delegate:YJEditViewControllerDelegate?
@@ -95,13 +95,13 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
         
         if type == 0 {
             //新增顾客
-            if !YJCache.shared.insertPerson(name,totalCost,stock!,amount, buy_date){
+            if !YJCache.shared.insertHolds(name,totalCost,stock!,amount, buy_date){
                 YJProgressHUD.showError(message: "创建用户失败")
                 return
             }
         }else{
             //编辑顾客信息
-            if !YJCache.shared.updatePerson(person!,name, totalCost, stock!, amount,buy_date)
+            if !YJCache.shared.updateHolds(person!,name, totalCost, stock!, amount,buy_date)
             {
                 YJProgressHUD.showError(message: "更新用户信息失败")
                 return
@@ -137,7 +137,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
             self.totalCostField.text = String(person!.total_cost)
             dateField.text = YJCache.shared.dateFormatter.string(from: person!.buy_date!)
             self.amountField.text = String(person!.amount)
-            self.nameField.text = String(person!.name!)
+            self.nameField.text = String(person!.owner!.name!)
             self.title = NSLocalizedString("Edit", comment: "")
             searchBar.text = person?.stock?.id
             //self.feeField.text = String(person!.fee_rate * 100)

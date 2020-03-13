@@ -39,7 +39,7 @@
 		3E80E5D0225F1F11005E9FBA /* YJEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5CF225F1F11005E9FBA /* YJEditViewController.swift */; };
 		3E80E5D222605CF6005E9FBA /* YJDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5D122605CF6005E9FBA /* YJDetailTableViewController.swift */; };
 		3E80E5D422607DFF005E9FBA /* YJHttpTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */; };
-		3E893819227416E50095EC7D /* People+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E893818227416E50095EC7D /* People+Method.swift */; };
+		3E893819227416E50095EC7D /* Holds+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E893818227416E50095EC7D /* Holds+Method.swift */; };
 		3E89381B2274170D0095EC7D /* Stocks+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89381A2274170D0095EC7D /* Stocks+Method.swift */; };
 		3E9051ED226C64FB006DD597 /* YJFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */; };
 		3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9051EE226C6B60006DD597 /* YJConst.swift */; };
@@ -53,6 +53,11 @@
 		3ED4716C227AD0C10059294B /* YJRecommendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4716B227AD0C10059294B /* YJRecommendController.swift */; };
 		3ED4716E227AD0F30059294B /* YJNewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4716D227AD0F30059294B /* YJNewsController.swift */; };
 		3EEEEE1A22788F6B0024EA85 /* fundcode_search.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EEEEE1922788F6B0024EA85 /* fundcode_search.js */; };
+		3EF01DD5241B52EC00977B25 /* Profits+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF01DD4241B52EC00977B25 /* Profits+Method.swift */; };
+		3EF01DD7241B5A0000977B25 /* People+Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF01DD6241B5A0000977B25 /* People+Method.swift */; };
+		3EF01DDA241B5EB400977B25 /* YJUuserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF01DD9241B5EB400977B25 /* YJUuserManager.swift */; };
+		3EF01DDE241B5F2600977B25 /* YJUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF01DDD241B5F2600977B25 /* YJUserController.swift */; };
+		3EF01DE0241B5F5100977B25 /* YJEditUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF01DDF241B5F5100977B25 /* YJEditUserController.swift */; };
 		49072F9B03CDD8BBF777C60F /* libPods-Simple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC3E42DD6D985750F04D2399 /* libPods-Simple.a */; };
 /* End PBXBuildFile section */
 
@@ -115,7 +120,7 @@
 		3E80E5CF225F1F11005E9FBA /* YJEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJEditViewController.swift; sourceTree = "<group>"; };
 		3E80E5D122605CF6005E9FBA /* YJDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJDetailTableViewController.swift; sourceTree = "<group>"; };
 		3E80E5D322607DFF005E9FBA /* YJHttpTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJHttpTool.swift; sourceTree = "<group>"; };
-		3E893818227416E50095EC7D /* People+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "People+Method.swift"; sourceTree = "<group>"; };
+		3E893818227416E50095EC7D /* Holds+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Holds+Method.swift"; sourceTree = "<group>"; };
 		3E89381A2274170D0095EC7D /* Stocks+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stocks+Method.swift"; sourceTree = "<group>"; };
 		3E8CE86A2276CBF60060D8B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		3E9051EC226C64FB006DD597 /* YJFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJFoldingCell.swift; sourceTree = "<group>"; };
@@ -132,6 +137,11 @@
 		3ED4716B227AD0C10059294B /* YJRecommendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJRecommendController.swift; sourceTree = "<group>"; };
 		3ED4716D227AD0F30059294B /* YJNewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJNewsController.swift; sourceTree = "<group>"; };
 		3EEEEE1922788F6B0024EA85 /* fundcode_search.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = fundcode_search.js; sourceTree = "<group>"; };
+		3EF01DD4241B52EC00977B25 /* Profits+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profits+Method.swift"; sourceTree = "<group>"; };
+		3EF01DD6241B5A0000977B25 /* People+Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "People+Method.swift"; sourceTree = "<group>"; };
+		3EF01DD9241B5EB400977B25 /* YJUuserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJUuserManager.swift; sourceTree = "<group>"; };
+		3EF01DDD241B5F2600977B25 /* YJUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJUserController.swift; sourceTree = "<group>"; };
+		3EF01DDF241B5F5100977B25 /* YJEditUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJEditUserController.swift; sourceTree = "<group>"; };
 		A4D649D7DDBE97C43A175A3B /* Pods-Simple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Simple/Pods-Simple.debug.xcconfig"; sourceTree = "<group>"; };
 		EC3E42DD6D985750F04D2399 /* libPods-Simple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Simple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F065A6AE80E12EDA6C151162 /* Pods-Simple.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simple/Pods-Simple.release.xcconfig"; sourceTree = "<group>"; };
@@ -302,6 +312,7 @@
 				3E80E584225D98D7005E9FBA /* AppDelegate.swift */,
 				3E80E58A225D98D7005E9FBA /* Main.storyboard */,
 				3E80E58F225D98D9005E9FBA /* LaunchScreen.storyboard */,
+				3EF01DD8241B5E8E00977B25 /* UserManege */,
 				3E0E986A226F0FC400FD7ACE /* Main */,
 				3ED4714B22797B120059294B /* Heart */,
 				3ED47165227ACB150059294B /* Discover */,
@@ -378,8 +389,10 @@
 			children = (
 				3E80E5CC225E499E005E9FBA /* Save.xcdatamodeld */,
 				3E33A4212273348900071FDE /* Statistics+Method.swift */,
-				3E893818227416E50095EC7D /* People+Method.swift */,
+				3E893818227416E50095EC7D /* Holds+Method.swift */,
 				3E89381A2274170D0095EC7D /* Stocks+Method.swift */,
+				3EF01DD4241B52EC00977B25 /* Profits+Method.swift */,
+				3EF01DD6241B5A0000977B25 /* People+Method.swift */,
 			);
 			path = coreData;
 			sourceTree = "<group>";
@@ -439,6 +452,24 @@
 				3E3BFA6B227BF9BF00720383 /* 关注动态 */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		3EF01DD8241B5E8E00977B25 /* UserManege */ = {
+			isa = PBXGroup;
+			children = (
+				3EF01DDB241B5EBE00977B25 /* Controllers */,
+				3EF01DD9241B5EB400977B25 /* YJUuserManager.swift */,
+			);
+			path = UserManege;
+			sourceTree = "<group>";
+		};
+		3EF01DDB241B5EBE00977B25 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3EF01DDD241B5F2600977B25 /* YJUserController.swift */,
+				3EF01DDF241B5F5100977B25 /* YJEditUserController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		AE0E2F955B8BD7417C6C61E1 /* Frameworks */ = {
@@ -645,10 +676,13 @@
 				3E80E589225D98D7005E9FBA /* SecondViewController.swift in Sources */,
 				3E3BFA84227C5A3D00720383 /* YJRecommendCell.swift in Sources */,
 				3E3BFA88227C5E8C00720383 /* YJRecommendPicCell.swift in Sources */,
-				3E893819227416E50095EC7D /* People+Method.swift in Sources */,
+				3EF01DD5241B52EC00977B25 /* Profits+Method.swift in Sources */,
+				3E893819227416E50095EC7D /* Holds+Method.swift in Sources */,
+				3EF01DD7241B5A0000977B25 /* People+Method.swift in Sources */,
 				3E80E5C0225E3103005E9FBA /* YJCache.swift in Sources */,
 				3E3BFA7A227C092500720383 /* YJCommendLabel.swift in Sources */,
 				3E3BFA7E227C561D00720383 /* YJRecommendViewModel.swift in Sources */,
+				3EF01DDA241B5EB400977B25 /* YJUuserManager.swift in Sources */,
 				3E9051EF226C6B60006DD597 /* YJConst.swift in Sources */,
 				3E80E5CE225E499E005E9FBA /* Save.xcdatamodeld in Sources */,
 				3ED4716A227AD0440059294B /* YJAttentionController.swift in Sources */,
@@ -660,11 +694,13 @@
 				3E80E5B7225D9C76005E9FBA /* YJProgressHUD.swift in Sources */,
 				3ED4715D22798F890059294B /* YJHeartManager.swift in Sources */,
 				3ED4716C227AD0C10059294B /* YJRecommendController.swift in Sources */,
+				3EF01DDE241B5F2600977B25 /* YJUserController.swift in Sources */,
 				3E2CB625227861D600BF60C3 /* YJSettingsController.swift in Sources */,
 				3E346747229BC4FC00132FFF /* YJTimer.swift in Sources */,
 				3E346749229BCC5900132FFF /* YJFlurry.swift in Sources */,
 				3ED4716E227AD0F30059294B /* YJNewsController.swift in Sources */,
 				3E33A4142272E77200071FDE /* YJMainHeaderView.swift in Sources */,
+				3EF01DE0241B5F5100977B25 /* YJEditUserController.swift in Sources */,
 				3E33A4222273348900071FDE /* Statistics+Method.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -872,20 +908,20 @@
 			baseConfigurationReference = A4D649D7DDBE97C43A175A3B /* Pods-Simple.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = KF7EEK3333;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BFQM2YX9WF;
 				INFOPLIST_FILE = Simple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG -DFOO";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mingsing.Asset;
+				PRODUCT_BUNDLE_IDENTIFIER = com.youjoting.Simple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Simple Ad";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -896,20 +932,20 @@
 			baseConfigurationReference = F065A6AE80E12EDA6C151162 /* Pods-Simple.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = KF7EEK3333;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BFQM2YX9WF;
 				INFOPLIST_FILE = Simple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mingsing.Asset;
+				PRODUCT_BUNDLE_IDENTIFIER = com.youjoting.Simple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Simple Ad";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -19,7 +19,7 @@ class YJFoldingCell: FoldingCell {
 
     weak var delegate:YJFoldingCellDelegate?
     
-    var person:People?
+    var person:Holds?
     
 
     @IBOutlet weak var editButton: UIButton!
@@ -58,29 +58,29 @@ class YJFoldingCell: FoldingCell {
     
     
     
-    func setPerson(person:People){
+    func setPerson(person:Holds){
         self.person = person
-        nameLabel.text = person.name
+        nameLabel.text = person.owner!.name
         fundNameLabel.text = person.stock?.name
         
         updateTimeLabel.text = YJCache.shared.dateFormatter.string(from: person.stock!.update_time!)
         detailUnitValueLabel.text =  String( person.stock!.unit_value)
         detailFundNameLabel.text = person.stock?.name
-        detailTitleLabel.text = person.name
+        detailTitleLabel.text = person.owner!.name
         
         detailFundCodeLabel.text = person.stock?.id
         
         detailCostLabel.text = String(format:"%.4lf",person.cost)
         detailAmountLabel.text = String(person.amount)
         detailBuyDateLabel.text = YJCache.shared.dateFormatter.string(from: person.buy_date!)
-        detailDaysLabel.text = String(person.days)
-        accountingLabel.text = String(format:"%.2f", person.value_proportion * 100) + "%"
-        detailValueLabel.text = String(format:"%.3lf",person.total_value)
+        detailDaysLabel.text = String(person.currentProfit!.days)
+        accountingLabel.text = String(format:"%.2f", person.currentProfit!.value_proportion * 100) + "%"
+        detailValueLabel.text = String(format:"%.3lf",person.currentProfit!.total_value)
         if person.isValued {
-            profitLabel.text = String(format: "%.3lf", person.profit)
-            detailProfitLabel.text = String(format: "%.3lf", person.profit)
+            profitLabel.text = String(format: "%.3lf", person.currentProfit!.profit)
+            detailProfitLabel.text = String(format: "%.3lf", person.currentProfit!.profit)
 
-            if person.profit >= 0 {
+            if person.currentProfit!.profit >= 0 {
                 profitLabel.textColor = .red
                 rateLabel?.textColor = .red
                 yearsLabel?.textColor = .red
@@ -91,8 +91,8 @@ class YJFoldingCell: FoldingCell {
                 yearsLabel?.textColor = .green
                 detailProfitLabel.textColor = .green
             }
-            rateLabel?.text = String(format: "%.2f", person.simple*100) + "%"
-            yearsLabel?.text = String(format: "%.2f", person.annualized*100) + "%"
+            rateLabel?.text = String(format: "%.2f", person.currentProfit!.simple*100) + "%"
+            yearsLabel?.text = String(format: "%.2f", person.currentProfit!.annualized*100) + "%"
         }else{
             profitLabel.text = NSLocalizedString("Waiting", comment: "")
             rateLabel?.text = NSLocalizedString("Waiting", comment: "")

@@ -12,11 +12,11 @@ import CocoaLumberjack
 
 class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating,YJFoldingCellDelegate,YJDetailTVCDelegate {
     //@IBOutlet var tableView:UITableView!
-    var searchResults = Array<People>()
+    var searchResults = Array<Holds>()
     var line:UIImageView?
     var transparentLayer:UIView?
     let headerView = YJMainHeaderView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: YJConst.headerHeight))
-    lazy var normalCellHeights:[CGFloat] = (0..<YJCache.shared.people.count).map { _ in YJConst.closeCellHeight }
+    lazy var normalCellHeights:[CGFloat] = (0..<YJCache.shared.holds.count).map { _ in YJConst.closeCellHeight }
     lazy var searchCellHeights:[CGFloat] = (0..<searchResults.count).map { _ in YJConst.closeCellHeight }
     lazy var searchController:UISearchController = {
         let searchController = UISearchController.init(searchResultsController: nil)
@@ -57,7 +57,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         setRefresh()
         setNavigationBar()
         //开启计时器 自动刷新数据 半个小时
-        timer = YJTimer.init(1800, self, #selector(repeatRefreshPeople))
+        timer = YJTimer.init(1800, self, #selector(repeatRefreshHolds))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -142,13 +142,13 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         refreshStateChange(refreshControl!)
     }
     @objc func refreshStateChange(_ refreshControl:UIRefreshControl) {
-        if YJCache.shared.people.count == 0 {
+        if YJCache.shared.holds.count == 0 {
             YJCache.shared.refreshRecord()
             OperationQueue.main.addOperation {
                 refreshControl.endRefreshing()
             }
         }else{
-            YJCache.shared.refreshPeople({
+            YJCache.shared.refreshHolds(enforce:false,{
                 YJCache.shared.refreshRecord()
                 OperationQueue.main.addOperation {
                     [weak self] in
@@ -158,7 +158,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
             })
         }
     }
-    @objc func repeatRefreshPeople() {
+    @objc func repeatRefreshHolds() {
         guard let rc = refreshControl else {
             return
         }
@@ -186,11 +186,11 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
     }
     
     func filterContentForSearchText(_ searchText: String, scope: Int) {
-        searchResults = YJCache.shared.people.filter({( person : People) -> Bool in
+        searchResults = YJCache.shared.holds.filter({( person : Holds) -> Bool in
             if searchBarIsEmpty(){
                 return false
             }else if(scope == 0){
-                return person.name?.lowercased().contains(searchText.lowercased()) ?? false
+                return person.owner!.name?.lowercased().contains(searchText.lowercased()) ?? false
             }else if(scope == 1){
                 return person.stock!.id?.lowercased().contains(searchText.lowercased()) ?? false
             }else{
@@ -239,7 +239,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
                 guard let indexPath = dic["indexPath"] as? IndexPath else{
                     return
                 }
-                guard let person = dic["person"] as? People else{
+                guard let person = dic["person"] as? Holds else{
                     return
                 }
                 dest.indexPath = indexPath
@@ -252,7 +252,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
                 if isFiltering(){
                     dest.person = searchResults[index.row]
                 }else{
-                    dest.person = YJCache.shared.people[index.row]
+                    dest.person = YJCache.shared.holds[index.row]
 
                 }
                 dest.delegate = self
@@ -376,7 +376,7 @@ extension YJMainController{
     }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            YJCache.shared.deletePersonAt(row: indexPath.row)
+            YJCache.shared.deleteHoldsAt(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             normalCellHeights.remove(at: indexPath.row)
             YJCache.shared.updateRecord()
@@ -387,11 +387,11 @@ extension YJMainController{
         if isFiltering() {
             return searchResults.count
         }
-        return YJCache.shared.people.count
+        return YJCache.shared.holds.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var person = YJCache.shared.people[indexPath.row]
+        var person = YJCache.shared.holds[indexPath.row]
         if isFiltering() {
             person = searchResults[indexPath.row]
         }
@@ -413,7 +413,7 @@ extension YJMainController{
 extension YJMainController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentOffSet = scrollView.contentOffset.y
-        DDLogDebug("\(scrollView.contentOffset.y)")
+        //DDLogDebug("\(scrollView.contentOffset.y)")
         let alphaHeight = (currentOffSet+YJConst.navBarHeight + YJConst.scrollOffSetConst)/YJConst.scrollOffSetConst
         let alpha = alphaHeight<1 ? alphaHeight : 1
         if alpha > 0.9{

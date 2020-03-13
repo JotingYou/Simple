@@ -20,7 +20,7 @@ class YJCache: NSObject {
     var totalRecord:Statistics?
     var lastRecord:Statistics?
     
-    var people = Array<People>();
+    var holds = Array<Holds>();
     static let shared = YJCache();
     let managedObjectContext:NSManagedObjectContext = {
         let container = NSPersistentContainer(name: "Save")
@@ -42,7 +42,7 @@ class YJCache: NSObject {
         shared.readStocks();
         
         //读取顾客信息
-        shared.readPeople();
+        shared.readHolds();
         
         
         shared.readRecord()
@@ -52,16 +52,17 @@ class YJCache: NSObject {
         }
 
     }
-    //MARK:- People
+    //MARK:- Holds
     ///读取顾客信息
-    func readPeople() {
-        people = People.read()
+    func readHolds() {
+        holds = Holds.read()
     }
     ///插入顾客信息
-    func insertPerson(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date) -> Bool{
-        let person = People.insert(name, totalCost, stock, amount, buy_date)
-        people.insert(person, at: 0)
-        person.refreshStock({(flag) in
+    func insertHolds(_ name:String,_ totalCost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date) -> Bool{
+        let person = People.insert(name)
+        let hold = Holds.insert(person, totalCost, stock, amount, buy_date)
+        holds.insert(hold, at: 0)
+        hold.refreshStock(false,{(flag) in
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: flag)
             
@@ -69,9 +70,10 @@ class YJCache: NSObject {
         return save()
     }
     //更新顾客信息
-    func updatePerson(_ person:People,_ name:String,_ total_cost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->Bool{
-        person.update(name, total_cost, stock, amount, buy_date)
-        person.refreshStock({(flag) in
+    func updateHolds(_ hold:Holds,_ name:String,_ total_cost:Double,_ stock:Stocks,_ amount:Double,_ buy_date:Date)->Bool{
+        hold.owner?.name = name;
+        hold.update(hold.owner!, total_cost, stock, amount, buy_date)
+        hold.refreshStock(false,{(flag) in
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: YJConst.personHasUpdateStock), object: flag)
             
@@ -80,18 +82,18 @@ class YJCache: NSObject {
     }
 
     //删除顾客信息
-    func deletePersonAt(row:Int){
-        managedObjectContext.delete(people[row])
-        people.remove(at: row)
+    func deleteHoldsAt(row:Int){
+        managedObjectContext.delete(holds[row])
+        holds.remove(at: row)
         saveAndPrint(funcName: #function)
     }
     //MARK: REFRESH
-    func refreshPeople(_ complition:(()-> Void)?){
+    func refreshHolds(enforce:Bool?,_ complition:(()-> Void)?){
         var num = 0
-        for person in people {
-            person.refreshStock({[weak self](isUpdated) in
+        for person in holds {
+            person.refreshStock(enforce ?? false,{[weak self](isUpdated) in
                 num += 1
-                if num == self?.people.count{
+                if num == self?.holds.count{
                     self?.saveAndPrint(funcName: #function)
                     complition?()
                 }
@@ -277,7 +279,7 @@ class YJCache: NSObject {
             lastRecord = self.totalRecord
         }
         
-        let record =  Statistics.insert(lastRecord,people)
+        let record =  Statistics.insert(lastRecord,holds)
         self.totalRecord = record
         return save()
     }
@@ -286,7 +288,7 @@ class YJCache: NSObject {
         updateRecord()
     }
     func updateRecord(){
-        totalRecord?.update(lastRecord,people)
+        totalRecord?.update(lastRecord,holds)
         saveAndPrint(funcName: #function)
     }
     
