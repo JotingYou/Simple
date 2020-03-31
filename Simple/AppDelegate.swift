@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7
         
         DDLog.add(fileLogger)
-        YJFlurry.shared.logEvent(name: "App did launched")
+        //YJFlurry.shared.logEvent(name: "App did launched")
         return true
     }
 

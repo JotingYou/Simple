@@ -105,10 +105,21 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
             navigationItem.hidesSearchBarWhenScrolling = true
         }
         //修改导航栏标题文字颜色
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [.foregroundColor: UIColor.white]
-        //修改导航栏按钮颜色
-        self.navigationController?.navigationBar.tintColor = UIColor.white
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = UIColor.init(r: 93, g: 74, b: 153)
+            self.navigationController!.navigationBar.tintColor = .white
+            self.navigationController!.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController!.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }else{
+            self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+            self.navigationController!.navigationBar.tintColor = .white
+        }
+
+
         //设置视图的背景图片（自动拉伸）
         self.view.layer.contents = #imageLiteral(resourceName: "background").cgImage
     }

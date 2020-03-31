@@ -62,6 +62,7 @@ class YJEditViewController: UIViewController,UITextFieldDelegate,UISearchBarDele
         setFields()
         setSearchBar()
         setDatePicker()
+        
     }
     // MARK: - Actions
     @IBAction func add() {
