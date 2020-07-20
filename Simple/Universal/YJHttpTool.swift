@@ -16,8 +16,8 @@ class YJHttpTool: NSObject {
     
     static let shared = YJHttpTool()
     
-    let httpManager: SessionManager = {
-        let manager = SessionManager()
+    let httpManager: Session = {
+        let manager = Session()
         manager.session.configuration.timeoutIntervalForRequest = 10
         return manager
     }()
@@ -37,7 +37,7 @@ class YJHttpTool: NSObject {
                         return
                 }
             }
-            if let data = response.result.value{
+            if let data = response.data{
                 if let str = String.init(gbkData: data){
                     guard let basicDic = self?.getBasicDicFrom(str) else{
                         return
@@ -80,7 +80,7 @@ class YJHttpTool: NSObject {
                     return
                 }
             }
-            if let data = response.result.value{
+            if let data = response.data{
                 let dataStr = String.init(data: data, encoding: .utf8)
                 guard let start = dataStr?.range(of: "var apidata={ ")else{
                     complition?(["status":"0","valus":"0","updateTime":"0"])
@@ -166,7 +166,7 @@ class YJHttpTool: NSObject {
     func getFundList(_ success:((Bool) -> Void)?=nil,_ failure:((Error)->Void)?=nil){
         let url = URL(string: "http://fund.eastmoney.com/js/fundcode_search.js")
         let request = URLRequest(url: url!)
-        let destination:DownloadRequest.DownloadFileDestination = {_,_ in
+        let destination:DownloadRequest.Destination = {_,_ in
             return (YJConst.fundFileUrl,[.createIntermediateDirectories,.removePreviousFile])
         }
         httpManager.download(request, to: destination).response { (response) in

@@ -1,4 +1,4 @@
-module BouncyPageViewController {
+framework module BouncyPageViewController {
   umbrella header "BouncyPageViewController-umbrella.h"
 
   export *

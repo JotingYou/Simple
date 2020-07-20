@@ -1,4 +1,4 @@
-module RBBAnimation {
+framework module RBBAnimation {
   umbrella header "RBBAnimation-umbrella.h"
 
   export *

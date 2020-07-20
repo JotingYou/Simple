@@ -1,4 +1,4 @@
-module SwiftWebVC {
+framework module SwiftWebVC {
   umbrella header "SwiftWebVC-umbrella.h"
 
   export *

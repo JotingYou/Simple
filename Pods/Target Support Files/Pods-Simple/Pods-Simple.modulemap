@@ -1,4 +1,4 @@
-module Pods_Simple {
+framework module Pods_Simple {
   umbrella header "Pods-Simple-umbrella.h"
 
   export *

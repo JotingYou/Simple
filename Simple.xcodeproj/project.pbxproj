@@ -58,7 +58,8 @@
 		3EF01DDA241B5EB400977B25 /* YJUuserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF01DD9241B5EB400977B25 /* YJUuserManager.swift */; };
 		3EF01DDE241B5F2600977B25 /* YJUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF01DDD241B5F2600977B25 /* YJUserController.swift */; };
 		3EF01DE0241B5F5100977B25 /* YJEditUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF01DDF241B5F5100977B25 /* YJEditUserController.swift */; };
-		49072F9B03CDD8BBF777C60F /* libPods-Simple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC3E42DD6D985750F04D2399 /* libPods-Simple.a */; };
+		5CE385B724C19544009DF6AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E80E58D225D98D9005E9FBA /* Assets.xcassets */; };
+		B61E49B0B6D603418DF3FF3E /* Pods_Simple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B18A607AC354A37189DB3929 /* Pods_Simple.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,7 +144,7 @@
 		3EF01DDD241B5F2600977B25 /* YJUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJUserController.swift; sourceTree = "<group>"; };
 		3EF01DDF241B5F5100977B25 /* YJEditUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YJEditUserController.swift; sourceTree = "<group>"; };
 		A4D649D7DDBE97C43A175A3B /* Pods-Simple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Simple/Pods-Simple.debug.xcconfig"; sourceTree = "<group>"; };
-		EC3E42DD6D985750F04D2399 /* libPods-Simple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Simple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B18A607AC354A37189DB3929 /* Pods_Simple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F065A6AE80E12EDA6C151162 /* Pods-Simple.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simple/Pods-Simple.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,7 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49072F9B03CDD8BBF777C60F /* libPods-Simple.a in Frameworks */,
+				B61E49B0B6D603418DF3FF3E /* Pods_Simple.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,7 +476,7 @@
 		AE0E2F955B8BD7417C6C61E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EC3E42DD6D985750F04D2399 /* libPods-Simple.a */,
+				B18A607AC354A37189DB3929 /* Pods_Simple.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -491,7 +492,7 @@
 				3E80E57D225D98D7005E9FBA /* Sources */,
 				3E80E57E225D98D7005E9FBA /* Frameworks */,
 				3E80E57F225D98D7005E9FBA /* Resources */,
-				D020BE54EF4EA99A7C5FCA9F /* [CP] Copy Pods Resources */,
+				E68053027AA9FC33870F386C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -591,6 +592,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE385B724C19544009DF6AD /* Assets.xcassets in Resources */,
 				3E80E591225D98D9005E9FBA /* LaunchScreen.storyboard in Resources */,
 				3ED471602279A0DD0059294B /* YJHeartController.xib in Resources */,
 				3E80E5B5225D9C69005E9FBA /* MBProgressHUD.bundle in Resources */,
@@ -639,21 +641,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D020BE54EF4EA99A7C5FCA9F /* [CP] Copy Pods Resources */ = {
+		E68053027AA9FC33870F386C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Simple/Pods-Simple-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Simple/Pods-Simple-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Simple/Pods-Simple-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Simple/Pods-Simple-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Simple/Pods-Simple-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Simple/Pods-Simple-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -910,7 +912,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BFQM2YX9WF;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = KF7EEK3333;
 				INFOPLIST_FILE = Simple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -934,7 +937,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BFQM2YX9WF;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = KF7EEK3333;
 				INFOPLIST_FILE = Simple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1044,7 +1048,7 @@
 				3E80E5AA225D98D9005E9FBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3E80E5AB225D98D9005E9FBA /* Build configuration list for PBXNativeTarget "Simple" */ = {
 			isa = XCConfigurationList;
@@ -1053,7 +1057,7 @@
 				3E80E5AD225D98D9005E9FBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3E80E5AE225D98D9005E9FBA /* Build configuration list for PBXNativeTarget "SimpleTests" */ = {
 			isa = XCConfigurationList;
@@ -1062,7 +1066,7 @@
 				3E80E5B0225D98D9005E9FBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3E80E5B1225D98D9005E9FBA /* Build configuration list for PBXNativeTarget "SimpleUITests" */ = {
 			isa = XCConfigurationList;
@@ -1071,7 +1075,7 @@
 				3E80E5B3225D98D9005E9FBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

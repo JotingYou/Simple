@@ -97,7 +97,7 @@ open class Attribute {
      * @param encodedValue HTML attribute encoded value
      * @return attribute
      */
-    open static func createFromEncoded(unencodedKey: String, encodedValue: String) throws ->Attribute {
+    public static func createFromEncoded(unencodedKey: String, encodedValue: String) throws ->Attribute {
         let value = try Entities.unescape(string: encodedValue, strict: true)
         return try Attribute(key: unencodedKey, value: value)
     }
@@ -119,7 +119,7 @@ open class Attribute {
     }
 
     public func isBooleanAttribute() -> Bool {
-        return Attribute.booleanAttributes.contains(key)
+        return Attribute.booleanAttributes.contains(key.lowercased())
     }
 
     public func hashCode() -> Int {

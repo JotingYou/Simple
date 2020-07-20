@@ -26,7 +26,9 @@ import UIKit
 /// UITableViewCell with folding animation
 open class FoldingCell: UITableViewCell {
     
-    /// UIView whitch display when cell open
+    @objc open var isUnfolded = false
+    
+    /// UIView is displayed when cell open
     @IBOutlet open var containerView: UIView!
     @IBOutlet open var containerViewTop: NSLayoutConstraint!
     
@@ -49,7 +51,7 @@ open class FoldingCell: UITableViewCell {
      - Open:  Open direction
      - Close: Close direction
      */
-    public enum AnimationType {
+    @objc public enum AnimationType : Int {
         case open
         case close
     }
@@ -65,7 +67,7 @@ open class FoldingCell: UITableViewCell {
     /**
      Call this method in methods init(style: UITableViewCellStyle, reuseIdentifier: String?) after creating Views
      */
-    open func commonInit() {
+    @objc open func commonInit() {
         configureDefaultState()
         
         selectionStyle = .none
@@ -76,7 +78,7 @@ open class FoldingCell: UITableViewCell {
     
     // MARK: configure
     
-    func configureDefaultState() {
+    private func configureDefaultState() {
         
         guard let foregroundViewTop = self.foregroundViewTop,
             let containerViewTop = self.containerViewTop else {
@@ -96,13 +98,14 @@ open class FoldingCell: UITableViewCell {
         contentView.bringSubviewToFront(foregroundView)
     }
     
-    func createAnimationItemView() -> [RotatedView] {
+    private func createAnimationItemView() -> [RotatedView] {
         
         var items = [RotatedView]()
         items.append(foregroundView)
         var rotatedViews = [RotatedView]()
         
         animationView?.subviews
+            .lazy
             .compactMap({ $0 as? RotatedView })
             .sorted(by: { $0.tag < $1.tag })
             .forEach { itemView in
@@ -120,18 +123,16 @@ open class FoldingCell: UITableViewCell {
         
         if animationType == .open {
             animationView?.subviews
+                .lazy
                 .compactMap { $0 as? RotatedView }
                 .forEach { $0.alpha = 0 }
         } else {
             animationView?.subviews
+                .lazy
                 .compactMap { $0 as? RotatedView }
                 .forEach {
-                    if animationType == .open {
-                        $0.alpha = 0
-                    } else {
-                        $0.alpha = 1
-                        $0.backView?.alpha = 0
-                    }
+                    $0.alpha = animationType == .open ? 0 : 1
+                    if animationType != .open { $0.backView?.alpha = 0 }
             }
         }
     }
@@ -183,14 +184,14 @@ open class FoldingCell: UITableViewCell {
         let foregroundViewSize = foregroundView.bounds.size
         
         // added first item
-        var image = containerView.pb_takeSnapshot(CGRect(x: 0, y: 0, width: containerViewSize.width, height: foregroundViewSize.height))
+        var image = containerView.takeSnapshot(CGRect(x: 0, y: 0, width: containerViewSize.width, height: foregroundViewSize.height))
         var imageView = UIImageView(image: image)
         imageView.tag = 0
         imageView.layer.cornerRadius = foregroundView.layer.cornerRadius
         animationView?.addSubview(imageView)
         
         // added secod item
-        image = containerView.pb_takeSnapshot(CGRect(x: 0, y: foregroundViewSize.height, width: containerViewSize.width, height: foregroundViewSize.height))
+        image = containerView.takeSnapshot(CGRect(x: 0, y: foregroundViewSize.height, width: containerViewSize.width, height: foregroundViewSize.height))
         
         imageView = UIImageView(image: image)
         let rotatedView = RotatedView(frame: imageView.frame)
@@ -216,7 +217,7 @@ open class FoldingCell: UITableViewCell {
         var yPosition = 2 * foregroundViewSize.height
         var tag = 2
         for _ in 2 ..< itemCount {
-            image = containerView.pb_takeSnapshot(CGRect(x: 0, y: yPosition, width: containerViewSize.width, height: itemHeight))
+            image = containerView.takeSnapshot(CGRect(x: 0, y: yPosition, width: containerViewSize.width, height: itemHeight))
             
             imageView = UIImageView(image: image)
             let rotatedView = RotatedView(frame: imageView.frame)
@@ -276,11 +277,9 @@ open class FoldingCell: UITableViewCell {
         return animationView?.alpha == 1 ? true : false
     }
     
-    open var isUnfolded = false
-    
     // MARK: Animations
     
-    open func animationDuration(_ itemIndex: NSInteger, type: AnimationType) -> TimeInterval {
+    @objc open dynamic func animationDuration(_ itemIndex: NSInteger, type: AnimationType) -> TimeInterval {
         return type == .close ? durationsForCollapsedState[itemIndex] : durationsForExpandedState[itemIndex]
     }
     
@@ -297,7 +296,7 @@ open class FoldingCell: UITableViewCell {
         return durations
     }
     
-    public func openAnimation(_ completion: (() -> Void)?) {
+    func openAnimation(_ completion: (() -> Void)?) {
         isUnfolded = true
         removeImageItemsFromAnimationView()
         addImageItemsToAnimationView()
@@ -308,7 +307,7 @@ open class FoldingCell: UITableViewCell {
         let durations = durationSequence(.open)
         
         var delay: TimeInterval = 0
-        var timing = CAMediaTimingFunctionName.easeIn
+        var timing = convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeIn)
         var from: CGFloat = 0.0
         var to: CGFloat = -CGFloat.pi / 2
         var hidden = true
@@ -321,11 +320,11 @@ open class FoldingCell: UITableViewCell {
         for index in 0 ..< animationItemViews.count {
             let animatedView = animationItemViews[index]
             
-            animatedView.foldingAnimation(timing.rawValue, from: from, to: to, duration: durations[index], delay: delay, hidden: hidden)
+            animatedView.foldingAnimation(timing, from: from, to: to, duration: durations[index], delay: delay, hidden: hidden)
             
             from = from == 0.0 ? CGFloat.pi / 2 : 0.0
             to = to == 0.0 ? -CGFloat.pi / 2 : 0.0
-            timing = timing == CAMediaTimingFunctionName.easeIn ? CAMediaTimingFunctionName.easeOut : CAMediaTimingFunctionName.easeIn
+            timing = timing == convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeIn) ? convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeOut) : convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeIn)
             hidden = !hidden
             delay += durations[index]
         }
@@ -344,7 +343,7 @@ open class FoldingCell: UITableViewCell {
         }
     }
     
-    public func closeAnimation(_ completion: (() -> Void)?) {
+    func closeAnimation(_ completion: (() -> Void)?) {
         isUnfolded = false
         removeImageItemsFromAnimationView()
         addImageItemsToAnimationView()
@@ -356,10 +355,10 @@ open class FoldingCell: UITableViewCell {
         animationView?.alpha = 1
         containerView.alpha = 0
         
-        var durations: [TimeInterval] = durationSequence(.close).reversed()
+        let durations: [TimeInterval] = durationSequence(.close).reversed()
         
         var delay: TimeInterval = 0
-        var timing = CAMediaTimingFunctionName.easeIn
+        var timing = convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeIn)
         var from: CGFloat = 0.0
         var to: CGFloat = CGFloat.pi / 2
         var hidden = true
@@ -371,11 +370,11 @@ open class FoldingCell: UITableViewCell {
         for index in 0 ..< animationItemViews.count {
             let animatedView = animationItemViews.reversed()[index]
             
-            animatedView.foldingAnimation(timing.rawValue, from: from, to: to, duration: durations[index], delay: delay, hidden: hidden)
+            animatedView.foldingAnimation(timing, from: from, to: to, duration: durations[index], delay: delay, hidden: hidden)
             
             to = to == 0.0 ? CGFloat.pi / 2 : 0.0
             from = from == 0.0 ? -CGFloat.pi / 2 : 0.0
-            timing = timing == CAMediaTimingFunctionName.easeIn ? CAMediaTimingFunctionName.easeOut : CAMediaTimingFunctionName.easeIn
+            timing = timing == convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeIn) ? convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeOut) : convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeIn)
             hidden = !hidden
             delay += durations[index]
         }
@@ -400,6 +399,12 @@ open class FoldingCell: UITableViewCell {
 // MARK: RotatedView
 
 open class RotatedView: UIView {
+    
+    private enum Const {
+        static let rotationX = "rotation.x"
+        static let transformRotationX = "transform.rotation.x"
+    }
+    
     var hiddenAfterAnimation = false
     var backView: RotatedView?
     
@@ -446,8 +451,8 @@ extension RotatedView: CAAnimationDelegate {
     
     func foldingAnimation(_ timing: String, from: CGFloat, to: CGFloat, duration: TimeInterval, delay: TimeInterval, hidden: Bool) {
         
-        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.x")
-        rotateAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName(rawValue: timing))
+        let rotateAnimation = CABasicAnimation(keyPath: Const.transformRotationX)
+        rotateAnimation.timingFunction = CAMediaTimingFunction(name: convertToCAMediaTimingFunctionName(timing))
         rotateAnimation.fromValue = from
         rotateAnimation.toValue = to
         rotateAnimation.duration = duration
@@ -458,7 +463,7 @@ extension RotatedView: CAAnimationDelegate {
         
         self.hiddenAfterAnimation = hidden
         
-        self.layer.add(rotateAnimation, forKey: "rotation.x")
+        self.layer.add(rotateAnimation, forKey: Const.rotationX)
     }
     
     public func animationDidStart(_: CAAnimation) {
@@ -476,9 +481,10 @@ extension RotatedView: CAAnimationDelegate {
     }
 }
 
+// MARK: UIView + extension
 private extension UIView {
     
-    func pb_takeSnapshot(_ frame: CGRect) -> UIImage? {
+    func takeSnapshot(_ frame: CGRect) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
@@ -490,4 +496,14 @@ private extension UIView {
         
         return image
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAMediaTimingFunctionName(_ input: CAMediaTimingFunctionName) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAMediaTimingFunctionName(_ input: String) -> CAMediaTimingFunctionName {
+	return CAMediaTimingFunctionName(rawValue: input)
 }

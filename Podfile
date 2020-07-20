@@ -1,4 +1,5 @@
-#use_frameworks!
+use_frameworks!
+
 use_modular_headers!
 platform:ios,'10.0'
 target "Simple" do
@@ -30,5 +31,5 @@ pod 'SnapKit'
 #logging
 pod 'CocoaLumberjack/Swift'
 pod 'Flurry-iOS-SDK/FlurrySDK' #Analytics Pod
-pod 'Flurry-iOS-SDK/FlurryAds' #Advertising Pod (requires Analytics)
+#pod 'Flurry-iOS-SDK/FlurryAds' #Advertising Pod (requires Analytics)
 end

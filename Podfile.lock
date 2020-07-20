@@ -1,31 +1,28 @@
 PODS:
-  - Alamofire (4.7.2)
-  - BouncyPageViewController (0.1.0):
+  - Alamofire (5.2.1)
+  - BouncyPageViewController (0.1.1):
     - RBBAnimation (= 0.4.0)
-  - CocoaLumberjack/Core (3.5.3)
-  - CocoaLumberjack/Swift (3.5.3):
+  - CocoaLumberjack/Core (3.6.1)
+  - CocoaLumberjack/Swift (3.6.1):
     - CocoaLumberjack/Core
-  - Flurry-iOS-SDK/FlurryAds (9.3.1):
-    - Flurry-iOS-SDK/FlurrySDK
-  - Flurry-iOS-SDK/FlurrySDK (9.3.1)
-  - FoldingCell (3.1.1)
-  - HandyJSON (5.0.0-beta.1)
-  - LTScrollView (0.1.6)
-  - MBProgressHUD (1.1.0)
+  - Flurry-iOS-SDK/FlurrySDK (10.3.3)
+  - FoldingCell (5.0.2)
+  - HandyJSON (5.0.2)
+  - LTScrollView (0.2.1)
+  - MBProgressHUD (1.2.0)
   - RBBAnimation (0.4.0)
-  - SDWebImage (4.4.0):
-    - SDWebImage/Core (= 4.4.0)
-  - SDWebImage/Core (4.4.0)
-  - SnapKit (4.0.0)
-  - SwiftSoup (1.7.1)
+  - SDWebImage (5.8.4):
+    - SDWebImage/Core (= 5.8.4)
+  - SDWebImage/Core (5.8.4)
+  - SnapKit (5.0.1)
+  - SwiftSoup (2.3.2)
   - SwiftWebVC (0.4.2)
-  - SwiftyJSON (4.1.0)
+  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - Alamofire
   - BouncyPageViewController
   - CocoaLumberjack/Swift
-  - Flurry-iOS-SDK/FlurryAds
   - Flurry-iOS-SDK/FlurrySDK
   - FoldingCell
   - HandyJSON (~> 5.0.0-beta.1)
@@ -38,7 +35,7 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Alamofire
     - BouncyPageViewController
     - CocoaLumberjack
@@ -55,21 +52,21 @@ SPEC REPOS:
     - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  BouncyPageViewController: e62e46c88a200e1c8baf10fe1f0294fbddd75bc7
-  CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
-  Flurry-iOS-SDK: 5d782d740c5e95389c327d38245b3db4bb471fd7
-  FoldingCell: 238c33ae8d9cd655090c9c4c5ff32596cfd18c6e
-  HandyJSON: 582477127ab3ab65bd2e471815f1a7b846856978
-  LTScrollView: 54ad587a9664434c6b25eefd2b8095eb5641c79c
-  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  BouncyPageViewController: 94e68ee2ef28f1bf2724be3d72b6871463baff84
+  CocoaLumberjack: b17ae15142558d08bbacf69775fa10c4abbebcc9
+  Flurry-iOS-SDK: 74038865f22ab9f587877b6a01b79e1b3bd86e01
+  FoldingCell: f92eb5fb9842319e7cd08c71533c98408b785099
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  LTScrollView: 93fff4aed9f9545f541a99b320b27808f5307c12
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
-  SDWebImage: b534502786e43dde36dfcaee89356fe6df30e203
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  SwiftSoup: 277f7ef548826e0ca7603a06b30d4a5df3ee0587
+  SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftSoup: f97bc4e988c7729d6457f9642f974c617a6e2510
   SwiftWebVC: ecc4feaabe5a3f75e059a0a345d3386bb0d16c44
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: db555805b4cc835bb553f136000ce40e033ecb78
+PODFILE CHECKSUM: 2effeb7d3183cbfd5f9e68fde70721dfe6bee557
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.9.3

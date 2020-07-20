@@ -21,7 +21,7 @@ open class Node: Equatable, Hashable {
 	* Get the list index of this node in its node sibling list. I.e. if this is the first node
 	* sibling, returns 0.
 	* @return position in node sibling list
-	* @see org.jsoup.nodes.Element#elementSiblingIndex()
+	* @see Element#elementSiblingIndex()
 	*/
     public private(set) var siblingIndex: Int = 0
 
@@ -750,9 +750,15 @@ open class Node: Equatable, Hashable {
         }
 
         open func tail(_ node: Node, _ depth: Int)throws {
+            // When compiling a release optimized swift linux 4.2 version the "saves a void hit."
+            // causes a SIL error. Removing optimization on linux until a fix is found.
+            #if os(Linux)
+            try node.outerHtmlTail(accum, depth, out)
+            #else
             if (!(node.nodeName() == OuterHtmlVisitor.text)) { // saves a void hit.
                 try node.outerHtmlTail(accum, depth, out)
             }
+            #endif
         }
     }
 
@@ -772,10 +778,10 @@ open class Node: Equatable, Hashable {
 	///
 	/// Hash values are not guaranteed to be equal across different executions of
 	/// your program. Do not save hash values to use during a future execution.
-	public var hashValue: Int {
-		return description.hashValue ^ (baseUri?.hashValue ?? 31)
-	}
-
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(description)
+        hasher.combine(baseUri)
+    }
 }
 
 extension Node: CustomStringConvertible {
