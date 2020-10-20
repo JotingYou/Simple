@@ -1,13 +1,13 @@
 PODS:
-  - Alamofire (5.2.1)
+  - Alamofire (5.2.2)
   - BouncyPageViewController (0.1.1):
     - RBBAnimation (= 0.4.0)
-  - CocoaLumberjack/Core (3.6.1)
-  - CocoaLumberjack/Swift (3.6.1):
+  - CocoaLumberjack/Core (3.6.2)
+  - CocoaLumberjack/Swift (3.6.2):
     - CocoaLumberjack/Core
-  - Flurry-iOS-SDK/FlurrySDK (10.3.3)
+  - Flurry-iOS-SDK/FlurrySDK (10.3.4)
   - FoldingCell (5.0.2)
-  - HandyJSON (5.0.2)
+  - HandyJSON (5.0.3-beta)
   - LTScrollView (0.2.1)
   - MBProgressHUD (1.2.0)
   - RBBAnimation (0.4.0)
@@ -52,12 +52,12 @@ SPEC REPOS:
     - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   BouncyPageViewController: 94e68ee2ef28f1bf2724be3d72b6871463baff84
-  CocoaLumberjack: b17ae15142558d08bbacf69775fa10c4abbebcc9
-  Flurry-iOS-SDK: 74038865f22ab9f587877b6a01b79e1b3bd86e01
+  CocoaLumberjack: bd155f2dd06c0e0b03f876f7a3ee55693122ec94
+  Flurry-iOS-SDK: e6f44e2aeb389d93b874483555a5e8f0cfd42ea2
   FoldingCell: f92eb5fb9842319e7cd08c71533c98408b785099
-  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  HandyJSON: 88e8ea5f66ab65c3b8768499a1935d0509c460d4
   LTScrollView: 93fff4aed9f9545f541a99b320b27808f5307c12
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
