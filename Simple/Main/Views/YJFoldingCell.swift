@@ -44,8 +44,12 @@ class YJFoldingCell: FoldingCell {
     @IBOutlet weak var accountingLabel: UILabel!
 
     @IBOutlet weak var detailValueLabel: UILabel!
+
     
-    
+    static func loadNib() -> YJFoldingCell{
+        let cell = Bundle.main.loadNibNamed("YJFoldingCell", owner: self, options: nil)?.first as! YJFoldingCell
+        return cell
+    }
     
     
     @IBAction func showDetail(_ sender: Any) {

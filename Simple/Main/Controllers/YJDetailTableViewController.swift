@@ -10,12 +10,12 @@ import UIKit
 import CocoaLumberjack
 
 protocol YJDetailTVCDelegate:NSObjectProtocol {
-    func didEdited(index:IndexPath)
+    func didEdited(index:IndexPath?)
 }
 class YJDetailTableViewController: UITableViewController,YJEditViewControllerDelegate {
     func didFinished(tag: Int, indexPath: IndexPath?) {
         self.tableView.reloadData()
-        self.delegate?.didEdited(index: indexPath!)
+        self.delegate?.didEdited(index: indexPath)
     }
 
     

@@ -21,6 +21,7 @@ class YJCache: NSObject {
     var lastRecord:Statistics?
     
     var holds = Array<Holds>();
+    lazy var saledHolds = Holds.readSaled()
     static let shared = YJCache();
     let managedObjectContext:NSManagedObjectContext = {
         let container = NSPersistentContainer(name: "Save")
@@ -86,14 +87,22 @@ class YJCache: NSObject {
         let hold = holds[row]
         hold.is_saled = true
         holds.remove(at: row)
+        if !saledHolds.contains(hold) {
+            saledHolds.insert(hold, at: 0)
+        }
         saveAndPrint(funcName: #function)
     }
     //删除持有信息
-    func deleteHoldsAt(row:Int){
+    func deleteHoldsAt(hold:Holds){
         //managedObjectContext.delete(holds[row])
-        let hold = holds[row]
         hold.is_deleted = true
-        holds.remove(at: row)
+        if let row = saledHolds.index(of: hold){
+            saledHolds.remove(at: row)
+        }
+
+        if let row = holds.index(of: hold){
+            holds.remove(at: row)
+        }
         saveAndPrint(funcName: #function)
     }
     //MARK: REFRESH

@@ -26,6 +26,9 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         searchController.obscuresBackgroundDuringPresentation = false
         return searchController
     }()
+    var holds: [Holds] {
+        return YJCache.shared.holds
+    }
     var timer:YJTimer?
     
     lazy var searchBar: UISearchBar = {
@@ -231,6 +234,11 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         
         performSegue(withIdentifier: "toDetail", sender: sender)
     }
+    @IBAction func toHistory(_ sender: Any) {
+        let hc = YJHistoryController()
+        show(hc, sender: nil)
+        
+    }
     @IBAction func toAdd(_ sender: Any) {
         performSegue(withIdentifier: "toEdit", sender: ["type":0])
     }
@@ -316,7 +324,7 @@ class YJMainController: UITableViewController,YJEditViewControllerDelegate,UISea
         
 
     }
-    func didEdited(index: IndexPath) {
+    func didEdited(index: IndexPath?) {
         YJCache.shared.updateRecord()
         self.tableView.reloadData()
 
@@ -385,14 +393,24 @@ extension YJMainController{
         }
         return true
     }
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let sale = UITableViewRowAction.init(style: .destructive, title: "卖出") { (action, indexPath) in
             YJCache.shared.saleHoldsAt(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            normalCellHeights.remove(at: indexPath.row)
+            self.normalCellHeights.remove(at: indexPath.row)
             YJCache.shared.updateRecord()
         }
+        let delete = UITableViewRowAction.init(style: .normal, title: "删除") { (action, indexPath) in
+            YJCache.shared.deleteHoldsAt(hold: self.holds[indexPath.row])
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.normalCellHeights.remove(at: indexPath.row)
+            YJCache.shared.updateRecord()
+        }
+        
+        return [sale,delete]
     }
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
