@@ -80,10 +80,19 @@ class YJCache: NSObject {
         })
         return save()
     }
-
-    //删除顾客信息
+    //卖出持有股票
+    func saleHoldsAt(row:Int){
+        //managedObjectContext.delete(holds[row])
+        let hold = holds[row]
+        hold.is_saled = true
+        holds.remove(at: row)
+        saveAndPrint(funcName: #function)
+    }
+    //删除持有信息
     func deleteHoldsAt(row:Int){
-        managedObjectContext.delete(holds[row])
+        //managedObjectContext.delete(holds[row])
+        let hold = holds[row]
+        hold.is_deleted = true
         holds.remove(at: row)
         saveAndPrint(funcName: #function)
     }

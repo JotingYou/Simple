@@ -17,6 +17,31 @@ extension Holds {
         fetchRequest.sortDescriptors = [sort]
         fetchRequest.fetchOffset = 0
         fetchRequest.fetchLimit = 30
+        
+        let predicate = NSPredicate(format: "(is_deleted == false) && (is_saled == false)")
+        fetchRequest.predicate = predicate
+        //        步骤三：执行请求
+        do {
+            let fetchedResults = try YJCache.shared.managedObjectContext.fetch(fetchRequest) as? [Holds]
+            if let results = fetchedResults {
+                return results
+            }
+            
+        } catch  {
+            fatalError("读取顾客失败")
+        }
+        return Array<Holds>()
+    }
+    static func readSaled()->[Holds]{
+        //        步骤二：建立一个获取的请求
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Holds")
+        let sort = NSSortDescriptor.init(key: "create_time", ascending: false)
+        fetchRequest.sortDescriptors = [sort]
+        fetchRequest.fetchOffset = 0
+        fetchRequest.fetchLimit = 30
+        
+        let predicate = NSPredicate(format: "(is_deleted == false) && (is_saled == true)")
+        fetchRequest.predicate = predicate
         //        步骤三：执行请求
         do {
             let fetchedResults = try YJCache.shared.managedObjectContext.fetch(fetchRequest) as? [Holds]

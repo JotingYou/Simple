@@ -387,7 +387,7 @@ extension YJMainController{
     }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            YJCache.shared.deleteHoldsAt(row: indexPath.row)
+            YJCache.shared.saleHoldsAt(row: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             normalCellHeights.remove(at: indexPath.row)
             YJCache.shared.updateRecord()
