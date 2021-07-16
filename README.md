@@ -7,7 +7,7 @@ You can add your records to it,then it will auto-update the profit and compute t
 You can also get the latest financial news by it.<br />
 ### NOTICE
 This is only an app demo,some parts of it have not be brought into effect.<br />
-Since some of APIs belong to other companies,please contact these companies for permit,if you want to use them.
+Since some APIs belong to other companies,please contact these companies for permit if you want to use them.
 ## Language
 Swift 4.2
 ## Installation
