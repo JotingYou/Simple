@@ -318,7 +318,7 @@
 				3E80E584225D98D7005E9FBA /* AppDelegate.swift */,
 				3E80E58A225D98D7005E9FBA /* Main.storyboard */,
 				3E80E58F225D98D9005E9FBA /* LaunchScreen.storyboard */,
-				3EF01DD8241B5E8E00977B25 /* UserManege */,
+				3EF01DD8241B5E8E00977B25 /* UserManager */,
 				3E0E986A226F0FC400FD7ACE /* Main */,
 				3ED4714B22797B120059294B /* Heart */,
 				3ED47165227ACB150059294B /* Discover */,
@@ -462,13 +462,13 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		3EF01DD8241B5E8E00977B25 /* UserManege */ = {
+		3EF01DD8241B5E8E00977B25 /* UserManager */ = {
 			isa = PBXGroup;
 			children = (
 				3EF01DDB241B5EBE00977B25 /* Controllers */,
 				3EF01DD9241B5EB400977B25 /* YJUuserManager.swift */,
 			);
-			path = UserManege;
+			path = UserManager;
 			sourceTree = "<group>";
 		};
 		3EF01DDB241B5EBE00977B25 /* Controllers */ = {
@@ -930,7 +930,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = KF7EEK3333;
 				INFOPLIST_FILE = Simple/Info.plist;
@@ -956,7 +956,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = KF7EEK3333;
 				INFOPLIST_FILE = Simple/Info.plist;
